@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/ui/shadcn/button';
 
 export default function Home() {
   return (
