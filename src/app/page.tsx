@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/shadcn/button';
+import { Button } from '@/05_shared/ui/shadcn/button';
 
 export default function Home() {
   return (
