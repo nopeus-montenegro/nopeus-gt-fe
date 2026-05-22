@@ -30,11 +30,11 @@ The project architecture is split into four interconnected specs:
 
 - Document 2: Frontend Specification (FSD) - UI/UX layers, state management, and responsive design guidelines.
 
-- Document 3: Database & Data Models (Prisma/Postgres) - Flat table schemas, indexes, and strict typing.
+- [Document 3](https://github.com/nopeus-montenegro/nopeus-gt-fe/blob/c58254c9ac0c5843087f77ccbcc6910e4b7449e8/README_DB.md): Database & Data Models (Prisma/Postgres) - Flat table schemas, indexes, and strict typing.
 
-- Document 4: Infrastructure & Content Automation - Server Actions, REST API constraints, GitOps workflow, and future telemetry ingestion.
+- [Document 4:](https://github.com/nopeus-montenegro/nopeus-gt-fe/blob/c58254c9ac0c5843087f77ccbcc6910e4b7449e8/README_CONTENT.md) Infrastructure & API Specification - Server Actions, REST API constraints, GitOps workflow, and future telemetry ingestion.
 
-- Document 5: Git Flow & Branching Strategy - Epic-driven workflow, CI/CD environment routing (Production/Staging), and task lifecycle constraints.
+- [Document 5:](https://github.com/nopeus-montenegro/nopeus-gt-fe/blob/c58254c9ac0c5843087f77ccbcc6910e4b7449e8/DEVELOPMENT.md) Git Flow & Branching Strategy - Epic-driven workflow, CI/CD environment routing (Production/Staging), and task lifecycle constraints.
 
 Architecture Note: We don't need a standalone folder structure doc. NopeusGT strictly adheres to Feature-Sliced Design (FSD). By separating concerns into predictable layers (app, pages, widgets, features, entities, shared), the codebase remains completely self-documenting.
 

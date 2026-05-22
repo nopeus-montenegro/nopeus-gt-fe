@@ -1,4 +1,4 @@
-# Git Flow & Branching Strategy
+# Nopeus GT - Git Flow & Branching Strategy
 
 This project utilizes a modified Epic-Driven Git Flow, tailored for seamless integration with Vercel automation.
 
