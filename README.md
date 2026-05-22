@@ -1,10 +1,10 @@
-# Nopeus GT — Core Vision & Index
+# Nopeus GT - Core Vision & Index
 
 This document serves as the starting point for the entire technical ecosystem of the Nopeus GT platform. It combines the core product vision, a phased development roadmap, and acts as a high-level index for the detailed specifications of the system modules.
 
 ## Product Vision & Mission
 
-The Nopeus GT platform solves a critical challenge within the sim racing community (initially focusing on Gran Turismo 7) — the widening technical and performance gap between elite drivers ('aliens') and mainstream players. Currently, top-tier car setups, telemetry configurations, and track guides remain deeply buried within low-view YouTube videos or scattered across private, fragmented Discord servers. The project aggregates, structures, and automates access to this tribal knowledge, transforming chaotic data into a streamlined, intuitive UI/UX reference directory that will subsequently scale into a full-fledged analytical SaaS product.
+The Nopeus GT platform solves a critical challenge within the sim racing community (initially focusing on Gran Turismo 7) - the widening technical and performance gap between elite drivers ('aliens') and mainstream players. Currently, top-tier car setups, telemetry configurations, and track guides remain deeply buried within low-view YouTube videos or scattered across private, fragmented Discord servers. The project aggregates, structures, and automates access to this tribal knowledge, transforming chaotic data into a streamlined, intuitive UI/UX reference directory that will subsequently scale into a full-fledged analytical SaaS product.
 
 In the modern sim racing landscape, fractional gains in lap times are heavily dictated by engineering and data-driven car optimization. However, the lack of centralized infrastructure forces enthusiastic drivers to spend more time reverse-engineering setups through trial and error rather than refining their racing lines. NopeusGT bridges this gap by establishing a single source of truth, democratizing elite racing knowledge and fostering a transparent, performance-oriented ecosystem.
 
@@ -26,13 +26,15 @@ To mitigate risks and validate core hypotheses early on, development is split in
 
 The project architecture is split into four interconnected specs:
 
-- Document 1: Core Vision & Roadmap (Current) — High-level concept, milestones, and IP security.
+- Document 1: Core Vision & Roadmap (Current) - High-level concept, milestones, and IP security.
 
-- Document 2: Frontend Specification (FSD) — UI/UX layers, state management, and responsive design guidelines.
+- Document 2: Frontend Specification (FSD) - UI/UX layers, state management, and responsive design guidelines.
 
-- Document 3: Database & Data Models (Prisma/Postgres) — Flat table schemas, indexes, and strict typing.
+- Document 3: Database & Data Models (Prisma/Postgres) - Flat table schemas, indexes, and strict typing.
 
-- Document 4: Infrastructure & Content Automation — Server Actions, REST API constraints, GitOps workflow, and future telemetry ingestion.
+- Document 4: Infrastructure & Content Automation - Server Actions, REST API constraints, GitOps workflow, and future telemetry ingestion.
+
+- Document 5: Git Flow & Branching Strategy - Epic-driven workflow, CI/CD environment routing (Production/Staging), and task lifecycle constraints.
 
 Architecture Note: We don't need a standalone folder structure doc. NopeusGT strictly adheres to Feature-Sliced Design (FSD). By separating concerns into predictable layers (app, pages, widgets, features, entities, shared), the codebase remains completely self-documenting.
 

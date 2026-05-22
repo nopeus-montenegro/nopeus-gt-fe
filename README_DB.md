@@ -1,4 +1,4 @@
-# Nopeus GT — Database & Data Models
+# Nopeus GT - Database & Data Models
 
 This document provides a detailed breakdown of the database architecture for the NopeusGT platform during Phase 0. The specification is structured to be completely open-source friendly and safe for public repositories.
 

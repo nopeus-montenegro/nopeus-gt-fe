@@ -1,4 +1,4 @@
-# Nopeus GT — Infrastructure & API Specification
+# Nopeus GT - Infrastructure & API Specification
 
 This document describes the hybrid infrastructure of the NopeusGT platform during Phase 0. The architecture combines a strict relational database for storing engineering telemetry (car setups) with a highly minimalist, GitOps/CMS-driven workflow for dynamic content management.
 
@@ -16,9 +16,9 @@ To deliver maximum performance, optimized SEO, and UI flexibility, the codebase 
 
 To ensure high responsiveness and reactivity across catalog interfaces during Phase 0, the following lightweight GET endpoints are implemented:
 
-- `GET /api/v1/setups` — Dynamic Setup Filtering: Accepts query parameters: `carId`, `trackId`, `group`, and `isBopLocked`. Returns a highly cacheable JSON array optimized for consumption via TanStack Query.
+- `GET /api/v1/setups` - Dynamic Setup Filtering: Accepts query parameters: `carId`, `trackId`, `group`, and `isBopLocked`. Returns a highly cacheable JSON array optimized for consumption via TanStack Query.
 
-- `GET /api/v1/comments` — Paginated Discussion Feeds: Accepts a `contentId` (derived from Markdown/MDX Frontmatter) and a `page` parameter for infinite scroll or classic pagination.
+- `GET /api/v1/comments` - Paginated Discussion Feeds: Accepts a `contentId` (derived from Markdown/MDX Frontmatter) and a `page` parameter for infinite scroll or classic pagination.
 
 ## GitOps-CMS: Structured Content Management via GitHub
 
@@ -33,7 +33,7 @@ content/
 
 ### Linking Static Content to the Relational DB via `contentId`
 
-To enable dynamic features (such as comments, likes, and view counters) for files stored natively in Git, every Markdown/MDX document must include a unique string identifier - `contentId` (formatted as a CUID2)—within its Frontmatter metadata.
+To enable dynamic features (such as comments, likes, and view counters) for files stored natively in Git, every Markdown/MDX document must include a unique string identifier - `contentId` (formatted as a CUID2) - within its Frontmatter metadata.
 
 The PostgreSQL database (via Prisma) stores engagement records like comments and likes by referencing this `contentId`. This architecture completely isolates heavy text content inside Git, ensuring the relational database only manages lightweight transactional and engagement metrics.
 
