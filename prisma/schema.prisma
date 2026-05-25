@@ -1,0 +1,490 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Car {
+  id           String     @id @default(cuid())
+  name         String // ex. "296 GT3"
+  manufacturer String // ex. "Ferrari"
+  country      String // ex. "Italy"
+  class        CarClass // ex. GR_3
+  layout       Drivetrain // ex. MR
+  basePp       Float?
+
+  // engine and gearbox specs
+  engineCode   String? // ex. "F163CE"
+  displacement Int? // ex. "2992"
+  engineType   String? // ex. "V6"
+  aspiration   String? // ex. "Twin-Turbocharged"
+  gearbox      String? // ex. "6-speed"
+
+  // power
+  power     Int?
+  powerRpm  Int?
+  torque    Float?
+  torqueRpm Int?
+
+  // measurements
+  length Int?
+  width  Int?
+  height Int?
+  weight Int?
+  pwr    Float?
+
+  setups    Setup[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([class])
+  @@index([manufacturer])
+  @@index([layout])
+}
+
+model Setup {
+  id    String @id @default(cuid())
+  title String // ex. "Settings Sheet 1"
+
+  carId    String
+  car      Car       @relation(fields: [carId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  lapTimes LapTime[]
+
+  // ==========================================
+  // BASE PERFORMANCE / RESULTS
+  // ==========================================
+  resultPp           Float // Performance Points
+  resultPower        Int // BHP
+  resultTorque       Float // kgfm
+  resultWeight       Int // kg
+  weightBalanceFront Int
+  weightBalanceRear  Int
+
+  // ==========================================
+  // WIDE BODY / SWAP
+  // ==========================================
+  hasWideBody        Boolean @default(false)
+  swappedEngineModel String?
+
+  // GT Auto
+  gtAutoFront CustomPartType
+  gtAutoSide  CustomPartType
+  gtAutoRear  CustomPartType
+  gtAutoWing  CustomWingType
+
+  // ==========================================
+  // Tyres
+  // ==========================================
+  tyresFront TyreType
+  tyresRear  TyreType
+
+  // ==========================================
+  // Suspension
+  // ==========================================
+  suspensionType      SuspensionType
+  susBodyHeightFront  Int
+  susBodyHeightRear   Int
+  susAntiRollBarFront Int
+  susAntiRollBarRear  Int
+  susDampingCompFront Int
+  susDampingCompRear  Int
+  susDampingExpFront  Int
+  susDampingExpRear   Int
+  susNaturalFreqFront Float
+  susNaturalFreqRear  Float
+  susCamberFront      Float
+  susCamberRear       Float
+  susToeFront         Float
+  susToeRear          Float
+
+  // ==========================================
+  // Differential Gear
+  // ==========================================
+  diffType            DifferentialType
+  diffInitTorqueFront Int?
+  diffInitTorqueRear  Int?
+  diffAccelSensFront  Int?
+  diffAccelSensRear   Int?
+  diffBrakeSensFront  Int?
+  diffBrakeSensRear   Int?
+
+  // 4WD
+  diffTorqueVectoring TorqueVectoringType
+  diffTorqueFront     Int?
+  diffTorqueRear      Int?
+
+  // ==========================================
+  // Aerodynamics
+  // ==========================================
+  aeroDownforceFront Int
+  aeroDownforceRear  Int
+
+  // ==========================================
+  // ECU / Power Restrictor
+  // ==========================================
+  ecuType         EcuType
+  ecuOutput       Int
+  powerRestrictor Int
+
+  // ==========================================
+  // Performance Adjustment
+  // ==========================================
+  ballastWeight   Int
+  ballastPosition Int
+
+  // ==========================================
+  // Transmission
+  // ==========================================
+  transmissionType  TransmissionType
+  transTopSpeedAuto Int?
+  transFinalGear    Float?
+  transGearRatios   Float[]
+
+  // ==========================================
+  // Nitrous / Overtake
+  // ==========================================
+  nitro       Boolean @default(false)
+  nitroOutput Int?
+
+  // ==========================================
+  // Supercharger / Turbo
+  // ==========================================
+  turboType        TurbochargerType
+  antiLagType      AntiLagType
+  intercoolerType  IntercoolerType
+  superchargerType SuperchargerType
+
+  // ==========================================
+  // Intake & Exhaust
+  // ==========================================
+  airCleanerType      AirCleanerType
+  silencerType        SilencerType
+  exhaustManifoldType ExhaustManifoldType
+
+  // ==========================================
+  // Brakes
+  // ==========================================
+  brakeSystemType  BrakeSystemType
+  brakePadsType    BrakePadsType
+  handbrakeType    HandbrakeType
+  handbrakeTorque  Int?
+  brakeBalanceType BrakeBalanceType
+  brakeBalance     Int
+
+  // ==========================================
+  // Steering
+  // ==========================================
+  steeringAngleKit      SteeringAngleKitType
+  fourWheelSteeringType FourWheelSteeringType
+  rearSteeringAngle     Int?
+
+  // ==========================================
+  // Drivetrain
+  // ==========================================
+  clutchFlywheelType ClutchFlywheelType
+  propellerShaftType PropellerShaftType
+
+  // ==========================================
+  // Engine Tuning
+  // ==========================================
+  engineBoreUp           EngineUpgradeTier
+  engineStrokeUp         EngineUpgradeTier
+  engineBalanceTuning    EngineUpgradeTier
+  enginePolishPorts      EngineUpgradeTier
+  engineHighLiftCamshaft EngineUpgradeTier
+  engineTitaniumRods     EngineUpgradeTier
+  engineRacingCrank      EngineUpgradeTier
+  engineHighCompPistons  EngineUpgradeTier
+
+  // ==========================================
+  // Bodywork
+  // ==========================================
+  weightReductionStage   Int
+  isBodyRigidityRollCage Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([carId])
+  @@index([authorId])
+}
+
+model Track {
+  id         String         @id @default(cuid())
+  name       String // ex. "Suzuka Circuit"
+  configName String? // ex. "East Course"
+  region     TrackRegion
+  country    String
+  class      TrackClass
+  bopClass   BopTrackClass
+  surface    TrackSurface[]
+  length     Int? // meters
+  hasRain    Boolean        @default(false)
+
+  lapTimes  LapTime[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([name, configName])
+  @@index([region])
+  @@index([class])
+  @@index([bopClass])
+}
+
+model LapTime {
+  id       String  @id @default(cuid())
+  lapTime  Int // ms
+  videoUrl String
+  isWet    Boolean @default(false)
+
+  status VerificationStatus
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  setupId String
+  setup   Setup  @relation(fields: [setupId], references: [id], onDelete: Cascade)
+
+  trackId String
+  track   Track  @relation(fields: [trackId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+
+  @@index([setupId])
+  @@index([trackId])
+  @@index([authorId])
+  @@index([lapTime])
+  @@index([status])
+}
+
+model User {
+  id       String @id @default(cuid())
+  username String @unique
+  email    String @unique
+
+  setups   Setup[]
+  lapTimes LapTime[]
+
+  createdAt DateTime @default(now())
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum SetupDifficulty {
+  SAFE
+  BALANCED
+  ALIEN
+}
+
+enum CarClass {
+  GR_1
+  GR_2
+  GR_3
+  GR_4
+  GR_B
+  ROAD
+}
+
+enum TyreType {
+  RH // Racing: Hard
+  RM // Racing: Medium
+  RS // Racing: Soft
+  SH // Sports: Hard
+  SM // Sports: Medium
+  SS // Sports: Soft
+  CH // Comfort: Hard
+  CM // Comfort: Medium
+  CS // Comfort: Soft
+  IM // Intermediate
+  W // Heavy Wet
+  D // Dirt
+  S // Snow
+}
+
+enum Drivetrain {
+  FF
+  FR
+  MR
+  RR
+  AWD // 4WD
+}
+
+enum TrackRegion {
+  AMERICAS
+  EUROPE
+  ASIA_OCEANIA
+}
+
+enum TrackClass {
+  FAST
+  TECHNICAL
+  HYBRID
+  RALLY
+}
+
+enum BopTrackClass {
+  HIGH_SPEED
+  MEDIUM_SPEED
+  LOW_SPEED
+}
+
+enum TrackSurface {
+  ASPHALT
+  DIRT
+  SNOW
+}
+
+enum SuspensionType {
+  NORMAL
+  STREET
+  SPORTS
+  HEIGHT_ADJUSTABLE_SPORTS
+  FULLY_CUSTOMISABLE
+}
+
+enum DifferentialType {
+  NORMAL
+  ONE_WAY_LSD
+  TWO_WAY_LSD
+  FULLY_CUSTOMISABLE
+}
+
+enum TorqueVectoringType {
+  NONE
+  NORMAL
+  TORQUE_VECTORING_CENTRE
+}
+
+enum EcuType {
+  NORMAL
+  SPORTS
+  FULLY_CUSTOMISABLE
+}
+
+enum TransmissionType {
+  NORMAL
+  CLOSE_RATIO_LOW
+  CLOSE_RATIO_HIGH
+  FULLY_CUSTOMISABLE_MANUAL
+  FULLY_CUSTOMISABLE_RACING
+}
+
+enum TurbochargerType {
+  NONE
+  LOW_RPM
+  MEDIUM_RPM
+  HIGH_RPM
+  ULTRA_HIGH_RPM
+}
+
+enum AntiLagType {
+  OFF
+  WEAK
+  STRONG
+}
+
+enum IntercoolerType {
+  NONE
+  SPORTS
+  RACING
+}
+
+enum SuperchargerType {
+  NONE
+  LOW_END_TORQUE
+  HIGH_END_TORQUE
+  HIGH_RPM
+}
+
+enum AirCleanerType {
+  NORMAL
+  SPORTS
+  RACING
+}
+
+enum SilencerType {
+  NORMAL
+  SPORTS
+  SEMI_RACING
+  RACING
+}
+
+enum ExhaustManifoldType {
+  NORMAL
+  RACING
+}
+
+enum BrakeSystemType {
+  NORMAL
+  SPORTS
+  RACING_SLOTTED
+  RACING_DRILLED
+  CARBON
+}
+
+enum BrakePadsType {
+  NORMAL
+  SPORTS
+  RACING
+}
+
+enum HandbrakeType {
+  NORMAL
+  HYDRAULIC
+}
+
+enum BrakeBalanceType {
+  NORMAL
+  CONTROLLER
+}
+
+enum SteeringAngleKitType {
+  NORMAL
+  ADAPTER
+}
+
+enum FourWheelSteeringType {
+  NONE
+  FOUR_WHEEL_STEERING
+}
+
+enum ClutchFlywheelType {
+  NORMAL
+  SPORTS
+  SEMI_RACING
+  RACING
+}
+
+enum PropellerShaftType {
+  NORMAL
+  CARBON
+}
+
+enum EngineUpgradeTier {
+  NONE
+  NORMAL
+  S
+}
+
+enum CustomPartType {
+  STANDARD
+  TYPE_A
+  TYPE_B
+}
+
+enum CustomWingType {
+  STANDARD
+  WINGLESS
+  TYPE_A
+  TYPE_B
+  CUSTOM
+}
