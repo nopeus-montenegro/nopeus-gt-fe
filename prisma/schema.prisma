@@ -12,42 +12,37 @@ model Car {
   name         String // ex. "296 GT3"
   manufacturer String // ex. "Ferrari"
   country      String // ex. "Italy"
-  class        CarClass // ex. GR_3
-  layout       Drivetrain // ex. MR
-  basePp       Float?
+  year         Int
+  class        CarClass
+  drivetrain   Drivetrain
 
-  // engine and gearbox specs
-  engineCode   String? // ex. "F163CE"
+  engineCode   String // ex. "F163CE"
   displacement Int? // ex. "2992"
   engineType   String? // ex. "V6"
-  aspiration   String? // ex. "Twin-Turbocharged"
-  gearbox      String? // ex. "6-speed"
+  aspiration   AspirationType
+  engineLayout LayoutType
+  isHybrid     Boolean        @default(false)
+  gearbox      Int // gears count
+  overtake     OvertakeType
 
-  // power
-  power     Int?
-  powerRpm  Int?
-  torque    Float?
-  torqueRpm Int?
-
-  // measurements
-  length Int?
-  width  Int?
-  height Int?
-  weight Int?
-  pwr    Float?
+  length Int
+  width  Int
+  height Int
 
   setups    Setup[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([name, manufacturer, year])
   @@index([class])
   @@index([manufacturer])
-  @@index([layout])
+  @@index([engineLayout])
 }
 
 model Setup {
-  id    String @id @default(cuid())
-  title String // ex. "Settings Sheet 1"
+  id     String  @id @default(cuid())
+  title  String // ex. "Settings Sheet 1"
+  isBase Boolean @default(false)
 
   carId    String
   car      Car       @relation(fields: [carId], references: [id], onDelete: Cascade)
@@ -58,10 +53,14 @@ model Setup {
   // ==========================================
   // BASE PERFORMANCE / RESULTS
   // ==========================================
-  resultPp           Float // Performance Points
-  resultPower        Int // BHP
-  resultTorque       Float // kgfm
-  resultWeight       Int // kg
+  basePp             Float
+  pp                 Float // Performance Points
+  power              Int // BHP
+  powerRpm           Int
+  torque             Float // kgfm
+  torqueRpm          Int
+  weight             Int // kg
+  pwr                Float
   weightBalanceFront Int
   weightBalanceRear  Int
 
@@ -106,17 +105,17 @@ model Setup {
   // Differential Gear
   // ==========================================
   diffType            DifferentialType
-  diffInitTorqueFront Int?
-  diffInitTorqueRear  Int?
-  diffAccelSensFront  Int?
-  diffAccelSensRear   Int?
-  diffBrakeSensFront  Int?
-  diffBrakeSensRear   Int?
+  diffInitTorqueFront Int
+  diffInitTorqueRear  Int
+  diffAccelSensFront  Int
+  diffAccelSensRear   Int
+  diffBrakeSensFront  Int
+  diffBrakeSensRear   Int
 
   // 4WD
   diffTorqueVectoring TorqueVectoringType
-  diffTorqueFront     Int?
-  diffTorqueRear      Int?
+  diffTorqueFront     Int
+  diffTorqueRear      Int
 
   // ==========================================
   // Aerodynamics
@@ -141,15 +140,15 @@ model Setup {
   // Transmission
   // ==========================================
   transmissionType  TransmissionType
-  transTopSpeedAuto Int?
-  transFinalGear    Float?
+  transTopSpeedAuto Int
+  transFinalGear    Float
   transGearRatios   Float[]
 
   // ==========================================
   // Nitrous / Overtake
   // ==========================================
-  nitro       Boolean @default(false)
-  nitroOutput Int?
+  nitro       NitroType
+  nitroOutput Int
 
   // ==========================================
   // Supercharger / Turbo
@@ -172,7 +171,7 @@ model Setup {
   brakeSystemType  BrakeSystemType
   brakePadsType    BrakePadsType
   handbrakeType    HandbrakeType
-  handbrakeTorque  Int?
+  handbrakeTorque  Int
   brakeBalanceType BrakeBalanceType
   brakeBalance     Int
 
@@ -181,7 +180,7 @@ model Setup {
   // ==========================================
   steeringAngleKit      SteeringAngleKitType
   fourWheelSteeringType FourWheelSteeringType
-  rearSteeringAngle     Int?
+  rearSteeringAngle     Int
 
   // ==========================================
   // Drivetrain
@@ -215,15 +214,20 @@ model Setup {
 }
 
 model Track {
-  id         String         @id @default(cuid())
+  id         String      @id @default(cuid())
   name       String // ex. "Suzuka Circuit"
   configName String? // ex. "East Course"
   region     TrackRegion
   country    String
-  class      TrackClass
-  bopClass   BopTrackClass
+
+  length          Int // meters
+  longestStraight Int // meters
+  cornerCount     Int
+  elevationDiff   Int
+
   surface    TrackSurface[]
-  length     Int? // meters
+  trackClass TrackClass
+  bopClass   BopTrackClass
   hasRain    Boolean        @default(false)
 
   lapTimes  LapTime[]
@@ -232,7 +236,7 @@ model Track {
 
   @@unique([name, configName])
   @@index([region])
-  @@index([class])
+  @@index([trackClass])
   @@index([bopClass])
 }
 
@@ -311,11 +315,37 @@ enum TyreType {
 }
 
 enum Drivetrain {
-  FF
-  FR
-  MR
-  RR
+  FWD
+  RWD
   AWD // 4WD
+}
+
+enum LayoutType {
+  FRONT
+  MID
+  REAR
+}
+
+enum AspirationType {
+  NA
+  TC
+  SC
+  TC_SC
+  EV
+  NONE
+}
+
+enum OvertakeType {
+  NONE
+  ENGINE_BOOST
+  KERS
+  DRS
+}
+
+enum NitroType {
+  NONE
+  NORMAL
+  NITROUS
 }
 
 enum TrackRegion {
