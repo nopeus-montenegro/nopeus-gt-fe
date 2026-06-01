@@ -20,7 +20,7 @@ model Car {
   displacement Int? // ex. "2992"
   engineType   String? // ex. "V6"
   aspiration   AspirationType
-  engineLayout LayoutType
+  engineLayout EngineLayout
   isHybrid     Boolean        @default(false)
   gearbox      Int // gears count
   overtake     OvertakeType
@@ -36,6 +36,7 @@ model Car {
   @@unique([name, manufacturer, year])
   @@index([class])
   @@index([manufacturer])
+  @@index([drivetrain])
   @@index([engineLayout])
 }
 
@@ -53,7 +54,6 @@ model Setup {
   // ==========================================
   // BASE PERFORMANCE / RESULTS
   // ==========================================
-  basePp             Float
   pp                 Float // Performance Points
   power              Int // BHP
   powerRpm           Int
@@ -314,25 +314,25 @@ enum TyreType {
   S // Snow
 }
 
+enum AspirationType {
+  NA // Naturally Aspirated
+  TC // Turbocharged
+  SC // Supercharged
+  TC_SC // Twincharged
+  EV // Electric Vehicle
+  NONE
+}
+
 enum Drivetrain {
   FWD
   RWD
   AWD // 4WD
 }
 
-enum LayoutType {
+enum EngineLayout {
   FRONT
   MID
   REAR
-}
-
-enum AspirationType {
-  NA
-  TC
-  SC
-  TC_SC
-  EV
-  NONE
 }
 
 enum OvertakeType {
