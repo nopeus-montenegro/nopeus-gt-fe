@@ -1,4 +1,4 @@
-import { AspirationType, BopTrackClass, CarClass, Drivetrain, LayoutType, OvertakeType, PrismaClient, TrackClass, TrackRegion, TrackSurface } from '@/generated/prisma';
+import { AspirationType, BopTrackClass, CarClass, Drivetrain, EngineLayout, OvertakeType, PrismaClient, TrackClass, TrackRegion, TrackSurface } from '@/generated/prisma';
 import { parse } from 'csv-parse/sync';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -58,6 +58,20 @@ interface RawTrackRow {
 async function main() {
   console.log('Starting Nopeus GT database seeding...');
 
+  const authorId = 'nopeus-gt';
+
+  // --- STAGE 0: System User ---
+  const systemUser = await prisma.user.upsert({
+    where: { username: 'Nopeus GT' },
+    update: {},
+    create: {
+      id: authorId,
+      username: 'Nopeus GT',
+      email: 'nopeus-gt@nopeus.gt',
+    },
+  });
+  console.log(`System user ready: ${systemUser.username}`);
+
   // --- STAGE 1: Core Data (Cars & Tracks) ---
   console.log('Reading cars data...');
   const rawCars = parseCSV<RawCarRow>('cars.csv');
@@ -72,7 +86,7 @@ async function main() {
     displacement: car.displacement ? parseInt(car.displacement, 10) : 0,
     engineType: car.engineType ? String(car.engineType).trim() : null,
     aspiration: String(car.aspiration).trim() as AspirationType,
-    engineLayout: String(car.engineLayout).trim() as LayoutType,
+    engineLayout: String(car.engineLayout).trim() as EngineLayout,
     isHybrid: String(car.isHybrid).toUpperCase() === 'TRUE',
     gearbox: parseInt(car.gearbox, 10),
     overtake: String(car.overtake).trim() as OvertakeType,
@@ -117,7 +131,7 @@ async function main() {
     data: {
       title: 'Dealership Specs',
       isBase: true,
-      authorId: 'nopeus-gt',
+      authorId,
       car: { connect: { name_manufacturer_year: { name: 'GT3', manufacturer: 'AMG', year: 2020 } } },
       pp: 735.4,
       weight: 1320,
@@ -134,7 +148,7 @@ async function main() {
     data: {
       title: 'NopeusGT High-Speed Casino',
       isBase: false,
-      authorId: 'nopeus-gt',
+      authorId,
       car: { connect: { name_manufacturer_year: { name: 'GT3', manufacturer: 'AMG', year: 2020 } } },
       ...
     }
@@ -144,7 +158,7 @@ async function main() {
     data: {
       time: 0,
       setupId: amgSpeedSetup.id,
-      authorId: 'nopeus-gt',
+      authorId,
       track: { connect: { name_configName: { name: 'Autodromo Nazionale Monza', configName: 'No Chicane' } } }
     }
   });

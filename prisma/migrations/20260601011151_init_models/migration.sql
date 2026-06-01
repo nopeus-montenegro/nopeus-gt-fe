@@ -11,13 +11,13 @@ CREATE TYPE "CarClass" AS ENUM ('GR_1', 'GR_2', 'GR_3', 'GR_4', 'GR_B', 'ROAD');
 CREATE TYPE "TyreType" AS ENUM ('RH', 'RM', 'RS', 'SH', 'SM', 'SS', 'CH', 'CM', 'CS', 'IM', 'W', 'D', 'S');
 
 -- CreateEnum
+CREATE TYPE "AspirationType" AS ENUM ('NA', 'TC', 'SC', 'TC_SC', 'EV', 'NONE');
+
+-- CreateEnum
 CREATE TYPE "Drivetrain" AS ENUM ('FWD', 'RWD', 'AWD');
 
 -- CreateEnum
-CREATE TYPE "LayoutType" AS ENUM ('FRONT', 'MID', 'REAR');
-
--- CreateEnum
-CREATE TYPE "AspirationType" AS ENUM ('NA', 'TC', 'SC', 'TC_SC', 'EV', 'NONE');
+CREATE TYPE "EngineLayout" AS ENUM ('FRONT', 'MID', 'REAR');
 
 -- CreateEnum
 CREATE TYPE "OvertakeType" AS ENUM ('NONE', 'ENGINE_BOOST', 'KERS', 'DRS');
@@ -26,16 +26,16 @@ CREATE TYPE "OvertakeType" AS ENUM ('NONE', 'ENGINE_BOOST', 'KERS', 'DRS');
 CREATE TYPE "NitroType" AS ENUM ('NONE', 'NORMAL', 'NITROUS');
 
 -- CreateEnum
-CREATE TYPE "TrackRegion" AS ENUM ('AMERICAS', 'EUROPE', 'ASIA_OCEANIA');
+CREATE TYPE "TrackRegion" AS ENUM ('AMERICAS', 'EUROPE_MIDDLE_EAST', 'ASIA_OCEANIA');
 
 -- CreateEnum
-CREATE TYPE "TrackClass" AS ENUM ('FAST', 'TECHNICAL', 'HYBRID', 'RALLY');
+CREATE TYPE "TrackClass" AS ENUM ('SPEED', 'TECHNICAL', 'HYBRID', 'RALLY');
 
 -- CreateEnum
-CREATE TYPE "BopTrackClass" AS ENUM ('HIGH_SPEED', 'MEDIUM_SPEED', 'LOW_SPEED');
+CREATE TYPE "BopTrackClass" AS ENUM ('HIGH_SPEED', 'MID_SPEED', 'LOW_SPEED');
 
 -- CreateEnum
-CREATE TYPE "TrackSurface" AS ENUM ('ASPHALT', 'DIRT', 'SNOW');
+CREATE TYPE "TrackSurface" AS ENUM ('TARMAC', 'DIRT', 'SNOW');
 
 -- CreateEnum
 CREATE TYPE "SuspensionType" AS ENUM ('NORMAL', 'STREET', 'SPORTS', 'HEIGHT_ADJUSTABLE_SPORTS', 'FULLY_CUSTOMISABLE');
@@ -119,7 +119,7 @@ CREATE TABLE "Car" (
     "displacement" INTEGER,
     "engineType" TEXT,
     "aspiration" "AspirationType" NOT NULL,
-    "engineLayout" "LayoutType" NOT NULL,
+    "engineLayout" "EngineLayout" NOT NULL,
     "isHybrid" BOOLEAN NOT NULL DEFAULT false,
     "gearbox" INTEGER NOT NULL,
     "overtake" "OvertakeType" NOT NULL,
@@ -139,7 +139,6 @@ CREATE TABLE "Setup" (
     "isBase" BOOLEAN NOT NULL DEFAULT false,
     "carId" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
-    "basePp" DOUBLE PRECISION NOT NULL,
     "pp" DOUBLE PRECISION NOT NULL,
     "power" INTEGER NOT NULL,
     "powerRpm" INTEGER NOT NULL,
@@ -233,14 +232,14 @@ CREATE TABLE "Setup" (
 CREATE TABLE "Track" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "configName" TEXT,
+    "configName" TEXT NOT NULL,
     "region" "TrackRegion" NOT NULL,
     "country" TEXT NOT NULL,
     "length" INTEGER NOT NULL,
-    "longestStraight" INTEGER NOT NULL,
+    "longestStraight" DOUBLE PRECISION NOT NULL,
     "cornerCount" INTEGER NOT NULL,
-    "elevationDiff" INTEGER NOT NULL,
-    "surface" "TrackSurface"[],
+    "elevationDiff" DOUBLE PRECISION NOT NULL,
+    "surface" "TrackSurface" NOT NULL,
     "trackClass" "TrackClass" NOT NULL,
     "bopClass" "BopTrackClass" NOT NULL,
     "hasRain" BOOLEAN NOT NULL DEFAULT false,
@@ -280,6 +279,9 @@ CREATE INDEX "Car_class_idx" ON "Car"("class");
 
 -- CreateIndex
 CREATE INDEX "Car_manufacturer_idx" ON "Car"("manufacturer");
+
+-- CreateIndex
+CREATE INDEX "Car_drivetrain_idx" ON "Car"("drivetrain");
 
 -- CreateIndex
 CREATE INDEX "Car_engineLayout_idx" ON "Car"("engineLayout");
