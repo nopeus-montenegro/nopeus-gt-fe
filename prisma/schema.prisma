@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -216,19 +216,19 @@ model Setup {
 model Track {
   id         String      @id @default(cuid())
   name       String // ex. "Suzuka Circuit"
-  configName String? // ex. "East Course"
+  configName String // ex. "East Course"
   region     TrackRegion
   country    String
 
   length          Int // meters
-  longestStraight Int // meters
+  longestStraight Float // meters
   cornerCount     Int
-  elevationDiff   Int
+  elevationDiff   Float
 
-  surface    TrackSurface[]
+  surface    TrackSurface
   trackClass TrackClass
   bopClass   BopTrackClass
-  hasRain    Boolean        @default(false)
+  hasRain    Boolean       @default(false)
 
   lapTimes  LapTime[]
   createdAt DateTime  @default(now())
@@ -350,12 +350,12 @@ enum NitroType {
 
 enum TrackRegion {
   AMERICAS
-  EUROPE
+  EUROPE_MIDDLE_EAST
   ASIA_OCEANIA
 }
 
 enum TrackClass {
-  FAST
+  SPEED
   TECHNICAL
   HYBRID
   RALLY
@@ -363,12 +363,12 @@ enum TrackClass {
 
 enum BopTrackClass {
   HIGH_SPEED
-  MEDIUM_SPEED
+  MID_SPEED
   LOW_SPEED
 }
 
 enum TrackSurface {
-  ASPHALT
+  TARMAC
   DIRT
   SNOW
 }
