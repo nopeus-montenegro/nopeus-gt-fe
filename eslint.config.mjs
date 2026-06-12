@@ -11,6 +11,7 @@ const eslintConfig = defineConfig([
     quotes: 'single',
     semi: true,
     jsx: true,
+    braceStyle: '1tbs',
   }),
   // Override default ignores of eslint-config-next.
   globalIgnores([
