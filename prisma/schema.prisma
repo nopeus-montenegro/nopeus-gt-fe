@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -12,29 +12,28 @@ model Car {
   name         String // ex. "296 GT3"
   manufacturer String // ex. "Ferrari"
   country      String // ex. "Italy"
-  year         Int?
-  class        CarClass // ex. GR_3
-  drivetrain   Drivetrain // ex. MR
+  year         Int
+  class        CarClass
+  drivetrain   Drivetrain
 
-  // engine and gearbox specs
-  engineCode   String? // ex. "F163CE"
-  displacement Int? // ex. "2992"
-  engineType   String? // ex. "V6"
+  engineCode   String // ex. "F163CE"
+  displacement Int // ex. "2992"
+  engineType   String // ex. "V6"
   aspiration   AspirationType
   engineLayout EngineLayout
   isHybrid     Boolean        @default(false)
-  gearbox      Int? // gears count
+  gearbox      Int // gears count
   overtake     OvertakeType
 
-  // measurements
-  length Int?
-  width  Int?
-  height Int?
+  length Int
+  width  Int
+  height Int
 
   setups    Setup[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([name, manufacturer, year])
   @@index([class])
   @@index([manufacturer])
   @@index([drivetrain])
@@ -43,8 +42,8 @@ model Car {
 
 model Setup {
   id     String  @id @default(cuid())
-  title  String
-  isBase Boolean
+  title  String // ex. "Settings Sheet 1"
+  isBase Boolean @default(false)
 
   carId    String
   car      Car       @relation(fields: [carId], references: [id], onDelete: Cascade)
@@ -60,8 +59,7 @@ model Setup {
   powerRpm           Int
   torque             Float // kgfm
   torqueRpm          Int
-  weight             Int
-  pwr                Float
+  weight             Int // kg
   weightBalanceFront Int
   weightBalanceRear  Int
 
@@ -69,7 +67,7 @@ model Setup {
   // WIDE BODY / SWAP
   // ==========================================
   hasWideBody        Boolean @default(false)
-  swappedEngineModel String?
+  swappedEngineModel String
 
   // GT Auto
   gtAutoFront CustomPartType
@@ -106,17 +104,17 @@ model Setup {
   // Differential Gear
   // ==========================================
   diffType            DifferentialType
-  diffInitTorqueFront Int?
-  diffInitTorqueRear  Int?
-  diffAccelSensFront  Int?
-  diffAccelSensRear   Int?
-  diffBrakeSensFront  Int?
-  diffBrakeSensRear   Int?
+  diffInitTorqueFront Int
+  diffInitTorqueRear  Int
+  diffAccelSensFront  Int
+  diffAccelSensRear   Int
+  diffBrakeSensFront  Int
+  diffBrakeSensRear   Int
 
   // 4WD
   diffTorqueVectoring TorqueVectoringType
-  diffTorqueFront     Int?
-  diffTorqueRear      Int?
+  diffTorqueFront     Int
+  diffTorqueRear      Int
 
   // ==========================================
   // Aerodynamics
@@ -140,16 +138,16 @@ model Setup {
   // ==========================================
   // Transmission
   // ==========================================
-  transmissionType TransmissionType
-  transTopSpeed    Int?
-  transFinalGear   Float?
-  transGearRatios  Float[]
+  transmissionType  TransmissionType
+  transTopSpeedAuto Int
+  transFinalGear    Float
+  transGearRatios   Float[]
 
   // ==========================================
   // Nitrous / Overtake
   // ==========================================
   nitro       NitroType
-  nitroOutput Int?
+  nitroOutput Int
 
   // ==========================================
   // Supercharger / Turbo
@@ -172,7 +170,7 @@ model Setup {
   brakeSystemType  BrakeSystemType
   brakePadsType    BrakePadsType
   handbrakeType    HandbrakeType
-  handbrakeTorque  Int?
+  handbrakeTorque  Int
   brakeBalanceType BrakeBalanceType
   brakeBalance     Int
 
@@ -181,7 +179,7 @@ model Setup {
   // ==========================================
   steeringAngleKit      SteeringAngleKitType
   fourWheelSteeringType FourWheelSteeringType
-  rearSteeringAngle     Int?
+  rearSteeringAngle     Int
 
   // ==========================================
   // Drivetrain
@@ -204,8 +202,8 @@ model Setup {
   // ==========================================
   // Bodywork
   // ==========================================
-  weightReductionStage   Int
-  isBodyRigidityRollCage Boolean @default(false)
+  weightReductionStage Int
+  isBodyRigidity       Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -217,19 +215,19 @@ model Setup {
 model Track {
   id         String      @id @default(cuid())
   name       String // ex. "Suzuka Circuit"
-  configName String? // ex. "East Course"
+  configName String // ex. "East Course"
   region     TrackRegion
   country    String
 
-  length              Int // meters
-  longestStraight     Float // meters
-  cornerCount         Int
-  elevationDifference Float // meters
-  surface             TrackSurface[]
+  length          Int // meters
+  longestStraight Float // meters
+  cornerCount     Int
+  elevationDiff   Float
 
-  class    TrackClass
-  bopClass BopTrackClass
-  hasRain  Boolean       @default(false)
+  surface    TrackSurface
+  trackClass TrackClass
+  bopClass   BopTrackClass
+  hasRain    Boolean       @default(false)
 
   lapTimes  LapTime[]
   createdAt DateTime  @default(now())
@@ -237,7 +235,7 @@ model Track {
 
   @@unique([name, configName])
   @@index([region])
-  @@index([class])
+  @@index([trackClass])
   @@index([bopClass])
 }
 
@@ -300,15 +298,15 @@ enum CarClass {
 }
 
 enum TyreType {
-  RH // Racing: Hard
-  RM // Racing: Medium
-  RS // Racing: Soft
-  SH // Sports: Hard
-  SM // Sports: Medium
-  SS // Sports: Soft
   CH // Comfort: Hard
   CM // Comfort: Medium
   CS // Comfort: Soft
+  SH // Sports: Hard
+  SM // Sports: Medium
+  SS // Sports: Soft
+  RH // Racing: Hard
+  RM // Racing: Medium
+  RS // Racing: Soft
   IM // Intermediate
   W // Heavy Wet
   D // Dirt
@@ -336,14 +334,27 @@ enum EngineLayout {
   REAR
 }
 
+enum OvertakeType {
+  NONE
+  ENGINE_BOOST
+  KERS
+  DRS
+}
+
+enum NitroType {
+  NONE
+  NORMAL
+  NITROUS
+}
+
 enum TrackRegion {
   AMERICAS
-  EUROPE
+  EUROPE_MIDDLE_EAST
   ASIA_OCEANIA
 }
 
 enum TrackClass {
-  FAST
+  SPEED
   TECHNICAL
   HYBRID
   RALLY
@@ -351,12 +362,12 @@ enum TrackClass {
 
 enum BopTrackClass {
   HIGH_SPEED
-  MEDIUM_SPEED
+  MID_SPEED
   LOW_SPEED
 }
 
 enum TrackSurface {
-  ASPHALT
+  TARMAC
   DIRT
   SNOW
 }
@@ -396,21 +407,9 @@ enum TransmissionType {
   FULLY_CUSTOMISABLE_RACING
 }
 
-enum NitroType {
-  NONE
-  NITROUS
-  OVERTAKE // SF, KERS, DRS
-}
-
-enum OvertakeType {
-  NONE
-  ENGINE_BOOST // Dallara SF19/SF23
-  KERS // Tomahawk, Vision GT
-  DRS // McLaren P1, F1 W08
-}
-
 enum TurbochargerType {
   NONE
+  NORMAL
   LOW_RPM
   MEDIUM_RPM
   HIGH_RPM
@@ -425,18 +424,21 @@ enum AntiLagType {
 
 enum IntercoolerType {
   NONE
+  NORMAL
   SPORTS
   RACING
 }
 
 enum SuperchargerType {
   NONE
+  NORMAL
   LOW_END_TORQUE
   HIGH_END_TORQUE
   HIGH_RPM
 }
 
 enum AirCleanerType {
+  NONE
   NORMAL
   SPORTS
   RACING
@@ -450,6 +452,7 @@ enum SilencerType {
 }
 
 enum ExhaustManifoldType {
+  NONE
   NORMAL
   RACING
 }
@@ -496,6 +499,7 @@ enum ClutchFlywheelType {
 }
 
 enum PropellerShaftType {
+  NONE
   NORMAL
   CARBON
 }
@@ -510,6 +514,7 @@ enum CustomPartType {
   STANDARD
   TYPE_A
   TYPE_B
+  TYPE_C
 }
 
 enum CustomWingType {

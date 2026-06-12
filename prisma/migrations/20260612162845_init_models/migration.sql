@@ -8,22 +8,34 @@ CREATE TYPE "SetupDifficulty" AS ENUM ('SAFE', 'BALANCED', 'ALIEN');
 CREATE TYPE "CarClass" AS ENUM ('GR_1', 'GR_2', 'GR_3', 'GR_4', 'GR_B', 'ROAD');
 
 -- CreateEnum
-CREATE TYPE "TyreType" AS ENUM ('RH', 'RM', 'RS', 'SH', 'SM', 'SS', 'CH', 'CM', 'CS', 'IM', 'W', 'D', 'S');
+CREATE TYPE "TyreType" AS ENUM ('CH', 'CM', 'CS', 'SH', 'SM', 'SS', 'RH', 'RM', 'RS', 'IM', 'W', 'D', 'S');
 
 -- CreateEnum
-CREATE TYPE "Drivetrain" AS ENUM ('FF', 'FR', 'MR', 'RR', 'AWD');
+CREATE TYPE "AspirationType" AS ENUM ('NA', 'TC', 'SC', 'TC_SC', 'EV', 'NONE');
 
 -- CreateEnum
-CREATE TYPE "TrackRegion" AS ENUM ('AMERICAS', 'EUROPE', 'ASIA_OCEANIA');
+CREATE TYPE "Drivetrain" AS ENUM ('FWD', 'RWD', 'AWD');
 
 -- CreateEnum
-CREATE TYPE "TrackClass" AS ENUM ('FAST', 'TECHNICAL', 'HYBRID', 'RALLY');
+CREATE TYPE "EngineLayout" AS ENUM ('FRONT', 'MID', 'REAR');
 
 -- CreateEnum
-CREATE TYPE "BopTrackClass" AS ENUM ('HIGH_SPEED', 'MEDIUM_SPEED', 'LOW_SPEED');
+CREATE TYPE "OvertakeType" AS ENUM ('NONE', 'ENGINE_BOOST', 'KERS', 'DRS');
 
 -- CreateEnum
-CREATE TYPE "TrackSurface" AS ENUM ('ASPHALT', 'DIRT', 'SNOW');
+CREATE TYPE "NitroType" AS ENUM ('NONE', 'NORMAL', 'NITROUS');
+
+-- CreateEnum
+CREATE TYPE "TrackRegion" AS ENUM ('AMERICAS', 'EUROPE_MIDDLE_EAST', 'ASIA_OCEANIA');
+
+-- CreateEnum
+CREATE TYPE "TrackClass" AS ENUM ('SPEED', 'TECHNICAL', 'HYBRID', 'RALLY');
+
+-- CreateEnum
+CREATE TYPE "BopTrackClass" AS ENUM ('HIGH_SPEED', 'MID_SPEED', 'LOW_SPEED');
+
+-- CreateEnum
+CREATE TYPE "TrackSurface" AS ENUM ('TARMAC', 'DIRT', 'SNOW');
 
 -- CreateEnum
 CREATE TYPE "SuspensionType" AS ENUM ('NORMAL', 'STREET', 'SPORTS', 'HEIGHT_ADJUSTABLE_SPORTS', 'FULLY_CUSTOMISABLE');
@@ -41,25 +53,25 @@ CREATE TYPE "EcuType" AS ENUM ('NORMAL', 'SPORTS', 'FULLY_CUSTOMISABLE');
 CREATE TYPE "TransmissionType" AS ENUM ('NORMAL', 'CLOSE_RATIO_LOW', 'CLOSE_RATIO_HIGH', 'FULLY_CUSTOMISABLE_MANUAL', 'FULLY_CUSTOMISABLE_RACING');
 
 -- CreateEnum
-CREATE TYPE "TurbochargerType" AS ENUM ('NONE', 'LOW_RPM', 'MEDIUM_RPM', 'HIGH_RPM', 'ULTRA_HIGH_RPM');
+CREATE TYPE "TurbochargerType" AS ENUM ('NONE', 'NORMAL', 'LOW_RPM', 'MEDIUM_RPM', 'HIGH_RPM', 'ULTRA_HIGH_RPM');
 
 -- CreateEnum
 CREATE TYPE "AntiLagType" AS ENUM ('OFF', 'WEAK', 'STRONG');
 
 -- CreateEnum
-CREATE TYPE "IntercoolerType" AS ENUM ('NONE', 'SPORTS', 'RACING');
+CREATE TYPE "IntercoolerType" AS ENUM ('NONE', 'NORMAL', 'SPORTS', 'RACING');
 
 -- CreateEnum
-CREATE TYPE "SuperchargerType" AS ENUM ('NONE', 'LOW_END_TORQUE', 'HIGH_END_TORQUE', 'HIGH_RPM');
+CREATE TYPE "SuperchargerType" AS ENUM ('NONE', 'NORMAL', 'LOW_END_TORQUE', 'HIGH_END_TORQUE', 'HIGH_RPM');
 
 -- CreateEnum
-CREATE TYPE "AirCleanerType" AS ENUM ('NORMAL', 'SPORTS', 'RACING');
+CREATE TYPE "AirCleanerType" AS ENUM ('NONE', 'NORMAL', 'SPORTS', 'RACING');
 
 -- CreateEnum
 CREATE TYPE "SilencerType" AS ENUM ('NORMAL', 'SPORTS', 'SEMI_RACING', 'RACING');
 
 -- CreateEnum
-CREATE TYPE "ExhaustManifoldType" AS ENUM ('NORMAL', 'RACING');
+CREATE TYPE "ExhaustManifoldType" AS ENUM ('NONE', 'NORMAL', 'RACING');
 
 -- CreateEnum
 CREATE TYPE "BrakeSystemType" AS ENUM ('NORMAL', 'SPORTS', 'RACING_SLOTTED', 'RACING_DRILLED', 'CARBON');
@@ -83,13 +95,13 @@ CREATE TYPE "FourWheelSteeringType" AS ENUM ('NONE', 'FOUR_WHEEL_STEERING');
 CREATE TYPE "ClutchFlywheelType" AS ENUM ('NORMAL', 'SPORTS', 'SEMI_RACING', 'RACING');
 
 -- CreateEnum
-CREATE TYPE "PropellerShaftType" AS ENUM ('NORMAL', 'CARBON');
+CREATE TYPE "PropellerShaftType" AS ENUM ('NONE', 'NORMAL', 'CARBON');
 
 -- CreateEnum
 CREATE TYPE "EngineUpgradeTier" AS ENUM ('NONE', 'NORMAL', 'S');
 
 -- CreateEnum
-CREATE TYPE "CustomPartType" AS ENUM ('STANDARD', 'TYPE_A', 'TYPE_B');
+CREATE TYPE "CustomPartType" AS ENUM ('STANDARD', 'TYPE_A', 'TYPE_B', 'TYPE_C');
 
 -- CreateEnum
 CREATE TYPE "CustomWingType" AS ENUM ('STANDARD', 'WINGLESS', 'TYPE_A', 'TYPE_B', 'CUSTOM');
@@ -100,23 +112,20 @@ CREATE TABLE "Car" (
     "name" TEXT NOT NULL,
     "manufacturer" TEXT NOT NULL,
     "country" TEXT NOT NULL,
+    "year" INTEGER NOT NULL,
     "class" "CarClass" NOT NULL,
-    "layout" "Drivetrain" NOT NULL,
-    "basePp" DOUBLE PRECISION,
-    "engineCode" TEXT,
-    "displacement" INTEGER,
-    "engineType" TEXT,
-    "aspiration" TEXT,
-    "gearbox" TEXT,
-    "power" INTEGER,
-    "powerRpm" INTEGER,
-    "torque" DOUBLE PRECISION,
-    "torqueRpm" INTEGER,
-    "length" INTEGER,
-    "width" INTEGER,
-    "height" INTEGER,
-    "weight" INTEGER,
-    "pwr" DOUBLE PRECISION,
+    "drivetrain" "Drivetrain" NOT NULL,
+    "engineCode" TEXT NOT NULL,
+    "displacement" INTEGER NOT NULL,
+    "engineType" TEXT NOT NULL,
+    "aspiration" "AspirationType" NOT NULL,
+    "engineLayout" "EngineLayout" NOT NULL,
+    "isHybrid" BOOLEAN NOT NULL DEFAULT false,
+    "gearbox" INTEGER NOT NULL,
+    "overtake" "OvertakeType" NOT NULL,
+    "length" INTEGER NOT NULL,
+    "width" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -127,16 +136,19 @@ CREATE TABLE "Car" (
 CREATE TABLE "Setup" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "isBase" BOOLEAN NOT NULL DEFAULT false,
     "carId" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
-    "resultPp" DOUBLE PRECISION NOT NULL,
-    "resultPower" INTEGER NOT NULL,
-    "resultTorque" DOUBLE PRECISION NOT NULL,
-    "resultWeight" INTEGER NOT NULL,
+    "pp" DOUBLE PRECISION NOT NULL,
+    "power" INTEGER NOT NULL,
+    "powerRpm" INTEGER NOT NULL,
+    "torque" DOUBLE PRECISION NOT NULL,
+    "torqueRpm" INTEGER NOT NULL,
+    "weight" INTEGER NOT NULL,
     "weightBalanceFront" INTEGER NOT NULL,
     "weightBalanceRear" INTEGER NOT NULL,
     "hasWideBody" BOOLEAN NOT NULL DEFAULT false,
-    "swappedEngineModel" TEXT,
+    "swappedEngineModel" TEXT NOT NULL,
     "gtAutoFront" "CustomPartType" NOT NULL,
     "gtAutoSide" "CustomPartType" NOT NULL,
     "gtAutoRear" "CustomPartType" NOT NULL,
@@ -159,15 +171,15 @@ CREATE TABLE "Setup" (
     "susToeFront" DOUBLE PRECISION NOT NULL,
     "susToeRear" DOUBLE PRECISION NOT NULL,
     "diffType" "DifferentialType" NOT NULL,
-    "diffInitTorqueFront" INTEGER,
-    "diffInitTorqueRear" INTEGER,
-    "diffAccelSensFront" INTEGER,
-    "diffAccelSensRear" INTEGER,
-    "diffBrakeSensFront" INTEGER,
-    "diffBrakeSensRear" INTEGER,
+    "diffInitTorqueFront" INTEGER NOT NULL,
+    "diffInitTorqueRear" INTEGER NOT NULL,
+    "diffAccelSensFront" INTEGER NOT NULL,
+    "diffAccelSensRear" INTEGER NOT NULL,
+    "diffBrakeSensFront" INTEGER NOT NULL,
+    "diffBrakeSensRear" INTEGER NOT NULL,
     "diffTorqueVectoring" "TorqueVectoringType" NOT NULL,
-    "diffTorqueFront" INTEGER,
-    "diffTorqueRear" INTEGER,
+    "diffTorqueFront" INTEGER NOT NULL,
+    "diffTorqueRear" INTEGER NOT NULL,
     "aeroDownforceFront" INTEGER NOT NULL,
     "aeroDownforceRear" INTEGER NOT NULL,
     "ecuType" "EcuType" NOT NULL,
@@ -176,11 +188,11 @@ CREATE TABLE "Setup" (
     "ballastWeight" INTEGER NOT NULL,
     "ballastPosition" INTEGER NOT NULL,
     "transmissionType" "TransmissionType" NOT NULL,
-    "transTopSpeedAuto" INTEGER,
-    "transFinalGear" DOUBLE PRECISION,
+    "transTopSpeedAuto" INTEGER NOT NULL,
+    "transFinalGear" DOUBLE PRECISION NOT NULL,
     "transGearRatios" DOUBLE PRECISION[],
-    "nitro" BOOLEAN NOT NULL DEFAULT false,
-    "nitroOutput" INTEGER,
+    "nitro" "NitroType" NOT NULL,
+    "nitroOutput" INTEGER NOT NULL,
     "turboType" "TurbochargerType" NOT NULL,
     "antiLagType" "AntiLagType" NOT NULL,
     "intercoolerType" "IntercoolerType" NOT NULL,
@@ -191,12 +203,12 @@ CREATE TABLE "Setup" (
     "brakeSystemType" "BrakeSystemType" NOT NULL,
     "brakePadsType" "BrakePadsType" NOT NULL,
     "handbrakeType" "HandbrakeType" NOT NULL,
-    "handbrakeTorque" INTEGER,
+    "handbrakeTorque" INTEGER NOT NULL,
     "brakeBalanceType" "BrakeBalanceType" NOT NULL,
     "brakeBalance" INTEGER NOT NULL,
     "steeringAngleKit" "SteeringAngleKitType" NOT NULL,
     "fourWheelSteeringType" "FourWheelSteeringType" NOT NULL,
-    "rearSteeringAngle" INTEGER,
+    "rearSteeringAngle" INTEGER NOT NULL,
     "clutchFlywheelType" "ClutchFlywheelType" NOT NULL,
     "propellerShaftType" "PropellerShaftType" NOT NULL,
     "engineBoreUp" "EngineUpgradeTier" NOT NULL,
@@ -208,7 +220,7 @@ CREATE TABLE "Setup" (
     "engineRacingCrank" "EngineUpgradeTier" NOT NULL,
     "engineHighCompPistons" "EngineUpgradeTier" NOT NULL,
     "weightReductionStage" INTEGER NOT NULL,
-    "isBodyRigidityRollCage" BOOLEAN NOT NULL DEFAULT false,
+    "isBodyRigidity" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -219,13 +231,16 @@ CREATE TABLE "Setup" (
 CREATE TABLE "Track" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "configName" TEXT,
+    "configName" TEXT NOT NULL,
     "region" "TrackRegion" NOT NULL,
     "country" TEXT NOT NULL,
-    "class" "TrackClass" NOT NULL,
+    "length" INTEGER NOT NULL,
+    "longestStraight" DOUBLE PRECISION NOT NULL,
+    "cornerCount" INTEGER NOT NULL,
+    "elevationDiff" DOUBLE PRECISION NOT NULL,
+    "surface" "TrackSurface" NOT NULL,
+    "trackClass" "TrackClass" NOT NULL,
     "bopClass" "BopTrackClass" NOT NULL,
-    "surface" "TrackSurface"[],
-    "length" INTEGER,
     "hasRain" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -265,7 +280,13 @@ CREATE INDEX "Car_class_idx" ON "Car"("class");
 CREATE INDEX "Car_manufacturer_idx" ON "Car"("manufacturer");
 
 -- CreateIndex
-CREATE INDEX "Car_layout_idx" ON "Car"("layout");
+CREATE INDEX "Car_drivetrain_idx" ON "Car"("drivetrain");
+
+-- CreateIndex
+CREATE INDEX "Car_engineLayout_idx" ON "Car"("engineLayout");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Car_name_manufacturer_year_key" ON "Car"("name", "manufacturer", "year");
 
 -- CreateIndex
 CREATE INDEX "Setup_carId_idx" ON "Setup"("carId");
@@ -277,7 +298,7 @@ CREATE INDEX "Setup_authorId_idx" ON "Setup"("authorId");
 CREATE INDEX "Track_region_idx" ON "Track"("region");
 
 -- CreateIndex
-CREATE INDEX "Track_class_idx" ON "Track"("class");
+CREATE INDEX "Track_trackClass_idx" ON "Track"("trackClass");
 
 -- CreateIndex
 CREATE INDEX "Track_bopClass_idx" ON "Track"("bopClass");
