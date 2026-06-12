@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Button } from '@/05_shared/ui/shadcn/button';
 
 export default function Home() {
@@ -21,10 +23,15 @@ export default function Home() {
 
         <div className="flex gap-4 mt-4">
           <Button variant="default" size="lg">
-            START SESSION
+            <Link href="/track">
+              TRACKS
+            </Link>
           </Button>
+
           <Button variant="outline" size="lg">
-            DASHBOARD
+            <Link href="/car">
+              CARS
+            </Link>
           </Button>
         </div>
       </div>
