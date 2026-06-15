@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+
+import { cn } from '@/05_shared/lib/shadcn/utils';
+import styles from './layout.module.css';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -24,7 +28,46 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <div className="relative min-h-screen bg-[#0B0F19] text-slate-200 overflow-hidden">
+
+          {/* Декоративный анимированный слой */}
+          <div className="fixed inset-0 z-0 pointer-events-none">
+
+            {/* Фиолетовая сфера */}
+            <div
+              className={cn(
+                'absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-600/15 blur-[120px]',
+                styles.spherePurple,
+              )}
+            />
+
+            {/* Синяя сфера */}
+            <div
+              className={cn(
+                'absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-blue-600/10 blur-[150px]',
+                styles.sphereBlue,
+              )}
+            />
+
+            {/* Красный блик */}
+            <div
+              className={cn(
+                'absolute top-[30%] left-[40%] w-[40vw] h-[40vw] rounded-full bg-red-600/5 blur-[150px]',
+                styles.sphereRed,
+              )}
+            />
+          </div>
+
+          {/* Шум для матовости */}
+          <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+          {/* Основной контент */}
+          <main className="relative z-10 container mx-auto p-6 lg:p-12 min-h-screen">
+            {children}
+          </main>
+        </div>
+      </body>
     </html>
   );
 }

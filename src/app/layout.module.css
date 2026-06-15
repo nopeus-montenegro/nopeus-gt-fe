@@ -1,0 +1,49 @@
+/* src/01_pages/layout/ui/layout.module.css (или где лежит твой Layout) */
+
+.spherePurple {
+  animation: driftTopLeft 25s ease-in-out infinite alternate;
+}
+
+.sphereBlue {
+  animation: driftBottomRight 30s ease-in-out infinite alternate;
+}
+
+.sphereRed {
+  animation: pulseCenter 20s ease-in-out infinite alternate;
+}
+
+/* Медленный дрейф фиолетовой сферы */
+@keyframes driftTopLeft {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    /* Сдвигаем на 10% от ее размера и немного увеличиваем */
+    transform: translate(10%, 5%) scale(1.1);
+  }
+}
+
+/* Дрейф синей сферы в противоход */
+@keyframes driftBottomRight {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-5%, -10%) scale(1.05);
+  }
+}
+
+/* Красный блик по центру просто плавно дышит и чуть смещается */
+@keyframes pulseCenter {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate(5%, -5%) scale(1.2);
+    opacity: 1;
+  }
+}
