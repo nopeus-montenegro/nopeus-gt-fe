@@ -1,1 +1,1 @@
-export { default as CarPage } from './ui/car-page';
+export { CarPage } from './ui/car-page';

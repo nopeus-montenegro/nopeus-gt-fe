@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
+import { carDetailRoute } from '@/05_shared/lib/next/routes';
 import { prisma } from '@/05_shared/lib/prisma/db';
 
-export default async function CarListPage() {
+export async function CarListPage() {
   const cars = await prisma.car.findMany({
     orderBy: [
       { manufacturer: 'asc' },
@@ -34,7 +35,7 @@ export default async function CarListPage() {
               {carList.map(car => (
                 <Link
                   key={car.id}
-                  href={`/car/${car.id}`}
+                  href={carDetailRoute(car.id)}
                   className="block p-4 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition"
                 >
                   <div className="font-bold text-base line-clamp-1">{car.name}</div>

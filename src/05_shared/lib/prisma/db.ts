@@ -1,4 +1,4 @@
-import { PrismaClient } from '@/generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
@@ -8,12 +8,14 @@ const prismaClientSingleton = () => {
   }).$extends(withAccelerate());
 };
 
-declare global {
-  var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>;
-}
+type PrismaClientExtended = ReturnType<typeof prismaClientSingleton>;
 
-export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+const globalForPrisma = globalThis as unknown as {
+  prismaGlobal: PrismaClientExtended | undefined;
+};
+
+export const prisma = globalForPrisma.prismaGlobal ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== 'production') {
-  globalThis.prismaGlobal = prisma;
-};
+  globalForPrisma.prismaGlobal = prisma;
+}

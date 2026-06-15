@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -7,24 +8,26 @@ interface Props {
   trackId: string;
 }
 
-export default async function TrackDetailPage({ trackId }: Props) {
-  const track = await prisma.track.findUnique({
-    where: { id: trackId },
+const trackInclude = {
+  lapTimes: {
     include: {
-      lapTimes: {
-        include: {
-          setup: {
-            include: {
-              car: true,
-            },
-          },
-        },
-        orderBy: {
-          lapTime: 'asc',
-        },
+      setup: {
+        include: { car: true },
       },
     },
-  });
+    orderBy: {
+      lapTime: 'asc',
+    },
+  },
+} satisfies Prisma.TrackInclude;
+
+type Track = Prisma.TrackGetPayload<{ include: typeof trackInclude }>;
+
+export async function TrackPage({ trackId }: Props) {
+  const track = await prisma.track.findUnique({
+    where: { id: trackId },
+    include: trackInclude,
+  }) as Track | null;
 
   if (!track) {
     notFound();

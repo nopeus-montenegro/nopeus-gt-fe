@@ -7,24 +7,24 @@ interface Props {
   carId: string;
 }
 
-export default async function CarPage({ carId }: Props) {
+export async function CarPage({ carId }: Props) {
   const car = await prisma.car.findUnique({
     where: { id: carId },
-    include: {
-      setups: {
-        orderBy: { createdAt: 'desc' },
-      },
-    },
   });
 
   if (!car) {
     notFound();
   }
 
-  const baseSetups = car.setups.filter(s => s.isBase);
-  const customSetups = car.setups.filter(s => !s.isBase);
+  const setups = await prisma.setup.findMany({
+    where: { carId },
+    orderBy: { createdAt: 'desc' },
+  });
 
-  const renderSetupCard = (setup: typeof car.setups[0]) => (
+  const baseSetups = setups.filter(s => s.isBase);
+  const customSetups = setups.filter(s => !s.isBase);
+
+  const renderSetupCard = (setup: typeof setups[0]) => (
     <Link
       key={setup.id}
       href={`/setup/${setup.id}`}

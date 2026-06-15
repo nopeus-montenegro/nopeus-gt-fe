@@ -1,9 +1,11 @@
 import Link from 'next/link';
 
-import { prisma } from '@/05_shared/lib/prisma/db';
-import { TrackClass } from '@/generated/prisma/edge';
+import { TrackClass } from '@prisma/client';
 
-export default async function TrackListPage() {
+import { trackDetailRoute } from '@/05_shared/lib/next/routes';
+import { prisma } from '@/05_shared/lib/prisma/db';
+
+export async function TrackListPage() {
   const tracks = await prisma.track.findMany({
     orderBy: { name: 'asc' },
   });
@@ -26,7 +28,7 @@ export default async function TrackListPage() {
         {list.map(track => (
           <Link
             key={track.id}
-            href={`/track/${track.id}`}
+            href={trackDetailRoute(track.id)}
             className="block p-4 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition"
           >
             <div className="font-bold text-lg">{track.name}</div>

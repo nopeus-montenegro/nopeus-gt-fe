@@ -1,1 +1,1 @@
-export { default as TrackPage } from './ui/track-page';
+export { TrackPage } from './ui/track-page';

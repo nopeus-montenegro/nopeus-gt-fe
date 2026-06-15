@@ -1,13 +1,15 @@
 import { TrackPage } from '@/01_pages/track';
 
 interface Params {
-  params: {
+  params: Promise<{
     trackId: string;
-  };
+  }>;
 }
 
-export default function TrackAppPage({ params }: Params) {
+export default async function TrackAppPage({ params }: Params) {
+  const { trackId } = await params;
+
   return (
-    <TrackPage trackId={params.trackId} />
+    <TrackPage trackId={trackId} />
   );
 }
