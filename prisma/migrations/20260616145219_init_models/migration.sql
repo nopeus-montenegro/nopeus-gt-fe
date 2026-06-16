@@ -242,6 +242,7 @@ CREATE TABLE "Track" (
     "trackClass" "TrackClass" NOT NULL,
     "bopClass" "BopTrackClass" NOT NULL,
     "hasRain" BOOLEAN NOT NULL DEFAULT false,
+    "hasSophy" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

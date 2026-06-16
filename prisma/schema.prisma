@@ -227,6 +227,7 @@ model Track {
   trackClass TrackClass
   bopClass   BopTrackClass
   hasRain    Boolean       @default(false)
+  hasSophy   Boolean       @default(false)
 
   lapTimes  LapTime[]
   createdAt DateTime  @default(now())

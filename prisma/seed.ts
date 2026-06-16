@@ -81,6 +81,7 @@ async function main() {
     trackClass: String(track.trackClass).trim() as TrackClass,
     bopClass: String(track.bopClass).trim() as BopTrackClass,
     hasRain: String(track.hasRain).toUpperCase() === 'TRUE',
+    hasSophy: String(track.hasSophy).toUpperCase() === 'TRUE',
   }));
 
   console.log(`Tracks ready to upload: ${tracksData.length}`);
@@ -749,6 +750,7 @@ interface RawTrackRow {
   trackClass: string;
   bopClass: string;
   hasRain: string;
+  hasSophy: string;
 }
 
 interface RawSetupRow {

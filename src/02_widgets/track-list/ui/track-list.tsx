@@ -41,6 +41,8 @@ export async function TrackList() {
                     bopClass={track.bopClass}
                     country={track.country}
                     surface={track.surface}
+                    hasRain={track.hasRain}
+                    hasSophy={track.hasSophy}
                   />
                 </Link>
               ))}

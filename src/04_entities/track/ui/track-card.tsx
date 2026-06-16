@@ -1,6 +1,6 @@
 import { BopTrackClass, TrackClass, TrackSurface } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
-import { TrafficCone } from 'lucide-react';
+import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
 
 import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
@@ -9,16 +9,18 @@ import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
 import { ReactCountryFlag } from 'react-country-flag';
 
-interface TrackCardProps {
+interface Props {
   name: string;
   config: string;
   country: string;
   trackClass: TrackClass;
   bopClass: BopTrackClass;
   surface: TrackSurface;
+  hasRain: boolean;
+  hasSophy: boolean;
 }
 
-export function TrackCard({ name, config, trackClass, bopClass, country, surface }: TrackCardProps) {
+export function TrackCard({ name, config, trackClass, bopClass, country, surface, hasRain, hasSophy }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[surface];
 
@@ -54,10 +56,10 @@ export function TrackCard({ name, config, trackClass, bopClass, country, surface
         </div>
       </CardHeader>
 
-      <CardContent className="flex items-center justify-between mt-auto">
+      <CardContent className="flex gap-2 items-center justify-between mt-auto">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
-            <Badge variant="outline" className="border-accent text-base text-accent h-10">
+            <Badge variant="outline" className="border-accent/80 text-base text-accent/80 h-10">
               BoP:
               {' '}
               {BOP_CLASS_LABEL[bopClass]}
@@ -67,11 +69,23 @@ export function TrackCard({ name, config, trackClass, bopClass, country, surface
 
         <div className="flex items-center gap-2">
           <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title={`Track class: ${TRACK_CLASS_LABEL[trackClass]}`}>
-            {ClassIcon && <ClassIcon className="w-6 h-6" />}
+            <ClassIcon className="w-6 h-6" />
           </div>
 
+          {hasSophy && (
+            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title="Sophy available">
+              <HeartCrack className="w-6 h-6 text-purple-600/80" />
+            </div>
+          )}
+
+          {hasRain && (
+            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title="Rain available">
+              <CloudHail className="w-5 h-5 text-primary/70" />
+            </div>
+          )}
+
           <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title={`Surface: ${SURFACE_LABEL[surface]}`}>
-            {SurfaceIcon && <SurfaceIcon className="w-5 h-5 text-secondary/90" />}
+            <SurfaceIcon className="w-5 h-5 text-primary/70" />
           </div>
         </div>
       </CardContent>
