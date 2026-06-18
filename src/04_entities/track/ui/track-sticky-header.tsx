@@ -1,9 +1,13 @@
 'use client';
 
+import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
+import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
+import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
+import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
-import { CloudRain, HeartCrack } from 'lucide-react';
+import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ReactCountryFlag } from 'react-country-flag';
 
@@ -14,19 +18,42 @@ interface Props {
 export function TrackStickyHeader({ track }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
+  const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
+
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (Math.abs(currentScrollY - lastScrollY) < 20) {
+        return;
+      }
+
+      if (currentScrollY < 120) {
+        setIsScrolled(false);
+      } else if (currentScrollY > lastScrollY) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
     <div className={cn(
-      'fixed top-0 z-20 w-full pt-6 pb-4 transition-colors duration-300',
-      // isScrolled ? 'bg-[#0B0F19]/90 backdrop-blur-md border-b border-white/5' : 'bg-transparent',
+      'fixed top-4 right-0 z-20 flex justify-center w-full pt-6 pb-4 transition-colors duration-300',
     )}
     >
-      <div className="container mx-auto px-4 max-w-5xl">
+      <div className="container max-w-5xl">
         <div className={cn(
           'rounded-2xl border border-secondary/5 bg-secondary/30 backdrop-blur-sm p-6 transition-all duration-300',
           isScrolled ? 'p-4 shadow-xl shadow-black/40' : 'p-6',
@@ -51,29 +78,45 @@ export function TrackStickyHeader({ track }: Props) {
                 >
                   {track.name}
                 </h1>
-                <p className="text-xs text-slate-400 font-medium tracking-wide uppercase">
-                  {track.configName}
-                </p>
+                {track.configName
+                  && (
+                    <p className="flex items-center gap-2 text-xs text-slate-400 font-medium tracking-wide uppercase">
+                      <TrafficCone className="w-4 h-4 text-white/40" />
+                      {' '}
+                      {track.configName}
+                    </p>
+                  )}
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              {track.hasRain && (
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5 text-blue-400" title="Дождь">
-                  <CloudRain className="w-4 h-4" />
-                </div>
-              )}
+              <div className="flex flex-col gap-2">
+                <Badge variant="outline" className="h-8 border border-accent/30 bg-accent/10 text-accent">
+                  BoP:
+                  {' '}
+                  {BOP_CLASS_LABEL[track.bopClass]}
+                </Badge>
+              </div>
+
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[track.trackClass]}`}>
+                <ClassIcon className="w-5 h-5" />
+              </div>
+
               {track.hasSophy && (
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5 text-purple-400" title="Gran Turismo Sophy">
-                  <HeartCrack className="w-4 h-4" />
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title="Gran Turismo Sophy">
+                  <HeartCrack className="w-5 h-5 text-purple-400/80" />
                 </div>
               )}
 
-              <span className="ml-2 px-3 py-1 text-xs font-semibold rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400">
-                BoP:
-                {' '}
-                {track.bopClass}
-              </span>
+              {track.hasRain && (
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title="Дождь">
+                  <CloudHail className="w-4 h-4 text-blue-400/80" />
+                </div>
+              )}
+
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[track.surface]}`}>
+                <SurfaceIcon className="w-5 h-5 text-white/60" />
+              </div>
             </div>
           </div>
 
@@ -84,28 +127,39 @@ export function TrackStickyHeader({ track }: Props) {
           >
             <div className="overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-
-                <div className="md:col-span-1 h-32 rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
+                <div className="md:col-span-1 h-full rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
                   <span className="absolute top-2 left-2 text-[10px] text-slate-600">TRACK LAYOUT</span>
                   [ Track scheme ]
                 </div>
 
-                <div className="md:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div className="bg-slate-950/20 p-3 rounded-xl border border-white/5">
-                    <div className="text-xs text-slate-400 mb-1">Length</div>
-                    <div className="text-base font-bold text-white">{track.length}</div>
+                <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-xs text-slate-400">Length:</div>
+                    <div className="text-base font-bold text-white">
+                      {track.length}
+                      {' m'}
+                    </div>
                   </div>
-                  <div className="bg-slate-950/20 p-3 rounded-xl border border-white/5">
-                    <div className="text-xs text-slate-400 mb-1">Longest Straight</div>
-                    <div className="text-base font-bold text-white">{track.longestStraight}</div>
+
+                  <div className="px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-xs text-slate-400 mb-1">Longest Straight:</div>
+                    <div className="text-base font-bold text-white">
+                      {track.longestStraight}
+                      {' m'}
+                    </div>
                   </div>
-                  <div className="bg-slate-950/20 p-3 rounded-xl border border-white/5">
-                    <div className="text-xs text-slate-400 mb-1">Corners</div>
+
+                  <div className="px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-xs text-slate-400 mb-1">Corners:</div>
                     <div className="text-base font-bold text-white">{track.cornerCount}</div>
                   </div>
-                  <div className="bg-slate-950/20 p-3 rounded-xl border border-white/5">
-                    <div className="text-xs text-slate-400 mb-1">Elevation Diff</div>
-                    <div className="text-base font-bold text-white">{track.elevationDiff}</div>
+
+                  <div className="px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-xs text-slate-400 mb-1">Elevation Difference:</div>
+                    <div className="text-base font-bold text-white">
+                      {track.elevationDiff}
+                      {' m'}
+                    </div>
                   </div>
                 </div>
 

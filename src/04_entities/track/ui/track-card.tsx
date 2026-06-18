@@ -58,34 +58,32 @@ export function TrackCard({ name, config, trackClass, bopClass, country, surface
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <Badge variant="outline" className="border-accent/80 text-base text-accent/80 h-10">
-              BoP:
-              {' '}
-              {BOP_CLASS_LABEL[bopClass]}
-            </Badge>
-          </div>
+          <Badge variant="outline" className="h-10 border border-accent/30 bg-accent/10 text-accent">
+            BoP:
+            {' '}
+            {BOP_CLASS_LABEL[bopClass]}
+          </Badge>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title={`Track class: ${TRACK_CLASS_LABEL[trackClass]}`}>
+          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[trackClass]}`}>
             <ClassIcon className="w-6 h-6" />
           </div>
 
           {hasSophy && (
-            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title="Sophy available">
-              <HeartCrack className="w-6 h-6 text-purple-600/80" />
+            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Sophy available">
+              <HeartCrack className="w-6 h-6 text-purple-400/80" />
             </div>
           )}
 
           {hasRain && (
-            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title="Rain available">
-              <CloudHail className="w-5 h-5 text-primary/70" />
+            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Rain available">
+              <CloudHail className="w-5 h-5 text-blue-400/80" />
             </div>
           )}
 
-          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 backdrop-blur-sm border border-secondary/5" title={`Surface: ${SURFACE_LABEL[surface]}`}>
-            <SurfaceIcon className="w-5 h-5 text-primary/70" />
+          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[surface]}`}>
+            <SurfaceIcon className="w-5 h-5 text-white/60" />
           </div>
         </div>
       </CardContent>

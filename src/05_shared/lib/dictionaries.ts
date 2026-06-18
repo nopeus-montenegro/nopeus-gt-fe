@@ -1,4 +1,4 @@
-import { BopTrackClass, TrackClass, TrackRegion, TrackSurface } from '@prisma/client';
+import { BopTrackClass, CarClass, TrackClass, TrackRegion, TrackSurface } from '@prisma/client';
 
 export const REGION_LABEL: Record<TrackRegion, string> = {
   [TrackRegion.EUROPE_MIDDLE_EAST]: 'Europe & Middle East',
@@ -23,4 +23,13 @@ export const SURFACE_LABEL: Record<TrackSurface, string> = {
   [TrackSurface.DIRT]: 'Dirt',
   [TrackSurface.SNOW]: 'Snow',
   [TrackSurface.TARMAC]: 'Tarmac',
+};
+
+export const CAR_CLASS: Record<CarClass, string> = {
+  [CarClass.GR_1]: 'Gr.1',
+  [CarClass.GR_2]: 'Gr.2',
+  [CarClass.GR_3]: 'Gr.3',
+  [CarClass.GR_4]: 'Gr.4',
+  [CarClass.GR_B]: 'Gr.B',
+  [CarClass.ROAD]: 'Road Car',
 };

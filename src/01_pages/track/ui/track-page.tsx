@@ -1,42 +1,44 @@
-import { SetupList } from '@/02_widgets/setup-list';
+import { notFound } from 'next/navigation';
+
+import { SetupCarList } from '@/02_widgets/setup-list';
+import { LapTimeInclude, lapTimeInclude } from '@/04_entities/setup';
 import { TrackStickyHeader } from '@/04_entities/track';
 import { prisma } from '@/05_shared/lib/prisma/db';
-import { Prisma } from '@prisma/client';
-import { notFound } from 'next/navigation';
+import { Track } from '@prisma/client';
 
 interface Props {
   trackId: string;
 }
 
-const trackInclude = {
-  lapTimes: {
-    include: {
-      setup: {
-        include: { car: true },
-      },
-    },
-    orderBy: {
-      lapTime: 'asc',
-    },
-  },
-} satisfies Prisma.TrackInclude;
-
-type Track = Prisma.TrackGetPayload<{ include: typeof trackInclude }>;
-
 export async function TrackPage({ trackId }: Props) {
-  const track = await prisma.track.findUnique({
-    where: { id: trackId },
-    include: trackInclude,
-  }) as Track | null;
+  const [track, lapTimes] = await Promise.all([
+    prisma.track.findUnique({
+      where: { id: trackId },
+    }),
+
+    prisma.lapTime.findMany({
+      where: {
+        trackId: trackId,
+      },
+      orderBy: {
+        lapTime: 'asc',
+      },
+      distinct: ['setupId'],
+      include: lapTimeInclude,
+    }),
+  ]) as [Track | null, LapTimeInclude[]];
 
   if (!track) {
     notFound();
   }
 
   return (
-    <SetupList
-      header={<TrackStickyHeader track={track} />}
-      data={track.lapTimes.map(lt => ({ setup: lt.setup, car: lt.setup.car }))}
-    />
+    <div className="relative min-h-screen pt-80">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <TrackStickyHeader track={track} />
+      </div>
+
+      <SetupCarList lapTimeList={lapTimes} />
+    </div>
   );
 }

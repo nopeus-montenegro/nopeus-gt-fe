@@ -1,18 +1,17 @@
 import Link from 'next/link';
 
-import { TrackRegion } from '@prisma/client';
+import { Track, TrackRegion } from '@prisma/client';
 
 import { TrackCard } from '@/04_entities/track';
 import { REGION_LABEL } from '@/05_shared/lib/dictionaries';
 import { trackDetailRoute } from '@/05_shared/lib/next/routes';
-import { prisma } from '@/05_shared/lib/prisma/db';
 
-export async function TrackList() {
+interface Props {
+  tracks: Track[];
+};
+
+export function TrackList({ tracks }: Props) {
   const regions = Object.values(TrackRegion);
-
-  const tracks = await prisma.track.findMany({
-    orderBy: { name: 'asc' },
-  });
 
   return (
     <div className="space-y-12">
