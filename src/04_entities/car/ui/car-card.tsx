@@ -38,25 +38,42 @@ export function CarCard({ car }: Props) {
             {car.setups[0].weightBalanceRear}
           </p>
 
-          <div className="flex gap-2 items-stretch">
-            <Badge variant="outline" className="grow h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+          <div className="flex flex-wrap gap-2 items-stretch">
+            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
               {car.class !== 'ROAD' && `${CAR_CLASS[car.class]} / `}
               {'PP '}
               {car.setups[0].pp.toFixed(2)}
             </Badge>
 
-            <Badge variant="outline" className="grow h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
               {car.aspiration.replace('_', ' + ')}
             </Badge>
 
-            <Badge variant="outline" className="grow h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
               {car.engineLayout}
               -ENGINE
             </Badge>
 
-            <Badge variant="outline" className="grow h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
               {car.drivetrain}
             </Badge>
+
+            {
+              car.isHybrid
+              && (
+                <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                  HYBRID
+                </Badge>
+              )
+            }
+
+            {
+              car.overtake !== 'NONE' && (
+                <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                  {car.overtake.replace('_', ' ')}
+                </Badge>
+              )
+            }
           </div>
         </CardContent>
       </div>

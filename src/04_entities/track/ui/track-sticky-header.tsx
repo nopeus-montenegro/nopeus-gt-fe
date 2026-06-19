@@ -2,13 +2,13 @@
 
 import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
+import { useStickyHeader } from '@/05_shared/hooks/use-sticky-header';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
@@ -16,37 +16,10 @@ interface Props {
 }
 
 export function TrackStickyHeader({ track }: Props) {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const isScrolled = useStickyHeader(160);
 
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (Math.abs(currentScrollY - lastScrollY) < 20) {
-        return;
-      }
-
-      if (currentScrollY < 120) {
-        setIsScrolled(false);
-      } else if (currentScrollY > lastScrollY) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <div className={cn(
@@ -61,7 +34,6 @@ export function TrackStickyHeader({ track }: Props) {
         >
 
           <div className="flex flex-wrap items-center justify-between gap-4">
-
             <div className="flex items-center gap-4">
               <div className="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
                 <ReactCountryFlag
@@ -70,6 +42,7 @@ export function TrackStickyHeader({ track }: Props) {
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
+
               <div>
                 <h1 className={cn(
                   'font-bold tracking-tight bg-linear-to-br from-white to-white/40 bg-clip-text text-transparent transition-all duration-300',
@@ -78,6 +51,7 @@ export function TrackStickyHeader({ track }: Props) {
                 >
                   {track.name}
                 </h1>
+
                 {track.configName
                   && (
                     <p className="flex items-center gap-2 text-xs text-slate-400 font-medium tracking-wide uppercase">
@@ -90,26 +64,24 @@ export function TrackStickyHeader({ track }: Props) {
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="flex flex-col gap-2">
-                <Badge variant="outline" className="h-8 border border-accent/30 bg-accent/10 text-accent">
-                  BoP:
-                  {' '}
-                  {BOP_CLASS_LABEL[track.bopClass]}
-                </Badge>
-              </div>
+              <Badge variant="outline" className="h-8 border border-accent/30 bg-accent/10 text-accent">
+                BoP:
+                {' '}
+                {BOP_CLASS_LABEL[track.bopClass]}
+              </Badge>
 
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[track.trackClass]}`}>
                 <ClassIcon className="w-5 h-5" />
               </div>
 
               {track.hasSophy && (
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title="Gran Turismo Sophy">
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title="Sophy available">
                   <HeartCrack className="w-5 h-5 text-purple-400/80" />
                 </div>
               )}
 
               {track.hasRain && (
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title="Дождь">
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title="Rain available">
                   <CloudHail className="w-4 h-4 text-blue-400/80" />
                 </div>
               )}

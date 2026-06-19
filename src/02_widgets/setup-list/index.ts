@@ -1,1 +1,1 @@
-export { SetupCarList } from './ui/setup-car-list';
+export { SetupList } from './ui/setup-list';

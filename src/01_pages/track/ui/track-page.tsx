@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 
-import { SetupCarList } from '@/02_widgets/setup-list';
-import { LapTimeInclude, lapTimeInclude } from '@/04_entities/setup';
+import { SetupList } from '@/02_widgets/setup-list';
+import { LapTimeCarInclude, lapTimeCarInclude } from '@/04_entities/lap-time';
+import { SetupCar } from '@/04_entities/setup';
 import { TrackStickyHeader } from '@/04_entities/track';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Track } from '@prisma/client';
@@ -24,9 +25,9 @@ export async function TrackPage({ trackId }: Props) {
         lapTime: 'asc',
       },
       distinct: ['setupId'],
-      include: lapTimeInclude,
+      include: lapTimeCarInclude,
     }),
-  ]) as [Track | null, LapTimeInclude[]];
+  ]) as [Track | null, LapTimeCarInclude[]];
 
   if (!track) {
     notFound();
@@ -38,7 +39,10 @@ export async function TrackPage({ trackId }: Props) {
         <TrackStickyHeader track={track} />
       </div>
 
-      <SetupCarList lapTimeList={lapTimes} />
+      <SetupList
+        lapTimeList={lapTimes}
+        renderItem={lapTime => <SetupCar key={lapTime.id} lapTime={lapTime} />}
+      />
     </div>
   );
 }

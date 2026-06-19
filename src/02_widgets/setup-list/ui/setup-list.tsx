@@ -1,16 +1,17 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import { LapTimeInclude, SetupCar } from '@/04_entities/setup';
+import { LapTimeCarInclude, LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { Wrench } from 'lucide-react';
 
 dayjs.extend(relativeTime);
 
-interface Props {
-  lapTimeList: LapTimeInclude[];
+interface Props<T extends LapTimeCarInclude | LapTimeTrackInclude> {
+  lapTimeList: T[];
+  renderItem: (item: T) => React.ReactNode;
 }
 
-export function SetupCarList({ lapTimeList }: Props) {
+export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ lapTimeList, renderItem }: Props<T>) {
   return (
     <div className="relative z-10 container mx-auto px-4 max-w-5xl mt-6 pb-24">
       <div className="flex items-center gap-2 mb-6">
@@ -19,9 +20,11 @@ export function SetupCarList({ lapTimeList }: Props) {
       </div>
 
       <div className="space-y-4">
-        {lapTimeList.map(lapTime => (
-          <SetupCar key={lapTime.id} lapTime={lapTime} />
-        ))}
+        {
+          lapTimeList.map(lapTime => (
+            renderItem(lapTime)
+          ))
+        }
       </div>
     </div>
   );
