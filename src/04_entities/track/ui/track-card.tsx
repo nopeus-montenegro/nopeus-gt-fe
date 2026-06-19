@@ -1,4 +1,4 @@
-import { BopTrackClass, TrackClass, TrackSurface } from '@prisma/client';
+import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
 
@@ -10,19 +10,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
-  name: string;
-  config: string;
-  country: string;
-  trackClass: TrackClass;
-  bopClass: BopTrackClass;
-  surface: TrackSurface;
-  hasRain: boolean;
-  hasSophy: boolean;
+  track: Track;
 }
 
-export function TrackCard({ name, config, trackClass, bopClass, country, surface, hasRain, hasSophy }: Props) {
-  const ClassIcon = TRACK_CLASS_ICONS[trackClass];
-  const SurfaceIcon = TRACK_SURFACE_ICONS[surface];
+export function TrackCard({ track }: Props) {
+  const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
+  const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
   return (
     <Card className="relative overflow-hidden min-h-52 h-full bg-background/30 backdrop-blur-xl border-white/10 shadow-lg transition-all hover:bg-background/40 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/40">
@@ -30,29 +23,28 @@ export function TrackCard({ name, config, trackClass, bopClass, country, surface
 
       <CardHeader className="pb-3 flex flex-row gap-8 items-start justify-between space-y-0">
         <div>
-          <CardTitle className="text-2xl font-bold tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent">{name}</CardTitle>
-          {config
+          <CardTitle className="text-2xl font-bold tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent">{track.name}</CardTitle>
+          {track.configName
             && (
               <p className="text-base tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent mt-1 flex items-center gap-1">
                 <TrafficCone className="w-4 h-4 text-white/40" />
                 {' '}
-                {config}
+                {track.configName}
               </p>
             )}
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 mt-1.5 rounded-full bg-secondary/30 backdrop-blur-sm overflow-hidden shrink-0">
-            <ReactCountryFlag
-              countryCode={countryCodes.findOne('countryNameEn', country)?.countryCode as string}
-              svg
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-              title={country}
-            />
-          </div>
+
+        <div className="flex items-center justify-center w-10 h-10 mt-1.5 rounded-full bg-secondary/30 backdrop-blur-sm overflow-hidden shrink-0">
+          <ReactCountryFlag
+            countryCode={countryCodes.findOne('countryNameEn', track.country)?.countryCode as string}
+            svg
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+            title={track.country}
+          />
         </div>
       </CardHeader>
 
@@ -61,28 +53,28 @@ export function TrackCard({ name, config, trackClass, bopClass, country, surface
           <Badge variant="outline" className="h-10 border border-accent/30 bg-accent/10 text-accent">
             BoP:
             {' '}
-            {BOP_CLASS_LABEL[bopClass]}
+            {BOP_CLASS_LABEL[track.bopClass]}
           </Badge>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[trackClass]}`}>
+          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[track.trackClass]}`}>
             <ClassIcon className="w-6 h-6" />
           </div>
 
-          {hasSophy && (
+          {track.hasSophy && (
             <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Sophy available">
               <HeartCrack className="w-6 h-6 text-purple-400/80" />
             </div>
           )}
 
-          {hasRain && (
+          {track.hasRain && (
             <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Rain available">
               <CloudHail className="w-5 h-5 text-blue-400/80" />
             </div>
           )}
 
-          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[surface]}`}>
+          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[track.surface]}`}>
             <SurfaceIcon className="w-5 h-5 text-white/60" />
           </div>
         </div>

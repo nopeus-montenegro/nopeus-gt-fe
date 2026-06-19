@@ -37,32 +37,24 @@ export function SetupCar({ lapTime }: Props) {
       </div>
 
       <div className="col-span-3 items-stretch flex flex-row-reverse flex-wrap gap-2">
-        <div className="flex gap-2">
-          <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {lapTime.setup.car.class !== 'ROAD' && `${CAR_CLASS[lapTime.setup.car.class]} / `}
-            {'PP '}
-            {lapTime.setup.pp.toFixed(2)}
-          </Badge>
-        </div>
+        <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
+          {lapTime.setup.car.class !== 'ROAD' && `${CAR_CLASS[lapTime.setup.car.class]} / `}
+          {'PP '}
+          {lapTime.setup.pp.toFixed(2)}
+        </Badge>
 
-        <div className="flex gap-2">
-          <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {lapTime.setup.car.aspiration.replace('_', ' + ')}
-          </Badge>
-        </div>
+        <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
+          {lapTime.setup.car.aspiration.replace('_', ' + ')}
+        </Badge>
 
-        <div className="flex gap-2">
-          <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {lapTime.setup.car.drivetrain}
-          </Badge>
-        </div>
+        <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
+          {lapTime.setup.car.drivetrain}
+        </Badge>
 
-        <div className="flex gap-2">
-          <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {lapTime.setup.car.engineLayout}
-            -ENGINE
-          </Badge>
-        </div>
+        <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
+          {lapTime.setup.car.engineLayout}
+          -ENGINE
+        </Badge>
       </div>
 
       <div className="col-span-1 text-right">

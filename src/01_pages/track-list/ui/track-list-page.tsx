@@ -13,7 +13,9 @@ export async function TrackListPage() {
         <p className="text-zinc-400">Choose track to check its details and suitable car setups</p>
       </header>
 
-      <TrackList tracks={tracks} />
+      <div className="space-y-12">
+        <TrackList tracks={tracks} />
+      </div>
     </div>
   );
 }
