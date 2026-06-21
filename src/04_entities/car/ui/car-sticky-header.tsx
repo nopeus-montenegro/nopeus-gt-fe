@@ -15,7 +15,7 @@ export function CarStickyHeader({ car }: Props) {
 
   return (
     <div className={cn(
-      'fixed top-4 right-0 z-20 flex justify-center w-full pt-6 pb-4 transition-colors duration-300',
+      'fixed top-8 right-0 z-20 flex justify-center w-full transition-colors duration-300',
     )}
     >
       <div className="container max-w-5xl">
@@ -106,7 +106,7 @@ export function CarStickyHeader({ car }: Props) {
                 </div>
 
                 <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="px-4 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Power:</div>
 
                     <div className="text-base font-bold text-white">
@@ -118,7 +118,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="px-4 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Torque:</div>
 
                     <div className="text-base font-bold text-white">
@@ -130,7 +130,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between py-2 px-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Engine type:</div>
 
                     <div className="text-base font-bold text-white">
@@ -138,7 +138,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between py-2 px-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Displacement:</div>
 
                     <div className="text-base font-bold text-white">
@@ -147,7 +147,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between py-2 px-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">WPR:</div>
 
                     <div className="text-base font-bold text-white">
@@ -155,7 +155,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between py-2 px-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400">Engine code:</div>
 
                     <div className="text-base font-bold text-white">
@@ -163,7 +163,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between px-3 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Gears count:</div>
 
                     <div className="text-base font-bold text-white">
@@ -171,7 +171,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between px-3 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Length:</div>
 
                     <div className="text-base font-bold text-white">
@@ -180,7 +180,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between px-3 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Width:</div>
 
                     <div className="text-base font-bold text-white">
@@ -189,7 +189,7 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
                     <div className="my-1 text-xs text-slate-400 mb-1">Height:</div>
 
                     <div className="text-base font-bold text-white">

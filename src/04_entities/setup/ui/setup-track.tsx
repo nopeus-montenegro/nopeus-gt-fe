@@ -85,42 +85,6 @@ export function SetupTrack({ lapTime }: Props) {
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[lapTime.track.surface]}`}>
           <SurfaceIcon className="w-5 h-5 text-white/60" />
         </div>
-
-        {/* <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-          {lapTime.setup.car.class !== 'ROAD' && `${CAR_CLASS[lapTime.setup.car.class]} / `}
-          {'PP '}
-          {lapTime.setup.pp.toFixed(2)}
-        </Badge>
-
-        <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-          {lapTime.setup.car.drivetrain}
-        </Badge> */}
-
-        {/* <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-          {lapTime.setup.car.aspiration.replace('_', ' + ')}
-        </Badge>
-
-        <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-          {lapTime.setup.car.engineLayout}
-          -ENGINE
-        </Badge>
-
-        {
-          lapTime.setup.car.isHybrid
-          && (
-            <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-              HYBRID
-            </Badge>
-          )
-        }
-
-        {
-          lapTime.setup.car.overtake !== 'NONE' && (
-            <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-              {lapTime.setup.car.overtake.replace('_', ' ')}
-            </Badge>
-          )
-        } */}
       </div>
 
       <div className="col-span-1 relative flex flex-col justify-end-safe h-full text-right">

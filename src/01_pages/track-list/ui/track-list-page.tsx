@@ -1,5 +1,6 @@
 import { TrackList } from '@/02_widgets/track-list';
 import { prisma } from '@/05_shared/lib/prisma/db';
+import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 
 export async function TrackListPage() {
   const tracks = await prisma.track.findMany({
@@ -12,6 +13,8 @@ export async function TrackListPage() {
         <h1 className="text-3xl font-extrabold tracking-tight">Gran Turismo 7 - Track list</h1>
         <p className="text-zinc-400">Choose track to check its details and suitable car setups</p>
       </header>
+
+      <Breadcrumbs />
 
       <div className="space-y-12">
         <TrackList tracks={tracks} />
