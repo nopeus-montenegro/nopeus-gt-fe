@@ -32,7 +32,7 @@ export async function CarPage({ carId }: Props) {
   }
 
   return (
-    <div className="relative min-h-screen pt-118">
+    <div className="relative min-h-screen pt-128">
       <div className="container mx-auto px-4 max-w-5xl">
         <CarStickyHeader car={car} />
       </div>

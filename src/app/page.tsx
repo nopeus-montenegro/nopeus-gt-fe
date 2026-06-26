@@ -4,37 +4,34 @@ import { Button } from '@/05_shared/ui/shadcn/button';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-600 text-slate-50 antialiased">
-      <div className="relative flex flex-col items-center gap-6 text-center">
-        <div className="absolute -top-24 -z-10 h-64 w-64 bg-blue-600/20 blur-[120px]" />
+    <div className="flex flex-col gap-12 min-h-screen items-center justify-center text-slate-50 antialiased">
+      <h1 className="text-6xl font-black tracking-tighter uppercase italic">
+        Nopeus
+        {' '}
+        <span className="text-blue-500 not-italic">GT</span>
+      </h1>
 
-        <h1 className="text-6xl font-black tracking-tighter uppercase italic">
-          Nopeus
-          {' '}
-          <span className="text-blue-500 not-italic">GT</span>
-        </h1>
-
-        <p className="max-w-125 text-lg text-slate-400">
-          Professional lap timing and telemetry for your
-          <span className="text-slate-200"> Thrustmaster T598</span>
-          {' '}
-          setup.
-        </p>
-
-        <div className="flex gap-4 mt-4">
-          <Button variant="default" size="lg">
-            <Link href="/track">
-              TRACKS
-            </Link>
+      <div className="flex gap-4 mt-4">
+        <Link href="/track">
+          <Button className="min-w-60" variant="outline" size="lg">
+            TRACKS
           </Button>
+        </Link>
 
-          <Button variant="outline" size="lg">
-            <Link href="/car">
-              CARS
-            </Link>
+        <Link href="/car">
+          <Button className="min-w-60" variant="outline" size="lg">
+            CARS
           </Button>
-        </div>
+        </Link>
       </div>
-    </main>
+
+      <p className="flex flex-col gap-8 max-w-md text-lg text-slate-400 text-center">
+        <span className="text-slate-50">( Early Access )</span>
+        <br />
+        We are building the ultimate GT7 telemetry hub. Currently featuring setups for every racing class across 26 real-world tracks and 3 speed profiles.
+        <br />
+        <span className="text-slate-50">Available cars: Gr.1 - 26, Gr.2 - 10, Gr.3 - 51, Gr.4 - 34</span>
+      </p>
+    </div>
   );
 }

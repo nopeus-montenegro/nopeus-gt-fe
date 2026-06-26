@@ -56,7 +56,7 @@ export default function RootLayout({
 
           <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-          <main className="relative z-10 container mx-auto p-6 lg:p-12 min-h-screen">
+          <main className="relative z-10 container mx-auto px-6 lg:px-12 min-h-screen">
             {children}
           </main>
         </div>

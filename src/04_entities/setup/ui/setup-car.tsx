@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
+import Link from 'next/link';
 
 import { LapTimeCarInclude } from '@/04_entities/lap-time';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
+import { setupDetailRoute } from '@/05_shared/lib/next/routes';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 
 interface Props {
@@ -10,9 +12,10 @@ interface Props {
 
 export function SetupCar({ lapTime }: Props) {
   return (
-    <div
+    <Link
       key={lapTime.id}
-      className="grid grid-cols-6 items-center gap-8 p-5 rounded-xl border border-white/5 bg-slate-900/20 backdrop-blur-sm hover:bg-slate-900/40 transition-colors"
+      href={setupDetailRoute(lapTime.setup.id)}
+      className="grid grid-cols-6 items-center gap-8 p-5 rounded-xl border border-white/5 bg-slate-900/20 backdrop-blur-sm hover:bg-slate-900/40 transition-all hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div className="col-span-2 flex flex-col items-start gap-1">
         <h3 className="flex items-center font-bold text-secondary text-lg">
@@ -92,7 +95,6 @@ export function SetupCar({ lapTime }: Props) {
           {dayjs(lapTime.setup.createdAt).fromNow()}
         </p>
       </div>
-    </div>
-
+    </Link>
   );
 };

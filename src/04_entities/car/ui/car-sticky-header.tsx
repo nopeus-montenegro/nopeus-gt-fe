@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function CarStickyHeader({ car }: Props) {
-  const isScrolled = useStickyHeader(224);
+  const isScrolled = useStickyHeader(320);
 
   return (
     <div className={cn(
@@ -172,10 +172,10 @@ export function CarStickyHeader({ car }: Props) {
                   </div>
 
                   <div className="flex gap-2 justify-between px-3 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
-                    <div className="my-1 text-xs text-slate-400 mb-1">Length:</div>
+                    <div className="my-1 text-xs text-slate-400 mb-1">Height:</div>
 
                     <div className="text-base font-bold text-white">
-                      {car.length}
+                      {car.height}
                       &nbsp;mm
                     </div>
                   </div>
@@ -189,11 +189,11 @@ export function CarStickyHeader({ car }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 justify-between px-6 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
-                    <div className="my-1 text-xs text-slate-400 mb-1">Height:</div>
+                  <div className="flex gap-2 justify-between px-3 py-2 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+                    <div className="my-1 text-xs text-slate-400 mb-1">Length:</div>
 
                     <div className="text-base font-bold text-white">
-                      {car.height}
+                      {car.length}
                       &nbsp;mm
                     </div>
                   </div>

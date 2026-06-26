@@ -9,7 +9,7 @@ interface Props {
 
 export function CarCard({ car }: Props) {
   return (
-    <Card className="relative overflow-hidden min-h-52 h-full bg-background/30 backdrop-blur-xl border-white/10 shadow-lg transition-all hover:bg-background/40 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/40">
+    <Card className="relative overflow-hidden min-h-52 h-full bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/20">
       <div className="absolute -inset-0.5 bg-linear-to-br from-white/20 to-transparent opacity-0 transition-opacity hover:opacity-100 pointer-events-none rounded-xl" />
 
       <div className="flex flex-col gap-8 justify-between h-full">

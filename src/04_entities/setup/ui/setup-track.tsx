@@ -1,11 +1,13 @@
 import dayjs from 'dayjs';
+import { CloudHail, HeartCrack } from 'lucide-react';
+import Link from 'next/link';
 
 import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
+import { setupDetailRoute } from '@/05_shared/lib/next/routes';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
-import { CloudHail, HeartCrack } from 'lucide-react';
 
 interface Props {
   lapTime: LapTimeTrackInclude;
@@ -16,9 +18,10 @@ export function SetupTrack({ lapTime }: Props) {
   const SurfaceIcon = TRACK_SURFACE_ICONS[lapTime.track.surface];
 
   return (
-    <div
+    <Link
       key={lapTime.id}
-      className="grid grid-cols-6 items-center gap-8 p-5 rounded-xl border border-white/5 bg-slate-900/20 backdrop-blur-sm hover:bg-slate-900/40 transition-colors"
+      href={setupDetailRoute(lapTime.setup.id)}
+      className="grid grid-cols-6 items-center gap-8 p-5 rounded-xl border border-white/5 bg-slate-900/20 backdrop-blur-sm hover:bg-slate-900/40 transition-all hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div className="col-span-2 flex flex-col items-start">
         <h3 className="flex items-center font-bold text-secondary text-lg">
@@ -96,7 +99,6 @@ export function SetupTrack({ lapTime }: Props) {
           {dayjs(lapTime.setup.createdAt).fromNow()}
         </p>
       </div>
-    </div>
-
+    </Link>
   );
 };

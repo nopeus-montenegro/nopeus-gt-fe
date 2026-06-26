@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function TrackStickyHeader({ track }: Props) {
-  const isScrolled = useStickyHeader(160);
+  const isScrolled = useStickyHeader(240);
 
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
