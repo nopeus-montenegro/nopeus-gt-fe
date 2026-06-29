@@ -1,5 +1,5 @@
 import { SetupList } from '@/02_widgets/setup-list';
-import { CarInclude, carInclude, CarStickyHeader } from '@/04_entities/car';
+import { CarInclude, CarStickyHeader, getCar } from '@/04_entities/car';
 import { LapTimeTrackInclude, lapTimeTrackInclude } from '@/04_entities/lap-time';
 import { SetupTrack } from '@/04_entities/setup';
 import { prisma } from '@/05_shared/lib/prisma/db';
@@ -12,11 +12,7 @@ interface Props {
 
 export async function CarPage({ carId }: Props) {
   const [car, lapTimes] = await Promise.all([
-    prisma.car.findUnique({
-      where: { id: carId },
-      include: carInclude,
-    }),
-
+    getCar(carId),
     prisma.lapTime.findMany({
       where: {
         setup: {

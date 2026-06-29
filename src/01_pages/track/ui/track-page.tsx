@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { SetupList } from '@/02_widgets/setup-list';
 import { LapTimeCarInclude, lapTimeCarInclude } from '@/04_entities/lap-time';
 import { SetupCar } from '@/04_entities/setup';
-import { TrackStickyHeader } from '@/04_entities/track';
+import { getTrack, TrackStickyHeader } from '@/04_entities/track';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { Track } from '@prisma/client';
@@ -14,10 +14,7 @@ interface Props {
 
 export async function TrackPage({ trackId }: Props) {
   const [track, lapTimes] = await Promise.all([
-    prisma.track.findUnique({
-      where: { id: trackId },
-    }),
-
+    getTrack(trackId),
     prisma.lapTime.findMany({
       where: {
         trackId: trackId,
