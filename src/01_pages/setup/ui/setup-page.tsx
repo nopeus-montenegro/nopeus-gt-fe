@@ -10,9 +10,7 @@ interface Props {
 
 export async function SetupPage({ setupId }: Props) {
   const setup = await prisma.setup.findUnique({
-    where: {
-      id: setupId,
-    },
+    where: { id: setupId },
     include: setupInclude,
   }) as SetupInclude;
 

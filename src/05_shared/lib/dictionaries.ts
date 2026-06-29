@@ -1,4 +1,6 @@
-import { AirCleanerType, AntiLagType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, EcuType, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType } from '@prisma/client';
+import {
+  AirCleanerType, AntiLagType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, EcuType, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
+} from '@prisma/client';
 
 export const REGION_LABEL: Record<TrackRegion, string> = {
   [TrackRegion.EUROPE_MIDDLE_EAST]: 'Europe & Middle East',
