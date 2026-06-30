@@ -1,5 +1,5 @@
 import { TrackPage } from '@/01_pages/track';
-import { getTrack } from '@/04_entities/track';
+import { getTrack } from '@/04_entities/track/index.server';
 
 interface Params {
   params: Promise<{

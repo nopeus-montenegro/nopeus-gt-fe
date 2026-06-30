@@ -1,7 +1,7 @@
 import { cache } from 'react';
 
 import { prisma } from '@/05_shared/lib/prisma/db';
-import { carInclude } from '../lib/const';
+import { carInclude } from './config';
 
 export const getCar = cache(async function (carId: string) {
   return (

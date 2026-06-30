@@ -1,7 +1,7 @@
 import { cache } from 'react';
 
 import { prisma } from '@/05_shared/lib/prisma/db';
-import { setupInclude } from '../lib/const';
+import { setupInclude } from './config';
 
 export const getSetup = cache(async function (carId: string) {
   return (

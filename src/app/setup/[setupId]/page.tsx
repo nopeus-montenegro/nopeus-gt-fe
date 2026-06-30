@@ -1,5 +1,5 @@
 import { SetupPage } from '@/01_pages/setup';
-import { getSetup } from '@/04_entities/setup';
+import { getSetup } from '@/04_entities/setup/index.server';
 
 interface Params {
   params: Promise<{

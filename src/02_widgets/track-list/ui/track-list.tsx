@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Track, TrackRegion } from '@prisma/client';
@@ -5,17 +7,22 @@ import { Track, TrackRegion } from '@prisma/client';
 import { TrackCard } from '@/04_entities/track';
 import { REGION_LABEL } from '@/05_shared/lib/dictionaries';
 import { trackDetailRoute } from '@/05_shared/lib/next/routes';
+import { useFilter } from '../hooks/use-filter';
+import { useSort } from '../hooks/use-sort';
 
 interface Props {
   tracks: Track[];
 };
 
 export function TrackList({ tracks }: Props) {
+  const filtered = useFilter(tracks);
+  const sorted = useSort(filtered);
+
   const regions = Object.values(TrackRegion);
 
   return (
     regions.map((region) => {
-      const regionTracks = tracks.filter(t => t.region === region);
+      const regionTracks = sorted.filter(t => t.region === region);
 
       if (regionTracks.length === 0) return null;
 

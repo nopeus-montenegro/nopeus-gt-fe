@@ -1,5 +1,5 @@
 import { CarPage } from '@/01_pages/car';
-import { getCar } from '@/04_entities/car';
+import { getCar } from '@/04_entities/car/index.server';
 
 interface Params {
   params: Promise<{

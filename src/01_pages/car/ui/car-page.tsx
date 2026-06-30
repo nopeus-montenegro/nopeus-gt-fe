@@ -1,5 +1,6 @@
 import { SetupList } from '@/02_widgets/setup-list';
-import { CarInclude, CarStickyHeader, getCar } from '@/04_entities/car';
+import { CarInclude, CarStickyHeader } from '@/04_entities/car';
+import { getCar } from '@/04_entities/car/index.server';
 import { LapTimeTrackInclude, lapTimeTrackInclude } from '@/04_entities/lap-time';
 import { SetupTrack } from '@/04_entities/setup';
 import { prisma } from '@/05_shared/lib/prisma/db';

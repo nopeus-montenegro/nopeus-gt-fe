@@ -1,14 +1,21 @@
+'use client';
+
 import Link from 'next/link';
 
-import { CarCard, CarInclude } from '@/04_entities/car';
+import { CarCard, type CarInclude } from '@/04_entities/car';
 import { carDetailRoute } from '@/05_shared/lib/next/routes';
+import { useFilter } from '../hooks/use-filter';
+import { useSort } from '../hooks/use-sort';
 
 interface Props {
   cars: CarInclude[];
 }
 
 export function CarList({ cars }: Props) {
-  const groupedCars = cars.reduce((acc, car) => {
+  const filtered = useFilter(cars);
+  const sorted = useSort(filtered);
+
+  const groupedCars = sorted.reduce((acc, car) => {
     const brand = car.manufacturer;
     if (!acc[brand]) acc[brand] = [];
     acc[brand].push(car);

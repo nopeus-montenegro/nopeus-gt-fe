@@ -1,7 +1,7 @@
 import { SetupCarousel } from '@/02_widgets/setup-carousel';
-import { SetupInclude, setupInclude } from '@/04_entities/setup';
+import { SetupInclude } from '@/04_entities/setup';
+import { getSetup } from '@/04_entities/setup/index.server';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
-import { prisma } from '@/05_shared/lib/prisma/db';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 
 interface Props {
@@ -9,10 +9,7 @@ interface Props {
 };
 
 export async function SetupPage({ setupId }: Props) {
-  const setup = await prisma.setup.findUnique({
-    where: { id: setupId },
-    include: setupInclude,
-  }) as SetupInclude;
+  const setup = await getSetup(setupId) as SetupInclude;
 
   return (
     <div className="flex w-full flex-col">

@@ -1,5 +1,5 @@
 import { CarList } from '@/02_widgets/car-ist';
-import { CarInclude, carInclude } from '@/04_entities/car';
+import { carInclude, CarInclude } from '@/04_entities/car';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 
