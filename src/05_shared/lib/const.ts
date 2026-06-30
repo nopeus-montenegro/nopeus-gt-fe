@@ -1,9 +1,9 @@
-export enum SORT_DIRECTION {
+export const enum SORT_DIRECTION {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
 }
 
-export enum SORT_TYPE {
-  DIRECTION = 'sort_dir',
-  DATA = 'sort_by',
+export const enum SORT_TYPE {
+  DIRECTION = 'sortDir',
+  DATA = 'sortBy',
 }

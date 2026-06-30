@@ -91,12 +91,14 @@ export function SetupTrack({ lapTime }: Props) {
       </div>
 
       <div className="col-span-1 relative flex flex-col justify-end-safe h-full text-right">
-        <span className="absolute top-1/2 -translate-y-1/2 right-0 text-xl font-mono text-emerald-400 font-semibold">{dayjs().startOf('day').millisecond(lapTime.lapTime).format(`m'ss.SSS`)}</span>
+        <span className="absolute top-1/2 -translate-y-1/2 right-0 text-emerald-400 text-xl font-mono font-semibold">
+          {dayjs().startOf('day').millisecond(lapTime.lapTime).format(`m'ss.SSS`)}
+        </span>
 
         <p className="text-xs text-slate-500">
-          {lapTime.setup.author.username}
+          {lapTime.author.username}
           {' • '}
-          {dayjs(lapTime.setup.createdAt).fromNow()}
+          {dayjs(lapTime.createdAt).fromNow()}
         </p>
       </div>
     </Link>

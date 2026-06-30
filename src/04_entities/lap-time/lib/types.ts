@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { lapTimeCarInclude, lapTimeTrackInclude } from './const';
+import { lapTimeCarInclude, lapTimeTrackInclude } from '../model/config';
 
 export type LapTimeCarInclude = Prisma.LapTimeGetPayload<{ include: typeof lapTimeCarInclude }>;
 

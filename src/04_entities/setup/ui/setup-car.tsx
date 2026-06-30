@@ -90,9 +90,9 @@ export function SetupCar({ lapTime }: Props) {
         <span className="absolute top-1/2 -translate-y-1/2 right-0 text-xl font-mono text-emerald-400 font-semibold">{dayjs().startOf('day').millisecond(lapTime.lapTime).format(`m'ss.SSS`)}</span>
 
         <p className="text-xs text-slate-500">
-          {lapTime.setup.author.username}
+          {lapTime.author.username}
           {' • '}
-          {dayjs(lapTime.setup.createdAt).fromNow()}
+          {dayjs(lapTime.createdAt).fromNow()}
         </p>
       </div>
     </Link>

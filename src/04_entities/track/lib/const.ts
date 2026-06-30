@@ -1,4 +1,4 @@
-export enum TRACK_SORT {
+export const enum TRACK_SORT {
   NAME = 'name',
   LENGTH = 'length',
   STRAIGHT = 'straight',
@@ -6,7 +6,7 @@ export enum TRACK_SORT {
   ELEVATION = 'elev',
 }
 
-export enum TRACK_FILTER {
+export const enum TRACK_FILTER {
   REGION = 'region',
   COUNTRY = 'country',
   SURFACE = 'surface',
