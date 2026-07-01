@@ -6,9 +6,16 @@ export const enum MAX_LIMITS {
   WPR = 5,
 }
 
-export function parseLimits(min: string | null, max: string | null, maxLimits: MAX_LIMITS): [number, number] {
-  const parsedMin = min && !isNaN(Number(min)) ? Number(min) : 0;
-  const parsedMax = max && !isNaN(Number(max)) ? Number(max) : maxLimits;
+export function parseLimits(min: string | string[] | null | undefined, max: string | string[] | null | undefined, maxLimits: MAX_LIMITS): [number, number] {
+  const minNumber = Number(min instanceof Array ? min[0] : min);
+  const maxNumber = Number(max instanceof Array ? max[0] : max);
+
+  const parsedMin = min && !isNaN(minNumber)
+    ? minNumber
+    : 0;
+  const parsedMax = max && !isNaN(maxNumber)
+    ? maxNumber
+    : maxLimits;
 
   return [parsedMin, parsedMax];
 }

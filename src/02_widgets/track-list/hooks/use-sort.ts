@@ -1,5 +1,4 @@
-import { TRACK_SORT } from '@/04_entities/track';
-import { SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
+import { SORT_DIRECTION, SORT_TYPE, TRACK_SORT } from '@/05_shared/lib/const';
 import { Track } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 

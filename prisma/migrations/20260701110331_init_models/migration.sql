@@ -145,6 +145,7 @@ CREATE TABLE "Setup" (
     "torque" DOUBLE PRECISION NOT NULL,
     "torqueRpm" INTEGER NOT NULL,
     "weight" INTEGER NOT NULL,
+    "wpr" DOUBLE PRECISION NOT NULL,
     "weightBalanceFront" INTEGER NOT NULL,
     "weightBalanceRear" INTEGER NOT NULL,
     "hasWideBody" BOOLEAN NOT NULL DEFAULT false,

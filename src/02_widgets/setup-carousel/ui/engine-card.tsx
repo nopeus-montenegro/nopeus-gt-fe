@@ -5,7 +5,7 @@ interface Props {
 }
 
 export function EngineCard({ setup }: Props) {
-  const { car, swappedEngineModel, power, powerRpm, torque, torqueRpm, weight, weightBalanceFront, weightBalanceRear } = setup;
+  const { car, swappedEngineModel, power, powerRpm, torque, torqueRpm, weight, wpr, weightBalanceFront, weightBalanceRear } = setup;
 
   return (
     <div className="flex flex-col gap-3">
@@ -48,7 +48,7 @@ export function EngineCard({ setup }: Props) {
         <div className="my-1 text-xs text-slate-400 mb-1">WPR:</div>
 
         <div className="text-base text-white">
-          {(weight / power).toFixed(2)}
+          {wpr}
         </div>
       </div>
 

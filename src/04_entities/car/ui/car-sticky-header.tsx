@@ -151,7 +151,7 @@ export function CarStickyHeader({ car }: Props) {
                     <div className="my-1 text-xs text-slate-400 mb-1">WPR:</div>
 
                     <div className="text-base font-bold text-white">
-                      {(car.setups[0].weight / car.setups[0].power).toFixed(2)}
+                      {car.setups[0].wpr}
                     </div>
                   </div>
 

@@ -127,6 +127,7 @@ async function main() {
       torque: parseFloat(basicSetup.torque),
       torqueRpm: parseInt(basicSetup.torqueRpm, 10),
       weight: parseInt(basicSetup.weight, 10),
+      wpr: parseFloat(parseInt(basicSetup.weight, 10 / parseInt(basicSetup.power, 10)).toFixed(2)),
       weightBalanceFront: parseInt(basicSetup.weightBalanceFront, 10),
       weightBalanceRear: parseInt(basicSetup.weightBalanceRear, 10),
 
@@ -275,6 +276,7 @@ async function main() {
           torque: parseFloat(techSetup.torque),
           torqueRpm: parseInt(techSetup.torqueRpm, 10),
           weight: parseInt(techSetup.weight, 10),
+          wpr: parseFloat(parseInt(techSetup.weight, 10 / parseInt(techSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(techSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(techSetup.weightBalanceRear, 10),
 
@@ -432,6 +434,7 @@ async function main() {
           torque: parseFloat(hybridSetup.torque),
           torqueRpm: parseInt(hybridSetup.torqueRpm, 10),
           weight: parseInt(hybridSetup.weight, 10),
+          wpr: parseFloat(parseInt(hybridSetup.weight, 10 / parseInt(hybridSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(hybridSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(hybridSetup.weightBalanceRear, 10),
 
@@ -587,6 +590,7 @@ async function main() {
           torque: parseFloat(speedSetup.torque),
           torqueRpm: parseInt(speedSetup.torqueRpm, 10),
           weight: parseInt(speedSetup.weight, 10),
+          wpr: parseFloat(parseInt(speedSetup.weight, 10 / parseInt(speedSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(speedSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(speedSetup.weightBalanceRear, 10),
 

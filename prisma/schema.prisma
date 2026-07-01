@@ -59,6 +59,7 @@ model Setup {
   torque             Float // kgfm
   torqueRpm          Int
   weight             Int // kg
+  wpr                Float // Weight to Power Ratio
   weightBalanceFront Int
   weightBalanceRear  Int
 

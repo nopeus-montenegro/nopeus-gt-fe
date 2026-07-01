@@ -1,5 +1,5 @@
-import { CAR_FILTER, CarInclude } from '@/04_entities/car';
-import { SETUP_FILTER } from '@/04_entities/setup';
+import { CarInclude } from '@/04_entities/car';
+import { CAR_FILTER, SETUP_FILTER } from '@/05_shared/lib/const';
 import { MAX_LIMITS, parseLimits } from '@/05_shared/utils/parse-limits';
 import { useSearchParams } from 'next/navigation';
 
@@ -8,7 +8,6 @@ export function useFilter(cars: CarInclude[]) {
   let filtered = [...cars];
 
   const manufacturer = searchParams.get(CAR_FILTER.MANUFACTURER)?.split(',') || [];
-  const country = searchParams.get(CAR_FILTER.COUNTRY)?.split(',') || [];
   const carClass = searchParams.get(CAR_FILTER.CAR_CLASS)?.split(',') || [];
   const drivetrain = searchParams.get(CAR_FILTER.DRIVETRAIN)?.split(',') || [];
   const engineLayout = searchParams.get(CAR_FILTER.ENGINE_LAYOUT)?.split(',') || [];
@@ -25,12 +24,8 @@ export function useFilter(cars: CarInclude[]) {
     filtered = filtered.filter(t => manufacturer.includes(t.manufacturer));
   }
 
-  if (country.length > 0) {
-    filtered = filtered.filter(t => country.includes(t.country.toLowerCase()));
-  }
-
   if (carClass.length > 0) {
-    filtered = filtered.filter(t => carClass.includes(t.class.toLowerCase()));
+    filtered = filtered.filter(t => carClass.includes(t.class));
   }
 
   if (drivetrain.length > 0) {
@@ -66,7 +61,7 @@ export function useFilter(cars: CarInclude[]) {
   }
 
   if (wprMinParsed > 0 || wprMaxParsed < MAX_LIMITS.WPR) {
-    filtered = filtered.filter(t => t.setups[0].weight / t.setups[0].power >= wprMinParsed && t.setups[0].weight / t.setups[0].power <= wprMaxParsed);
+    filtered = filtered.filter(t => t.setups[0].wpr >= wprMinParsed && t.setups[0].wpr <= wprMaxParsed);
   }
 
   if (hybrid !== null) {

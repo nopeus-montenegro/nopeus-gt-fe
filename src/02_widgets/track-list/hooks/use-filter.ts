@@ -1,4 +1,4 @@
-import { TRACK_FILTER } from '@/04_entities/track';
+import { TRACK_FILTER } from '@/05_shared/lib/const';
 import { Track } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 
@@ -7,7 +7,6 @@ export function useFilter(tracks: Track[]) {
   let filtered = [...tracks];
 
   const region = searchParams.get(TRACK_FILTER.REGION)?.split(',') || [];
-  const country = searchParams.get(TRACK_FILTER.COUNTRY)?.split(',') || [];
   const trackClass = searchParams.get(TRACK_FILTER.TRACK_CLASS)?.split(',') || [];
   const bop = searchParams.get(TRACK_FILTER.BOP)?.split(',') || [];
   const surface = searchParams.get(TRACK_FILTER.SURFACE)?.split(',') || [];
@@ -16,10 +15,6 @@ export function useFilter(tracks: Track[]) {
 
   if (region.length > 0) {
     filtered = filtered.filter(t => region.includes(t.region));
-  }
-
-  if (country.length > 0) {
-    filtered = filtered.filter(t => country.includes(t.country));
   }
 
   if (trackClass.length > 0) {

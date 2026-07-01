@@ -1,6 +1,5 @@
-import { CAR_SORT, CarInclude } from '@/04_entities/car';
-import { SETUP_SORT } from '@/04_entities/setup';
-import { SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
+import { CarInclude } from '@/04_entities/car';
+import { CAR_SORT, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { useSearchParams } from 'next/navigation';
 
 export function useSort(cars: CarInclude[]) {
@@ -26,7 +25,7 @@ export function useSort(cars: CarInclude[]) {
         return ((a.setups[0].weight || 0) - (b.setups[0].weight || 0)) * modifier;
 
       case SETUP_SORT.WPR:
-        return ((a.setups[0].weight / a.setups[0].power || 0) - (b.setups[0].weight / b.setups[0].power || 0)) * modifier;
+        return ((a.setups[0].wpr || 0) - (b.setups[0].wpr || 0)) * modifier;
 
       case CAR_SORT.YEAR:
         return ((a.year || 0) - (b.year || 0)) * modifier;
