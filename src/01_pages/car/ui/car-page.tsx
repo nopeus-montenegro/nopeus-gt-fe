@@ -1,11 +1,11 @@
-import { SetupList } from '@/02_widgets/setup-list';
+import { SetupTrackList } from '@/02_widgets/setup-list';
 import { CarInclude, CarStickyHeader } from '@/04_entities/car';
 import { getCar } from '@/04_entities/car/index.server';
 import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { getLapTimeTrack } from '@/04_entities/lap-time/index.server';
-import { SetupTrack } from '@/04_entities/setup';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs/ui/breadcrumbs';
+import { fetchMoreLapTimesTrack } from '@/app/actions/lap-times';
 import { notFound } from 'next/navigation';
 
 interface Props {
@@ -33,9 +33,11 @@ export async function CarPage({ carId, searchParams }: Props) {
         <Breadcrumbs dynamicNames={{ [carId]: `${car.manufacturer} ${car.name} ${car.year}` }} />
       </div>
 
-      <SetupList
+      <SetupTrackList
         lapTimeList={lapTimes}
-        renderItem={lapTime => <SetupTrack key={lapTime.id} lapTime={lapTime} />}
+        id={carId}
+        searchParams={await searchParams}
+        fetch={fetchMoreLapTimesTrack}
       />
     </div>
   );

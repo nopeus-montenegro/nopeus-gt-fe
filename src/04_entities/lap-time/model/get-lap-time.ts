@@ -8,12 +8,26 @@ import { parsePrismaEnum } from '@/05_shared/utils/parse-prisma-enum';
 import { AspirationType, BopTrackClass, CarClass, Drivetrain, EngineLayout, OvertakeType, Prisma, TrackClass, TrackRegion, TrackSurface, VerificationStatus } from '@prisma/client';
 import { lapTimeCarInclude, lapTimeTrackInclude } from './config';
 
+function getSetupLimits(searchParams: ResolvedPageSearchParams): Prisma.SetupWhereInput {
+  const [ppMin, ppMax] = parseLimits(searchParams[SETUP_FILTER.PP_LIM_MIN], searchParams[SETUP_FILTER.PP_LIM_MAX], MAX_LIMITS.PP);
+  const [powerMin, powerMax] = parseLimits(searchParams[SETUP_FILTER.POWER_LIM_MIN], searchParams[SETUP_FILTER.POWER_LIM_MAX], MAX_LIMITS.POWER);
+  const [torqueMin, torqueMax] = parseLimits(searchParams[SETUP_FILTER.TORQUE_LIM_MIN], searchParams[SETUP_FILTER.TORQUE_LIM_MAX], MAX_LIMITS.TORQUE);
+  const [weighMin, weighMax] = parseLimits(searchParams[SETUP_FILTER.WEIGHT_LIM_MIN], searchParams[SETUP_FILTER.WEIGHT_LIM_MAX], MAX_LIMITS.WEIGHT);
+  const [wprMin, wprMax] = parseLimits(searchParams[SETUP_FILTER.WPR_LIM_MIN], searchParams[SETUP_FILTER.WPR_LIM_MAX], MAX_LIMITS.WPR);
+
+  return {
+    isBase: false,
+    pp: (ppMin > 0 || ppMax < MAX_LIMITS.PP) ? { gte: ppMin, lte: ppMax } : undefined,
+    power: (powerMin > 0 || powerMax < MAX_LIMITS.POWER) ? { gte: powerMin, lte: powerMax } : undefined,
+    torque: (torqueMin > 0 || torqueMax < MAX_LIMITS.TORQUE) ? { gte: torqueMin, lte: torqueMax } : undefined,
+    weight: (weighMin > 0 || weighMax < MAX_LIMITS.WEIGHT) ? { gte: weighMin, lte: weighMax } : undefined,
+    wpr: (wprMin > 0 || wprMax < MAX_LIMITS.WPR) ? { gte: wprMin, lte: wprMax } : undefined,
+  };
+}
+
 export const getLapTimeCar = cache(async function (trackId: string, searchParams: ResolvedPageSearchParams) {
-  const [ppMinParsed, ppMaxParsed] = parseLimits(searchParams[SETUP_FILTER.PP_LIM_MIN], searchParams[SETUP_FILTER.PP_LIM_MAX], MAX_LIMITS.PP);
-  const [powerMinParsed, powerMaxParsed] = parseLimits(searchParams[SETUP_FILTER.POWER_LIM_MIN], searchParams[SETUP_FILTER.POWER_LIM_MAX], MAX_LIMITS.POWER);
-  const [torqueMinParsed, torqueMaxParsed] = parseLimits(searchParams[SETUP_FILTER.TORQUE_LIM_MIN], searchParams[SETUP_FILTER.TORQUE_LIM_MAX], MAX_LIMITS.TORQUE);
-  const [weighMinParsed, weighMaxParsed] = parseLimits(searchParams[SETUP_FILTER.WEIGHT_LIM_MIN], searchParams[SETUP_FILTER.WEIGHT_LIM_MAX], MAX_LIMITS.WEIGHT);
-  const [wprMinParsed, wprMaxParsed] = parseLimits(searchParams[SETUP_FILTER.WPR_LIM_MIN], searchParams[SETUP_FILTER.WPR_LIM_MAX], MAX_LIMITS.WPR);
+  const LIMIT = 12;
+  const currentPage = Number(searchParams.page) || 1;
 
   const where: Prisma.LapTimeWhereInput = {
     trackId,
@@ -22,14 +36,7 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
     lapTime: searchParams[LAP_TIME_FILTER.HAS_TIME] === 'true' ? { not: 0 } : undefined,
 
     setup: {
-      isBase: false,
-
-      pp: (ppMinParsed > 0 || ppMaxParsed < MAX_LIMITS.PP) ? { gte: ppMinParsed, lte: ppMaxParsed } : undefined,
-      power: (powerMinParsed > 0 || powerMaxParsed < MAX_LIMITS.POWER) ? { gte: powerMinParsed, lte: powerMaxParsed } : undefined,
-      torque: (torqueMinParsed > 0 || torqueMaxParsed < MAX_LIMITS.TORQUE) ? { gte: torqueMinParsed, lte: torqueMaxParsed } : undefined,
-      weight: (weighMinParsed > 0 || weighMaxParsed < MAX_LIMITS.WEIGHT) ? { gte: weighMinParsed, lte: weighMaxParsed } : undefined,
-      wpr: (wprMinParsed > 0 || wprMaxParsed < MAX_LIMITS.WPR) ? { gte: wprMinParsed, lte: wprMaxParsed } : undefined,
-
+      ...getSetupLimits(searchParams),
       car: {
         class: parsePrismaEnum(searchParams[CAR_FILTER.CAR_CLASS], CarClass),
         drivetrain: parsePrismaEnum(searchParams[CAR_FILTER.DRIVETRAIN], Drivetrain),
@@ -81,30 +88,23 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
       include: lapTimeCarInclude,
       distinct: ['setupId'],
       orderBy,
+      take: LIMIT,
+      skip: (currentPage - 1) * LIMIT,
     })
   );
 });
 
 export const getLapTimeTrack = cache(async function (carId: string, searchParams: ResolvedPageSearchParams) {
-  const [ppMinParsed, ppMaxParsed] = parseLimits(searchParams[SETUP_FILTER.PP_LIM_MIN], searchParams[SETUP_FILTER.PP_LIM_MAX], MAX_LIMITS.PP);
-  const [powerMinParsed, powerMaxParsed] = parseLimits(searchParams[SETUP_FILTER.POWER_LIM_MIN], searchParams[SETUP_FILTER.POWER_LIM_MAX], MAX_LIMITS.POWER);
-  const [torqueMinParsed, torqueMaxParsed] = parseLimits(searchParams[SETUP_FILTER.TORQUE_LIM_MIN], searchParams[SETUP_FILTER.TORQUE_LIM_MAX], MAX_LIMITS.TORQUE);
-  const [weighMinParsed, weighMaxParsed] = parseLimits(searchParams[SETUP_FILTER.WEIGHT_LIM_MIN], searchParams[SETUP_FILTER.WEIGHT_LIM_MAX], MAX_LIMITS.WEIGHT);
-  const [wprMinParsed, wprMaxParsed] = parseLimits(searchParams[SETUP_FILTER.WPR_LIM_MIN], searchParams[SETUP_FILTER.WPR_LIM_MAX], MAX_LIMITS.WPR);
+  const LIMIT = 12;
+  const currentPage = Number(searchParams.page) || 1;
 
   const where: Prisma.LapTimeWhereInput = {
     status: searchParams[LAP_TIME_FILTER.IS_VERIFIED] === 'true' ? VerificationStatus.VERIFIED : undefined,
     lapTime: searchParams[LAP_TIME_FILTER.HAS_TIME] === 'true' ? { not: 0 } : undefined,
 
     setup: {
+      ...getSetupLimits(searchParams),
       carId,
-      isBase: false,
-
-      pp: (ppMinParsed > 0 || ppMaxParsed < MAX_LIMITS.PP) ? { gte: ppMinParsed, lte: ppMaxParsed } : undefined,
-      power: (powerMinParsed > 0 || powerMaxParsed < MAX_LIMITS.POWER) ? { gte: powerMinParsed, lte: powerMaxParsed } : undefined,
-      torque: (torqueMinParsed > 0 || torqueMaxParsed < MAX_LIMITS.TORQUE) ? { gte: torqueMinParsed, lte: torqueMaxParsed } : undefined,
-      weight: (weighMinParsed > 0 || weighMaxParsed < MAX_LIMITS.WEIGHT) ? { gte: weighMinParsed, lte: weighMaxParsed } : undefined,
-      wpr: (wprMinParsed > 0 || wprMaxParsed < MAX_LIMITS.WPR) ? { gte: wprMinParsed, lte: wprMaxParsed } : undefined,
     },
 
     track: {
@@ -157,6 +157,8 @@ export const getLapTimeTrack = cache(async function (carId: string, searchParams
       include: lapTimeTrackInclude,
       orderBy,
       distinct: ['setupId', 'trackId'],
+      take: LIMIT,
+      skip: (currentPage - 1) * LIMIT,
     })
   );
 });

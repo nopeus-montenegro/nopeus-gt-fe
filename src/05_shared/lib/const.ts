@@ -1,3 +1,7 @@
+export const enum SERVICE_SEARCH_PARAMS {
+  PAGE = 'page',
+}
+
 export const enum SORT_DIRECTION {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
