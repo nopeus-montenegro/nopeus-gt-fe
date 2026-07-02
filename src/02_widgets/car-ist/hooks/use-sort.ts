@@ -6,7 +6,7 @@ export function useSort(cars: CarInclude[]) {
   const searchParams = useSearchParams();
 
   const sortDirection = searchParams.get(SORT_TYPE.DIRECTION) || SORT_DIRECTION.ASCENDING;
-  const sortBy = searchParams.get(SORT_TYPE.DATA) || CAR_SORT.NAME;
+  const sortBy = searchParams.get(SORT_TYPE.DATA) || CAR_SORT.MANUFACTURER;
 
   const modifier = sortDirection === SORT_DIRECTION.ASCENDING ? 1 : -1;
 
@@ -36,9 +36,9 @@ export function useSort(cars: CarInclude[]) {
       case CAR_SORT.GEARBOX:
         return ((a.gearbox || 0) - (b.gearbox || 0)) * modifier;
 
-      case CAR_SORT.NAME:
+      case CAR_SORT.MANUFACTURER:
       default:
-        return a.name.localeCompare(b.name) * modifier;
+        return a.manufacturer.localeCompare(b.manufacturer) * modifier;
     }
   });
 }

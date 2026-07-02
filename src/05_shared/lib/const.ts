@@ -61,7 +61,7 @@ export const enum TRACK_FILTER {
 }
 
 export const enum CAR_SORT {
-  NAME = 'name',
+  MANUFACTURER = 'man',
   YEAR = 'year',
   DISPLACEMENT = 'disp',
   GEARBOX = 'gear',

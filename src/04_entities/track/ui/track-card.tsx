@@ -36,7 +36,7 @@ export function TrackCard({ track }: Props) {
             )}
         </div>
 
-        <div className="flex items-center justify-center w-10 h-10 mt-1.5 rounded-full bg-secondary/30 backdrop-blur-sm overflow-hidden shrink-0">
+        <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 mt-1.5 rounded-full bg-secondary/30 backdrop-blur-sm overflow-hidden shrink-0">
           <ReactCountryFlag
             countryCode={countryCodes.findOne('countryNameEn', track.country)?.countryCode as string}
             svg
@@ -52,7 +52,7 @@ export function TrackCard({ track }: Props) {
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">
         <div className="flex flex-col gap-2">
-          <Badge variant="outline" className="h-10 border border-accent/30 bg-accent/10 text-accent">
+          <Badge variant="outline" className="h-7 sm:h-10 border border-accent/30 bg-accent/10 text-accent">
             BoP:
             {' '}
             {BOP_CLASS_LABEL[track.bopClass]}
@@ -60,23 +60,23 @@ export function TrackCard({ track }: Props) {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[track.trackClass]}`}>
+          <div className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[track.trackClass]}`}>
             <ClassIcon className="w-6 h-6" />
           </div>
 
           {track.hasSophy && (
-            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Sophy available">
+            <div className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Sophy available">
               <HeartCrack className="w-6 h-6 text-purple-400/80" />
             </div>
           )}
 
           {track.hasRain && (
-            <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Rain available">
+            <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title="Rain available">
               <CloudHail className="w-5 h-5 text-blue-400/80" />
             </div>
           )}
 
-          <div className="flex items-center justify-center w-10 h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[track.surface]}`}>
+          <div className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[track.surface]}`}>
             <SurfaceIcon className="w-5 h-5 text-white/60" />
           </div>
         </div>

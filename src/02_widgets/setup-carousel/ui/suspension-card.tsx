@@ -23,10 +23,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Body Height Adjustment:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {susBodyHeightFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -34,10 +34,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Anti-Roll Bar:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {susAntiRollBarFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -45,10 +45,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Damping Ratio (Compression):</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {susDampingCompFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -56,10 +56,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Damping Ratio (Expansion):</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {susDampingExpFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -67,10 +67,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Natural Frequency:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {(susNaturalFreqFront).toFixed(2)}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -78,10 +78,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Negative Camber Angle:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {(susCamberFront).toFixed(1)}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -89,10 +89,10 @@ export function SuspensionCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Toe Angle:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {(susToeFront).toFixed(2)}
           <span className="mt-1 text-xs text-slate-400">rear</span>

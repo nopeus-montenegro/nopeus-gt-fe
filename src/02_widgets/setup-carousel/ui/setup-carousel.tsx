@@ -30,11 +30,11 @@ export function SetupCarousel({ setup }: Props) {
   return (
     <Carousel
       opts={{ align: 'start' }}
-      className="w-full flex-1"
+      className="flex-1 min-h-0 w-full"
     >
-      <CarouselContent>
-        <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100vh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+      <CarouselContent className="h-full">
+        <CarouselItem className="flex h-full pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+          <div className="relative flex-1 h-full w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <EngineCard setup={setup} />
 
             <GtAutoCard setup={setup} />
@@ -42,7 +42,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100vh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <TyresCard setup={setup} />
 
             <SuspensionCard setup={setup} />
@@ -52,7 +52,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100vh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <AerodynamicsCard setup={setup} />
 
             <EcuCard setup={setup} />
@@ -66,7 +66,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100vh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <SuperchargerCard setup={setup} />
 
             <TransmissionCard setup={setup} />
@@ -76,7 +76,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100vh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <SteeringCard setup={setup} />
 
             <DrivetrainCard setup={setup} />
@@ -88,9 +88,9 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
       </CarouselContent>
 
-      <CarouselPrevious className="absolute xl:flex -top-18 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
+      <CarouselPrevious className="absolute hidden md:flex -top-18 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
 
-      <CarouselNext className="absolute xl:flex -top-18 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
+      <CarouselNext className="absolute hidden md:flex -top-18 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
     </Carousel>
   );
 }

@@ -12,9 +12,9 @@ export async function SetupPage({ setupId }: Props) {
   const setup = await getSetup(setupId) as SetupInclude;
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex items-center justify-between py-8 px-20">
-        <h1 className="text-2xl font-bold text-white">
+    <div className="flex flex-col h-dvh w-full">
+      <div className="flex items-center justify-between py-4 md:py-8 px-0.5 md:px-20">
+        <h1 className="text-xl md:text-2xl font-bold text-white">
           <p>
             {setup.title}
           </p>
@@ -28,7 +28,7 @@ export async function SetupPage({ setupId }: Props) {
           </p>
         </h1>
 
-        <div className="flex flex-wrap gap-2 items-stretch">
+        <div className="flex flex-row-reverse flex-wrap gap-2 items-stretch">
           <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
             {setup.car.class !== 'ROAD' && `${CAR_CLASS[setup.car.class]} / `}
             {'PP '}
@@ -36,16 +36,8 @@ export async function SetupPage({ setupId }: Props) {
           </Badge>
 
           <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {setup.car.aspiration.replace('_', ' + ')}
-          </Badge>
-
-          <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
             {setup.car.engineLayout}
             -ENGINE
-          </Badge>
-
-          <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {setup.car.drivetrain}
           </Badge>
 
           {
@@ -64,6 +56,14 @@ export async function SetupPage({ setupId }: Props) {
               </Badge>
             )
           }
+
+          <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+            {setup.car.aspiration.replace('_', ' + ')}
+          </Badge>
+
+          <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+            {setup.car.drivetrain}
+          </Badge>
         </div>
       </div>
 

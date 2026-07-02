@@ -23,7 +23,7 @@ export function CarList({ cars }: Props) {
   }, {} as Record<string, CarInclude[]>);
 
   return (
-    Object.entries(groupedCars).map(([manufacturer, carList]) => (
+    Object.entries(groupedCars).toSorted(([a], [b]) => a.localeCompare(b)).map(([manufacturer, carList]) => (
       <section key={manufacturer} className="space-y-3">
         <div className="flex items-center gap-4 mb-6">
           <h2 className="text-2xl font-semibold tracking-tight">{manufacturer}</h2>

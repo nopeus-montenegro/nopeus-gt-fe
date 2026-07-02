@@ -6,22 +6,22 @@ import { CarClass } from '@prisma/client';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-12 min-h-screen items-center justify-center text-slate-50 antialiased">
-      <h1 className="text-6xl font-black tracking-tighter uppercase italic">
+    <div className="flex flex-col gap-12 min-h-screen w-full items-center justify-center text-slate-50 antialiased">
+      <h1 className="text-5xl text-center font-black tracking-tighter uppercase italic">
         Nopeus
-        {' '}
+        &nbsp;
         <span className="text-blue-500 not-italic">GT</span>
       </h1>
 
-      <div className="flex gap-4 mt-4">
-        <Link href="/track">
-          <Button className="min-w-60" variant="outline" size="lg">
+      <div className="flex flex-col gap-4 mt-4 px-6 w-full sm:flex-row sm:w-auto">
+        <Link className="w-full" href="/track">
+          <Button className="w-full min-w-60" variant="outline" size="lg">
             TRACKS
           </Button>
         </Link>
 
-        <Link href="/car">
-          <Button className="min-w-60" variant="outline" size="lg">
+        <Link className="w-full" href="/car">
+          <Button className="w-full min-w-60" variant="outline" size="lg">
             CARS
           </Button>
         </Link>

@@ -57,9 +57,9 @@ export default function RootLayout({
             />
           </div>
 
-          <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E')]" />
 
-          <main className="relative z-10 container mx-auto px-6 lg:px-12 min-h-screen">
+          <main className="relative z-10 container mx-auto px-6 lg:px-12 min-h-dvh w-full">
             {children}
           </main>
         </div>

@@ -24,10 +24,10 @@ export function DifferentialCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Initial Torque:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {diffInitTorqueFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -35,10 +35,10 @@ export function DifferentialCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Acceleration Sensitivity:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {diffAccelSensFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
@@ -46,10 +46,10 @@ export function DifferentialCard({ setup }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 md:gap-0.5 lg:gap-3 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Braking Sensitivity:</div>
 
-        <div className="grid grid-cols-[repeat(4,2rem)] align-middle gap-2 text-base text-end text-white">
+        <div className="self-end sm:justify-self-end grid grid-cols-[repeat(4,2rem)] gap-3 md:gap-0.5 lg:gap-3 text-base text-end text-white">
           <span className="mt-1 text-xs text-slate-400">front</span>
           {diffBrakeSensFront}
           <span className="mt-1 text-xs text-slate-400">rear</span>
