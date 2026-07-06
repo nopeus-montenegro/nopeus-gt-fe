@@ -52,7 +52,6 @@ export const enum TRACK_SORT {
 
 export const enum TRACK_FILTER {
   REGION = 'region',
-  COUNTRY = 'country',
   SURFACE = 'surface',
   TRACK_CLASS = 'class',
   BOP = 'bop',

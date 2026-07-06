@@ -1,6 +1,7 @@
+import { useSearchParams } from 'next/navigation';
+
 import { TRACK_FILTER } from '@/05_shared/lib/const';
 import { Track } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
 
 export function useFilter(tracks: Track[]) {
   const searchParams = useSearchParams();
@@ -18,23 +19,23 @@ export function useFilter(tracks: Track[]) {
   }
 
   if (trackClass.length > 0) {
-    filtered = filtered.filter(t => trackClass.includes(t.region));
+    filtered = filtered.filter(t => trackClass.includes(t.trackClass));
   }
 
   if (bop.length > 0) {
-    filtered = filtered.filter(t => bop.includes(t.region));
+    filtered = filtered.filter(t => bop.includes(t.bopClass));
   }
 
   if (surface.length > 0) {
-    filtered = filtered.filter(t => surface.includes(t.region));
+    filtered = filtered.filter(t => surface.includes(t.surface));
   }
 
   if (rain !== null) {
-    filtered = filtered.filter(t => String(t.hasRain) === rain);
+    filtered = filtered.filter(t => t.hasRain);
   }
 
   if (sophy !== null) {
-    filtered = filtered.filter(t => String(t.hasSophy) === sophy);
+    filtered = filtered.filter(t => t.hasSophy);
   }
 
   return filtered;

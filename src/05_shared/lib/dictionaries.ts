@@ -1,6 +1,7 @@
 import {
   AirCleanerType, AntiLagType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, EcuType, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
 } from '@prisma/client';
+import { TRACK_SORT } from './const';
 
 export const REGION_LABEL: Record<TrackRegion, string> = {
   [TrackRegion.EUROPE_MIDDLE_EAST]: 'Europe & Middle East',
@@ -203,4 +204,12 @@ export const TYRES: Record<TyreType, string> = {
   [TyreType.W]: 'Heavy Wet',
   [TyreType.D]: 'Dirt',
   [TyreType.S]: 'Snow',
+};
+
+export const TRACK_SORT_LABELS: Record<TRACK_SORT, string> = {
+  [TRACK_SORT.NAME]: 'By Name',
+  [TRACK_SORT.LENGTH]: 'By Length',
+  [TRACK_SORT.STRAIGHT]: 'By Longest Straight',
+  [TRACK_SORT.CORNERS]: 'By Corners Count',
+  [TRACK_SORT.ELEVATION]: 'By Elevation Difference',
 };

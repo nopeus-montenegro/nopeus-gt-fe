@@ -1,6 +1,7 @@
+import { useSearchParams } from 'next/navigation';
+
 import { SORT_DIRECTION, SORT_TYPE, TRACK_SORT } from '@/05_shared/lib/const';
 import { Track } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
 
 export function useSort(tracks: Track[]) {
   const searchParams = useSearchParams();

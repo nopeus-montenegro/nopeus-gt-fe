@@ -1,4 +1,5 @@
 import { TrackList } from '@/02_widgets/track-list';
+import { TrackFilters } from '@/03_features/filter-sort';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { Suspense } from 'react';
@@ -16,6 +17,10 @@ export async function TrackListPage() {
       </header>
 
       <Breadcrumbs />
+
+      <Suspense>
+        <TrackFilters />
+      </Suspense>
 
       <div className="space-y-12">
         <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
