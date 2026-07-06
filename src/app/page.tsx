@@ -6,7 +6,7 @@ import { CarClass } from '@prisma/client';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-12 min-h-screen w-full items-center justify-center text-slate-50 antialiased">
+    <div className="flex flex-col gap-12 min-h-dvh w-full items-center justify-center text-slate-50 antialiased">
       <h1 className="text-5xl text-center font-black tracking-tighter uppercase italic">
         Nopeus
         &nbsp;

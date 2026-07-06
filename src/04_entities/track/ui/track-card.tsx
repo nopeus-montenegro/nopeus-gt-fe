@@ -6,9 +6,7 @@ import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
-import {
-  Card, CardContent, CardHeader, CardTitle,
-} from '@/05_shared/ui/shadcn/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {

@@ -21,45 +21,52 @@ export function TrackStickyHeader({ track }: Props) {
 
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
 
-  const touchStartY = useRef<number | null>(null);
-  const touchCurrentY = useRef<number | null>(null);
-
   const isDesktop = typeof window !== 'undefined'
     ? window.matchMedia('(min-width: 768px)').matches
     : false;
   const isExpanded = isDesktop ? !isScrolled : isMobileExpanded;
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
+  const pointerStartY = useRef<number | null>(null);
+  const pointerCurrentY = useRef<number | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    pointerStartY.current = e.clientY;
+    pointerCurrentY.current = null;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchCurrentY.current = e.touches[0].clientY;
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (pointerStartY.current === null) return;
+
+    pointerCurrentY.current = e.clientY;
   };
 
-  const handleTouchEnd = () => {
-    if (!touchStartY.current || !touchCurrentY.current) return;
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (pointerStartY.current === null) return;
 
-    const swipeDistance = touchCurrentY.current - touchStartY.current;
-    const swipeThreshold = 20;
+    const distance = pointerCurrentY.current !== null
+      ? pointerCurrentY.current - pointerStartY.current
+      : 0;
 
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-      if (swipeDistance > 0) {
-        setIsMobileExpanded(true);
-      } else {
-        setIsMobileExpanded(false);
-      }
+    const swipeThreshold = 30;
+
+    if (Math.abs(distance) > swipeThreshold) {
+      setIsMobileExpanded(distance > 0);
+    } else {
+      setIsMobileExpanded(prev => !prev);
     }
 
-    touchStartY.current = null;
-    touchCurrentY.current = null;
+    pointerStartY.current = null;
+    pointerCurrentY.current = null;
+
+    (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
   };
 
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
   return (
-    <div className="fixed top-0 md:top-8 md:px-8 right-0 z-20 flex justify-center w-full transition-colors duration-300">
+    <div className="fixed top-0 md:top-8 md:px-8 right-0 z-20 flex justify-center w-full transition-colors duration-300 touch-none">
       <div className="container max-w-5xl">
         <div className={cn(
           'rounded-b-2xl md:rounded-2xl border border-secondary/5 bg-secondary/30 backdrop-blur-sm pb-4 md:pb-0 transition-all duration-300',
@@ -67,7 +74,7 @@ export function TrackStickyHeader({ track }: Props) {
         )}
         >
           <div className={cn(isExpanded ? 'py-4 px-6 md:py-6 max-h-[80dvh] overflow-y-auto overscroll-contain scrollbar-none' : 'px-6 py-4 overflow-hidden max-h-none md:overflow-visible')}>
-            <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
                   <ReactCountryFlag
@@ -175,16 +182,15 @@ export function TrackStickyHeader({ track }: Props) {
           </div>
 
           <div
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onClick={() => setIsMobileExpanded(prev => !prev)}
-            className="block md:hidden w-full cursor-pointer group select-none"
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            className="block md:hidden w-full cursor-pointer group select-none py-1"
           >
             <div
               className={cn(
                 'w-12 h-1.5 mx-auto rounded-full bg-slate-400/40 transition-transform duration-200 group-hover:bg-slate-400',
-                isExpanded ? 'mt-4 scale-x-75 opacity-60' : 'rotate-0',
+                isExpanded ? 'scale-x-85 opacity-60' : 'rotate-0',
               )}
             />
           </div>
