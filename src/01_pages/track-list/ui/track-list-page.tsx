@@ -1,6 +1,7 @@
 import { TrackList } from '@/02_widgets/track-list';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
+import { Suspense } from 'react';
 
 export async function TrackListPage() {
   const tracks = await prisma.track.findMany({
@@ -17,7 +18,9 @@ export async function TrackListPage() {
       <Breadcrumbs />
 
       <div className="space-y-12">
-        <TrackList tracks={tracks} />
+        <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+          <TrackList tracks={tracks} />
+        </Suspense>
       </div>
     </div>
   );

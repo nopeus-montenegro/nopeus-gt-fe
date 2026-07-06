@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { CarList } from '@/02_widgets/car-ist';
 import { carInclude, CarInclude } from '@/04_entities/car';
 import { prisma } from '@/05_shared/lib/prisma/db';
@@ -22,7 +24,9 @@ export async function CarListPage() {
       <Breadcrumbs />
 
       <div className="space-y-12">
-        <CarList cars={cars} />
+        <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+          <CarList cars={cars} />
+        </Suspense>
       </div>
     </div>
   );
