@@ -14,7 +14,7 @@ import { useUrlFilters } from '../hooks/use-url-filters';
 export function TrackFilters() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { searchParams, setFilter, clearFilters } = useUrlFilters();
+  const { searchParams, setFilter } = useUrlFilters();
 
   const regionRef = useComboboxAnchor();
   const surfaceRef = useComboboxAnchor();
@@ -37,7 +37,7 @@ export function TrackFilters() {
       <button
         onClick={toggleDrawer}
         type="button"
-        className="group fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/90 px-4 py-3 text-sm font-medium text-slate-200 shadow-xl backdrop-blur-md transition-transform hover:scale-105 active:scale-95"
+        className="group fixed bottom-6 right-6 z-40 m-0 px-4 py-3 flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/90 text-sm font-medium text-slate-200 shadow-xl backdrop-blur-md transition-transform hover:scale-105 active:scale-95"
       >
         <SlidersHorizontal className="w-5 h-5 text-slate-400" />
         <span className="hidden md:group-hover:block ">Filters</span>
@@ -46,17 +46,17 @@ export function TrackFilters() {
       {isOpen && (
         <div
           onClick={toggleDrawer}
-          className="fixed inset-0 z-40 mb-0 bg-black/60 backdrop-blur-sm transition-all"
+          className="fixed inset-0 z-40 mb-0 bg-black/60 backdrop-blur-sm transition-all overscroll-contain"
         />
       )}
 
       <div
-        className={`fixed z-50 border-zinc-800 bg-zinc-950 p-6 text-slate-200 shadow-2xl transition-transform duration-300 ease-in-out
+        className={`fixed z-50 border-zinc-800 bg-zinc-950 p-6 m-0 text-slate-200 shadow-2xl transition-transform duration-300 ease-in-out overscroll-contain
           /* Mobile */
-          bottom-0 left-0 right-0 max-h-[85vh] rounded-t-2xl border-t translate-y-full overflow-y-auto
+          bottom-0 left-0 right-0 max-h-[90dvh] rounded-t-2xl border-t overflow-y-auto
           /* Desktop */
           md:top-0 md:right-0 md:left-auto md:h-full md:w-85 md:max-h-screen md:rounded-none md:rounded-l-2xl md:border-l md:border-t-0 md:translate-y-0
-          ${isOpen ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-x-full'}
+          ${isOpen ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-y-0 md:translate-x-full'}
         `}
       >
         <div className="flex items-center justify-between border-b border-zinc-900 pb-4">
@@ -66,7 +66,7 @@ export function TrackFilters() {
             onClick={toggleDrawer}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
           >
-            <ArrowBigRightDash className="w-6 h-6" />
+            <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
           </button>
         </div>
 
@@ -122,7 +122,7 @@ export function TrackFilters() {
               value={currentRegion}
               onValueChange={key => setFilter(TRACK_FILTER.REGION, key.join(','))}
             >
-              <ComboboxChips ref={regionRef} className="w-full max-w-xs bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={regionRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
@@ -161,7 +161,7 @@ export function TrackFilters() {
               value={currentSurface}
               onValueChange={key => setFilter(TRACK_FILTER.SURFACE, key.join(','))}
             >
-              <ComboboxChips ref={surfaceRef} className="w-full max-w-xs bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={surfaceRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
@@ -200,7 +200,7 @@ export function TrackFilters() {
               value={currentTrackClass}
               onValueChange={key => setFilter(TRACK_FILTER.TRACK_CLASS, key.join(','))}
             >
-              <ComboboxChips ref={classRef} className="w-full max-w-xs bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={classRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
@@ -239,7 +239,7 @@ export function TrackFilters() {
               value={currentBopClass}
               onValueChange={key => setFilter(TRACK_FILTER.BOP, key.join(','))}
             >
-              <ComboboxChips ref={bopRef} className="w-full max-w-xs bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={bopRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
