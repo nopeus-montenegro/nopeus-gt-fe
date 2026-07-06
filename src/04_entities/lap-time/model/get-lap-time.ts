@@ -59,9 +59,6 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
     case CAR_SORT.GEARBOX:
       orderBy = { setup: { car: { gearbox: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder) || 'asc' } } };
       break;
-    case CAR_SORT.NAME:
-      orderBy = { setup: { car: { name: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder) || 'asc' } } };
-      break;
     case SETUP_SORT.PP:
       orderBy = { setup: { pp: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder) || 'asc' } };
       break;
