@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { CarList } from '@/02_widgets/car-ist';
+import { CarFilters } from '@/03_features/filter-sort';
 import { carInclude, CarInclude } from '@/04_entities/car';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
@@ -28,6 +29,11 @@ export async function CarListPage() {
           <CarList cars={cars} />
         </Suspense>
       </div>
+
+      <Suspense>
+        <CarFilters cars={cars} />
+      </Suspense>
+
     </div>
   );
 }

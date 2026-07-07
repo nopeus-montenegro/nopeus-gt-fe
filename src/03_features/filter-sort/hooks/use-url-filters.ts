@@ -9,14 +9,17 @@ export function useUrlFilters() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const setFilter = useCallback((key: string, value: string | null) => {
+  const setFilter = useCallback((filters: { key: string; value: string | null }[]) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
+    filters.forEach(({ key, value }) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
+
     router.replace(`${pathname}?${params.toString()}` as Route, { scroll: false });
   }, [searchParams, pathname, router]);
 

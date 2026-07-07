@@ -1,7 +1,7 @@
 import {
-  AirCleanerType, AntiLagType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, EcuType, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
+  AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
 } from '@prisma/client';
-import { TRACK_SORT } from './const';
+import { CAR_SORT, SETUP_SORT, TRACK_SORT } from './const';
 
 export const REGION_LABEL: Record<TrackRegion, string> = {
   [TrackRegion.EUROPE_MIDDLE_EAST]: 'Europe & Middle East',
@@ -206,10 +206,50 @@ export const TYRES: Record<TyreType, string> = {
   [TyreType.S]: 'Snow',
 };
 
+export const ASPIRATION: Record<AspirationType, string> = {
+  [AspirationType.EV]: 'Electric Vehicle',
+  [AspirationType.NA]: 'Natural aspiration',
+  [AspirationType.NONE]: 'None',
+  [AspirationType.SC]: 'Supercharger',
+  [AspirationType.TC]: 'Turbocharger',
+  [AspirationType.TC_SC]: 'Turbocharger + Supercharger',
+};
+
+export const DRIVETRAIN: Record<Drivetrain, string> = {
+  [Drivetrain.AWD]: 'Four Wheels Drive',
+  [Drivetrain.FWD]: 'Front Wheels Drive',
+  [Drivetrain.RWD]: 'Rear Wheels Drive',
+};
+
+export const ENGINE_LAYOUT: Record<EngineLayout, string> = {
+  [EngineLayout.FRONT]: 'Front Engine',
+  [EngineLayout.MID]: 'Mid Engine',
+  [EngineLayout.REAR]: 'Rear Engine',
+};
+
+export const OVERTAKE: Record<OvertakeType, string> = {
+  [OvertakeType.DRS]: 'DRS',
+  [OvertakeType.ENGINE_BOOST]: 'Engine Boost',
+  [OvertakeType.KERS]: 'KERS',
+  [OvertakeType.NONE]: 'None',
+};
+
 export const TRACK_SORT_LABELS: Record<TRACK_SORT, string> = {
   [TRACK_SORT.NAME]: 'By Name',
   [TRACK_SORT.LENGTH]: 'By Length',
   [TRACK_SORT.STRAIGHT]: 'By Longest Straight',
   [TRACK_SORT.CORNERS]: 'By Corners Count',
   [TRACK_SORT.ELEVATION]: 'By Elevation Difference',
+};
+
+export const CAR_SORT_LABELS: Record<CAR_SORT & SETUP_SORT, string> = {
+  [CAR_SORT.MANUFACTURER]: 'By Manufacturer',
+  [CAR_SORT.YEAR]: 'By Year',
+  [CAR_SORT.DISPLACEMENT]: 'By Displacement',
+  [CAR_SORT.GEARBOX]: 'By Gears Count',
+  [SETUP_SORT.PP]: 'By PP',
+  [SETUP_SORT.POWER]: 'By Power',
+  [SETUP_SORT.TORQUE]: 'By Torque',
+  [SETUP_SORT.WEIGHT]: 'By Weight',
+  [SETUP_SORT.WPR]: 'By WPR',
 };

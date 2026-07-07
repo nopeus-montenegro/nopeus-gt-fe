@@ -3,7 +3,7 @@ export const enum MAX_LIMITS {
   POWER = 3000,
   TORQUE = 150,
   WEIGHT = 3500,
-  WPR = 5,
+  WPR = 25,
 }
 
 export function parseLimits(min: string | string[] | null | undefined, max: string | string[] | null | undefined, maxLimits: MAX_LIMITS): [number, number] {

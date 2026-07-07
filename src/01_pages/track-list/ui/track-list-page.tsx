@@ -18,15 +18,15 @@ export async function TrackListPage() {
 
       <Breadcrumbs />
 
-      <Suspense>
-        <TrackFilters />
-      </Suspense>
-
       <div className="space-y-12">
         <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
           <TrackList tracks={tracks} />
         </Suspense>
       </div>
+
+      <Suspense>
+        <TrackFilters />
+      </Suspense>
     </div>
   );
 }

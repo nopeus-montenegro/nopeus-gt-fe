@@ -8,6 +8,7 @@ export function useFilter(cars: CarInclude[]) {
   let filtered = [...cars];
 
   const manufacturer = searchParams.get(CAR_FILTER.MANUFACTURER)?.split(',') || [];
+  const country = searchParams.get(CAR_FILTER.COUNTRY)?.split(',') || [];
   const carClass = searchParams.get(CAR_FILTER.CAR_CLASS)?.split(',') || [];
   const drivetrain = searchParams.get(CAR_FILTER.DRIVETRAIN)?.split(',') || [];
   const engineLayout = searchParams.get(CAR_FILTER.ENGINE_LAYOUT)?.split(',') || [];
@@ -22,6 +23,10 @@ export function useFilter(cars: CarInclude[]) {
 
   if (manufacturer.length > 0) {
     filtered = filtered.filter(t => manufacturer.includes(t.manufacturer));
+  }
+
+  if (country.length > 0) {
+    filtered = filtered.filter(t => country.includes(t.country));
   }
 
   if (carClass.length > 0) {

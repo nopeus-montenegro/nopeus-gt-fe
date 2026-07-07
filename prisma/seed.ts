@@ -127,7 +127,7 @@ async function main() {
       torque: parseFloat(basicSetup.torque),
       torqueRpm: parseInt(basicSetup.torqueRpm, 10),
       weight: parseInt(basicSetup.weight, 10),
-      wpr: parseFloat(parseInt(basicSetup.weight, 10 / parseInt(basicSetup.power, 10)).toFixed(2)),
+      wpr: parseFloat((parseInt(basicSetup.weight, 10) / parseInt(basicSetup.power, 10)).toFixed(2)),
       weightBalanceFront: parseInt(basicSetup.weightBalanceFront, 10),
       weightBalanceRear: parseInt(basicSetup.weightBalanceRear, 10),
 
