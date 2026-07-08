@@ -4,7 +4,6 @@ import { AspirationType, CarClass, Drivetrain, EngineLayout, OvertakeType } from
 import { ArrowBigRightDash, ArrowDownAZ, ArrowDownZA, SlidersHorizontal, StickyNoteX } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
-import { LapTimeCarInclude } from '@/04_entities/lap-time';
 import { CAR_FILTER, CAR_SORT, SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { ASPIRATION, CAR_CLASS, DRIVETRAIN, ENGINE_LAYOUT, OVERTAKE, SETUP_CAR_SORT_LABELS } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
@@ -18,13 +17,13 @@ import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
 import { useUrlFilters } from '../hooks/use-url-filters';
 
 interface Props {
-  lapTimes: LapTimeCarInclude[];
+  filterList: {
+    countries: string[];
+    manufacturers: string[];
+  };
 }
 
-export function SetupCarFilters({ lapTimes }: Props) {
-  const countries = lapTimes.reduce<string[]>((acc, lapTime) => acc.includes(lapTime.setup.car.country) ? acc : [...acc, lapTime.setup.car.country], []);
-  const manufacturers = lapTimes.reduce<string[]>((acc, lapTime) => acc.includes(lapTime.setup.car.manufacturer) ? acc : [...acc, lapTime.setup.car.manufacturer], []);
-
+export function SetupCarFilters({ filterList }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const openDrawer = () => {
     setCurrentFilters(getFiltersFromUrl());
@@ -187,7 +186,7 @@ export function SetupCarFilters({ lapTimes }: Props) {
             <Combobox
               multiple
               autoHighlight
-              items={countries}
+              items={filterList.countries}
               value={currentFilters[CAR_FILTER.COUNTRY] ? currentFilters[CAR_FILTER.COUNTRY]?.split(',') : []}
               onValueChange={key => onFiltersChange({ key: CAR_FILTER.COUNTRY, value: key.join(',') })}
             >
@@ -226,7 +225,7 @@ export function SetupCarFilters({ lapTimes }: Props) {
             <Combobox
               multiple
               autoHighlight
-              items={manufacturers}
+              items={filterList.manufacturers}
               value={currentFilters[CAR_FILTER.MANUFACTURER] ? currentFilters[CAR_FILTER.MANUFACTURER]?.split(',') : []}
               onValueChange={key => onFiltersChange({ key: CAR_FILTER.MANUFACTURER, value: key.join(',') })}
             >

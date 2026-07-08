@@ -18,13 +18,7 @@ interface Props {
 
 export function TrackStickyHeader({ track }: Props) {
   const isScrolled = useStickyHeader(240);
-
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
-
-  const isDesktop = typeof window !== 'undefined'
-    ? window.matchMedia('(min-width: 768px)').matches
-    : false;
-  const isExpanded = isDesktop ? !isScrolled : isMobileExpanded;
 
   const pointerStartY = useRef<number | null>(null);
   const pointerCurrentY = useRef<number | null>(null);
@@ -70,10 +64,21 @@ export function TrackStickyHeader({ track }: Props) {
       <div className="container max-w-5xl">
         <div className={cn(
           'rounded-b-2xl md:rounded-2xl border border-secondary/5 bg-secondary/30 backdrop-blur-sm pb-4 md:pb-0 transition-all duration-300',
-          !isExpanded && 'py-4 shadow-xl shadow-black/40',
+          !isMobileExpanded && 'py-4 shadow-xl shadow-black/40',
+          isScrolled
+            ? 'md:py-4 md:shadow-xl md:shadow-black/40'
+            : 'md:py-6 md:shadow-none',
         )}
         >
-          <div className={cn(isExpanded ? 'py-4 px-6 md:py-6 max-h-[80dvh] overflow-y-auto overscroll-contain scrollbar-none' : 'px-6 py-4 overflow-hidden max-h-none md:overflow-visible')}>
+          <div className={cn(
+            isMobileExpanded
+              ? 'py-4 px-6 max-h-[80dvh] overflow-y-auto overscroll-contain scrollbar-none'
+              : 'px-6 py-4 overflow-hidden max-h-none',
+            !isScrolled
+              ? 'md:py-6 md:max-h-[80dvh] md:overflow-y-auto md:overscroll-contain md:scrollbar-none'
+              : 'md:overflow-visible md:max-h-none',
+          )}
+          >
             <div className="flex flex-wrap items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
@@ -87,7 +92,10 @@ export function TrackStickyHeader({ track }: Props) {
                 <div>
                   <h1 className={cn(
                     'font-bold tracking-tight bg-linear-to-br from-white to-white/40 bg-clip-text text-transparent transition-all duration-300',
-                    isExpanded ? 'text-2xl lg:text-3xl' : 'text-xl',
+                    isMobileExpanded ? 'text-2xl' : 'text-xl',
+                    !isScrolled
+                      ? 'md:text-2xl lg:text-3xl'
+                      : 'md:text-xl lg:text-xl',
                   )}
                   >
                     {track.name}
@@ -135,7 +143,12 @@ export function TrackStickyHeader({ track }: Props) {
 
             <div className={cn(
               'grid transition-all duration-300 ease-in-out overflow-hidden',
-              isExpanded ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/5' : 'grid-rows-[0fr] opacity-0 mt-0',
+              isMobileExpanded
+                ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/5'
+                : 'grid-rows-[0fr] opacity-0 mt-0 pt-0 border-t-transparent',
+              !isScrolled
+                ? 'md:grid-rows-[1fr] md:opacity-100 md:mt-6 md:pt-6 md:border-t md:border-white/5'
+                : 'md:grid-rows-[0fr] md:opacity-0 md:mt-0 md:pt-0 md:border-t-transparent',
             )}
             >
               <div className="overflow-hidden">
@@ -190,7 +203,12 @@ export function TrackStickyHeader({ track }: Props) {
             <div
               className={cn(
                 'w-12 h-1.5 mx-auto rounded-full bg-slate-400/40 transition-transform duration-200 group-hover:bg-slate-400',
-                isExpanded ? 'scale-x-85 opacity-60' : 'rotate-0',
+                isMobileExpanded
+                  ? 'scale-x-85 opacity-60'
+                  : 'rotate-0 scale-x-100 opacity-100',
+                !isScrolled
+                  ? 'md:scale-x-85 md:opacity-60'
+                  : 'md:rotate-0 md:scale-x-100 md:opacity-100',
               )}
             />
           </div>

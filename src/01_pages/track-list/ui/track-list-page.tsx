@@ -1,13 +1,11 @@
 import { TrackList } from '@/02_widgets/track-list';
 import { TrackFilters } from '@/03_features/filter-sort';
-import { prisma } from '@/05_shared/lib/prisma/db';
+import { getTrackList } from '@/04_entities/track/index.server';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { Suspense } from 'react';
 
 export async function TrackListPage() {
-  const tracks = await prisma.track.findMany({
-    orderBy: { name: 'asc' },
-  });
+  const tracks = await getTrackList();
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-8">

@@ -1,12 +1,16 @@
 export function parsePrismaEnum<T extends object>(
   value: string | string[] | undefined,
   prismaEnum: T,
-): T[keyof T] | undefined {
-  if (!value || Array.isArray(value)) return undefined;
+): T[keyof T][] {
+  if (!value) return [];
 
-  if (Object.values(prismaEnum).includes(value as unknown)) {
-    return value as T[keyof T];
-  }
+  const rawValues = Array.isArray(value)
+    ? value.flatMap(v => v.split(','))
+    : value.split(',');
 
-  return undefined;
+  const allowedValues = new Set(Object.values(prismaEnum));
+
+  return rawValues
+    .map(v => v.trim())
+    .filter((v): v is T[keyof T] & string => allowedValues.has(v));
 }

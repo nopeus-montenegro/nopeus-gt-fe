@@ -13,8 +13,11 @@ interface Props {
 }
 
 export function SetupTrackList({ lapTimeList, id, searchParams, fetch }: Props) {
+  const resetKey = JSON.stringify(searchParams);
+
   return (
     <SetupList
+      key={resetKey}
       lapTimeList={lapTimeList}
       id={id}
       searchParams={searchParams}

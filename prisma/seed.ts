@@ -1,6 +1,7 @@
 import { AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, EngineUpgradeTier, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, Prisma, PrismaClient, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType, VerificationStatus } from '@prisma/client';
 import { parse } from 'csv-parse/sync';
 import * as fs from 'fs';
+import { revalidateTag } from 'next/cache';
 import * as path from 'path';
 
 const prisma = new PrismaClient({
@@ -64,6 +65,7 @@ async function main() {
     data: carsData,
     skipDuplicates: true,
   });
+  revalidateTag('car-list', 'default');
   console.log(`Cars loaded: ${carsResult.count} new records.`);
 
   console.log('Reading tracks data...');
@@ -89,6 +91,7 @@ async function main() {
     data: tracksData,
     skipDuplicates: true,
   });
+  revalidateTag('track-list', 'default');
   console.log(`Tracks loaded: ${tracksResult.count} new configurations.`);
 
   // --- STAGE 2: Dealership Specs (isBase: true) ---
