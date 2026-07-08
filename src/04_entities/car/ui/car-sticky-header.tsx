@@ -57,7 +57,7 @@ export function CarStickyHeader({ car }: Props) {
   };
 
   return (
-    <div className="fixed top-0 md:top-8 md:px-8 right-0 z-100 flex justify-center w-full transition-colors duration-300 touch-none">
+    <div className="fixed top-0 md:top-8 md:px-8 right-0 z-20 flex justify-center w-full transition-colors duration-300 touch-none">
       <div className="container max-w-5xl">
         <div className={cn(
           'rounded-b-2xl md:rounded-2xl border border-secondary/5 bg-secondary/30 backdrop-blur-sm pb-4 md:pb-0 transition-all duration-300',

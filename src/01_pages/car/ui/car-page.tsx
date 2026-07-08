@@ -1,4 +1,8 @@
+import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+
 import { SetupTrackList } from '@/02_widgets/setup-list';
+import { SetupTrackFilters } from '@/03_features/filter-sort';
 import { CarInclude, CarStickyHeader } from '@/04_entities/car';
 import { getCar } from '@/04_entities/car/index.server';
 import { LapTimeTrackInclude } from '@/04_entities/lap-time';
@@ -6,7 +10,6 @@ import { getLapTimeTrack } from '@/04_entities/lap-time/index.server';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs/ui/breadcrumbs';
 import { fetchMoreLapTimesTrack } from '@/app/actions/lap-times';
-import { notFound } from 'next/navigation';
 
 interface Props {
   carId: string;
@@ -39,6 +42,10 @@ export async function CarPage({ carId, searchParams }: Props) {
         searchParams={await searchParams}
         fetch={fetchMoreLapTimesTrack}
       />
+
+      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+        <SetupTrackFilters />
+      </Suspense>
     </div>
   );
 }

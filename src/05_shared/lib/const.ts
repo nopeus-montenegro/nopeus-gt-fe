@@ -13,8 +13,8 @@ export const enum SORT_TYPE {
 }
 
 export const enum LAP_TIME_FILTER {
-  HAS_TIME = 'time',
-  IS_VERIFIED = 'verified',
+  TIME = 'time',
+  VERIFIED = 'verified',
 }
 
 export const enum LAP_TIME_SORT {

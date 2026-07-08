@@ -32,8 +32,8 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
   const where: Prisma.LapTimeWhereInput = {
     trackId,
 
-    status: searchParams[LAP_TIME_FILTER.IS_VERIFIED] === 'true' ? VerificationStatus.VERIFIED : undefined,
-    lapTime: searchParams[LAP_TIME_FILTER.HAS_TIME] === 'true' ? { not: 0 } : undefined,
+    status: searchParams[LAP_TIME_FILTER.VERIFIED] === 'true' ? VerificationStatus.VERIFIED : undefined,
+    lapTime: searchParams[LAP_TIME_FILTER.TIME] === 'true' ? { not: 0 } : undefined,
 
     setup: {
       ...getSetupLimits(searchParams),
@@ -96,8 +96,8 @@ export const getLapTimeTrack = cache(async function (carId: string, searchParams
   const currentPage = Number(searchParams.page) || 1;
 
   const where: Prisma.LapTimeWhereInput = {
-    status: searchParams[LAP_TIME_FILTER.IS_VERIFIED] === 'true' ? VerificationStatus.VERIFIED : undefined,
-    lapTime: searchParams[LAP_TIME_FILTER.HAS_TIME] === 'true' ? { not: 0 } : undefined,
+    status: searchParams[LAP_TIME_FILTER.VERIFIED] === 'true' ? VerificationStatus.VERIFIED : undefined,
+    lapTime: searchParams[LAP_TIME_FILTER.TIME] === 'true' ? { not: 0 } : undefined,
 
     setup: {
       ...getSetupLimits(searchParams),

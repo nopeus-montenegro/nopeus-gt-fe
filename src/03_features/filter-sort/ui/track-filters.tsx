@@ -24,6 +24,7 @@ export function TrackFilters() {
 
   const currentSortBy = searchParams.get(SORT_TYPE.DATA) || TRACK_SORT.NAME;
   const currentSortDir = searchParams.get(SORT_TYPE.DIRECTION) || SORT_DIRECTION.ASCENDING;
+
   const currentRegion = searchParams.get(TRACK_FILTER.REGION)?.split(',') as TrackRegion[] || [];
   const currentSurface = searchParams.get(TRACK_FILTER.SURFACE)?.split(',') as TrackSurface[] || [];
   const currentTrackClass = searchParams.get(TRACK_FILTER.TRACK_CLASS)?.split(',') as TrackClass[] || [];
@@ -112,7 +113,7 @@ export function TrackFilters() {
               value={currentSortBy}
               onValueChange={key => setFilter([{ key: SORT_TYPE.DATA, value: key as TRACK_SORT }])}
             >
-              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
                 <SelectValue placeholder="Choose Sort" />
               </SelectTrigger>
 
@@ -294,7 +295,7 @@ export function TrackFilters() {
               <Field orientation="horizontal">
                 <Checkbox id={TRACK_FILTER.RAIN} name={TRACK_FILTER.RAIN} checked={hasRain} onCheckedChange={checked => setFilter([{ key: TRACK_FILTER.RAIN, value: checked ? 'true' : '' }])} />
                 <FieldContent>
-                  <FieldTitle>Rain available</FieldTitle>
+                  <FieldTitle className="text-muted-foreground">Rain available</FieldTitle>
                 </FieldContent>
               </Field>
             </FieldLabel>
@@ -305,7 +306,7 @@ export function TrackFilters() {
               <Field orientation="horizontal">
                 <Checkbox id={TRACK_FILTER.SOPHY} name={TRACK_FILTER.SOPHY} checked={hasSophy} onCheckedChange={checked => setFilter([{ key: TRACK_FILTER.SOPHY, value: checked ? 'true' : '' }])} />
                 <FieldContent>
-                  <FieldTitle>Sophy available</FieldTitle>
+                  <FieldTitle className="text-muted-foreground">Sophy available</FieldTitle>
                 </FieldContent>
               </Field>
             </FieldLabel>

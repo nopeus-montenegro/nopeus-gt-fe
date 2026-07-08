@@ -1,7 +1,7 @@
 import {
   AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
 } from '@prisma/client';
-import { CAR_SORT, SETUP_SORT, TRACK_SORT } from './const';
+import { CAR_SORT, LAP_TIME_SORT, SETUP_SORT, TRACK_SORT } from './const';
 
 export const REGION_LABEL: Record<TrackRegion, string> = {
   [TrackRegion.EUROPE_MIDDLE_EAST]: 'Europe & Middle East',
@@ -253,3 +253,18 @@ export const CAR_SORT_LABELS: Record<CAR_SORT & SETUP_SORT, string> = {
   [SETUP_SORT.WEIGHT]: 'By Weight',
   [SETUP_SORT.WPR]: 'By WPR',
 };
+
+export const SETUP_TRACK_SORT_LABELS: Record<TRACK_SORT & SETUP_SORT & LAP_TIME_SORT, string> = {
+  [TRACK_SORT.NAME]: 'By Name',
+  [TRACK_SORT.LENGTH]: 'By Length',
+  [TRACK_SORT.STRAIGHT]: 'By Longest Straight',
+  [TRACK_SORT.CORNERS]: 'By Corners Count',
+  [TRACK_SORT.ELEVATION]: 'By Elevation Difference',
+  [SETUP_SORT.PP]: 'By PP',
+  [SETUP_SORT.POWER]: 'By Power',
+  [SETUP_SORT.TORQUE]: 'By Torque',
+  [SETUP_SORT.WEIGHT]: 'By Weight',
+  [SETUP_SORT.WPR]: 'By WPR',
+};
+
+export const SETUP_CAR_SORT_LABELS = CAR_SORT_LABELS;

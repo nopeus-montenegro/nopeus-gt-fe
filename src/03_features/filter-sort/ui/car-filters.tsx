@@ -39,6 +39,7 @@ export function CarFilters({ cars }: Props) {
 
   const currentSortBy = searchParams.get(SORT_TYPE.DATA) || CAR_SORT.YEAR;
   const currentSortDir = searchParams.get(SORT_TYPE.DIRECTION) || SORT_DIRECTION.ASCENDING;
+
   const currentCountry = searchParams.get(CAR_FILTER.COUNTRY)?.split(',') || [];
   const currentManufacturer = searchParams.get(CAR_FILTER.MANUFACTURER)?.split(',') || [];
   const isHybrid = searchParams.get(CAR_FILTER.HYBRID) === true.toString();
@@ -146,7 +147,7 @@ export function CarFilters({ cars }: Props) {
               value={currentSortBy}
               onValueChange={key => setFilter([{ key: SORT_TYPE.DATA, value: key as CAR_SORT & SETUP_SORT }])}
             >
-              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
                 <SelectValue placeholder="Choose Sort" />
               </SelectTrigger>
 
@@ -164,7 +165,7 @@ export function CarFilters({ cars }: Props) {
           </div>
         </div>
 
-        <div className="mt-6 space-y-6">
+        <div className="mt-6 space-y-4">
           <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
 
           <div className="space-y-2">
@@ -442,10 +443,10 @@ export function CarFilters({ cars }: Props) {
 
           <div className="space-y-2">
             <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
-              <Field orientation="horizontal">
+              <Field orientation="horizontal" className="gap-3">
                 <Checkbox id={CAR_FILTER.HYBRID} name={CAR_FILTER.HYBRID} checked={isHybrid} onCheckedChange={checked => setFilter([{ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' }])} />
                 <FieldContent>
-                  <FieldTitle>Hybrid</FieldTitle>
+                  <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
                 </FieldContent>
               </Field>
             </FieldLabel>
@@ -453,7 +454,7 @@ export function CarFilters({ cars }: Props) {
 
           <div className="mx-auto grid w-full gap-3 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-pp">PP</Label>
+              <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
               <span className="text-sm text-muted-foreground">
                 {ppSlider[0]}
                 {' - '}
@@ -479,7 +480,7 @@ export function CarFilters({ cars }: Props) {
 
           <div className="mx-auto grid w-full gap-3 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-power">Power</Label>
+              <Label htmlFor="slider-power" className="text-muted-foreground">Power</Label>
               <span className="text-sm text-muted-foreground">
                 {powerSlider[0]}
                 {' - '}
@@ -505,7 +506,7 @@ export function CarFilters({ cars }: Props) {
 
           <div className="mx-auto grid w-full gap-3 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-torque">Torque</Label>
+              <Label htmlFor="slider-torque" className="text-muted-foreground">Torque</Label>
               <span className="text-sm text-muted-foreground">
                 {torqueSlider[0]}
                 {' - '}
@@ -531,7 +532,7 @@ export function CarFilters({ cars }: Props) {
 
           <div className="mx-auto grid w-full gap-3 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-weight">Weight</Label>
+              <Label htmlFor="slider-weight" className="text-muted-foreground">Weight</Label>
               <span className="text-sm text-muted-foreground">
                 {weightSlider[0]}
                 {' - '}
@@ -557,7 +558,7 @@ export function CarFilters({ cars }: Props) {
 
           <div className="mx-auto grid w-full gap-3 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-wpr">WPR</Label>
+              <Label htmlFor="slider-wpr" className="text-muted-foreground">WPR</Label>
               <span className="text-sm text-muted-foreground">
                 {wprSlider[0]}
                 {' - '}

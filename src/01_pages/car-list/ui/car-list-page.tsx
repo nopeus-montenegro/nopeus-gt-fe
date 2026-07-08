@@ -30,10 +30,9 @@ export async function CarListPage() {
         </Suspense>
       </div>
 
-      <Suspense>
+      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
         <CarFilters cars={cars} />
       </Suspense>
-
     </div>
   );
 }
