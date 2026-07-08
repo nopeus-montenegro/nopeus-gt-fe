@@ -2,18 +2,11 @@ import { Suspense } from 'react';
 
 import { CarList } from '@/02_widgets/car-ist';
 import { CarFilters } from '@/03_features/filter-sort';
-import { carInclude, CarInclude } from '@/04_entities/car';
-import { prisma } from '@/05_shared/lib/prisma/db';
+import { getCarList } from '@/04_entities/car/index.server';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 
 export async function CarListPage() {
-  const cars = await prisma.car.findMany({
-    orderBy: [
-      { manufacturer: 'asc' },
-      { name: 'asc' },
-    ],
-    include: carInclude,
-  }) as CarInclude[];
+  const cars = await getCarList();
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-8">
