@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { SetupCarList } from '@/02_widgets/setup-list';
+import { SetupCarFilters } from '@/03_features/filter-sort';
 import { LapTimeCarInclude } from '@/04_entities/lap-time';
 import { getLapTimeCar } from '@/04_entities/lap-time/index.server';
 import { TrackStickyHeader } from '@/04_entities/track';
@@ -9,6 +10,7 @@ import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { fetchMoreLapTimesCar } from '@/app/actions/lap-times';
 import { Track } from '@prisma/client';
+import { Suspense } from 'react';
 
 interface Props {
   trackId: string;
@@ -41,6 +43,10 @@ export async function TrackPage({ trackId, searchParams }: Props) {
         searchParams={await searchParams}
         fetch={fetchMoreLapTimesCar}
       />
+
+      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+        <SetupCarFilters lapTimes={lapTimes} />
+      </Suspense>
     </div>
   );
 }

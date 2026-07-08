@@ -154,7 +154,7 @@ export function TrackFilters() {
 
                       {
                         currentRegion.length === 0
-                        && <ComboboxChipsInput placeholder={currentRegion ? 'Region' : ''} />
+                        && <ComboboxChipsInput placeholder="Region" />
                       }
                     </>
                   )}
@@ -193,7 +193,7 @@ export function TrackFilters() {
 
                       {
                         currentSurface.length === 0
-                        && <ComboboxChipsInput placeholder={currentSurface ? 'Surface' : ''} />
+                        && <ComboboxChipsInput placeholder="Surface" />
                       }
                     </>
                   )}
@@ -232,7 +232,7 @@ export function TrackFilters() {
 
                       {
                         currentTrackClass.length === 0
-                        && <ComboboxChipsInput placeholder={currentTrackClass ? 'Class' : ''} />
+                        && <ComboboxChipsInput placeholder="Class" />
                       }
                     </>
                   )}
@@ -271,7 +271,7 @@ export function TrackFilters() {
 
                       {
                         currentBopClass.length === 0
-                        && <ComboboxChipsInput placeholder={currentBopClass ? 'BoP' : ''} />
+                        && <ComboboxChipsInput placeholder="BoP" />
                       }
                     </>
                   )}

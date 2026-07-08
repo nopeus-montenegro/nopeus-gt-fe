@@ -14,7 +14,7 @@ import { Label } from '@/05_shared/ui/shadcn/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/05_shared/ui/shadcn/select';
 import { Slider } from '@/05_shared/ui/shadcn/slider';
 import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
-import { AspirationType, CarClass, Drivetrain, EngineLayout, OvertakeType, TrackRegion } from '@prisma/client';
+import { AspirationType, CarClass, Drivetrain, EngineLayout, OvertakeType } from '@prisma/client';
 import { useUrlFilters } from '../hooks/use-url-filters';
 
 interface Props {
@@ -188,7 +188,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentCountry.length === 0
-                        && <ComboboxChipsInput placeholder={currentCountry ? 'Country' : ''} />
+                        && <ComboboxChipsInput placeholder="Country" />
                       }
                     </>
                   )}
@@ -227,7 +227,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentManufacturer.length === 0
-                        && <ComboboxChipsInput placeholder={currentManufacturer ? 'Manufacturer' : ''} />
+                        && <ComboboxChipsInput placeholder="Manufacturer" />
                       }
                     </>
                   )}
@@ -250,7 +250,7 @@ export function CarFilters({ cars }: Props) {
             <Combobox
               multiple
               autoHighlight
-              items={Object.keys(ASPIRATION) as TrackRegion[]}
+              items={Object.keys(ASPIRATION) as AspirationType[]}
               value={currentAspiretion}
               onValueChange={key => setFilter([{ key: CAR_FILTER.ASPIRATION, value: key.join(',') }])}
             >
@@ -266,7 +266,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentAspiretion.length === 0
-                        && <ComboboxChipsInput placeholder={currentAspiretion ? 'Aspiration' : ''} />
+                        && <ComboboxChipsInput placeholder="Aspiration" />
                       }
                     </>
                   )}
@@ -305,7 +305,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentCarClass.length === 0
-                        && <ComboboxChipsInput placeholder={currentCarClass ? 'Car Class' : ''} />
+                        && <ComboboxChipsInput placeholder="Car Class" />
                       }
                     </>
                   )}
@@ -344,7 +344,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentDrivetrain.length === 0
-                        && <ComboboxChipsInput placeholder={currentDrivetrain ? 'Drivetrain' : ''} />
+                        && <ComboboxChipsInput placeholder="Drivetrain" />
                       }
                     </>
                   )}
@@ -383,7 +383,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentEngineLayout.length === 0
-                        && <ComboboxChipsInput placeholder={currentEngineLayout ? 'Engine Layout' : ''} />
+                        && <ComboboxChipsInput placeholder="Engine Layout" />
                       }
                     </>
                   )}
@@ -422,7 +422,7 @@ export function CarFilters({ cars }: Props) {
 
                       {
                         currentOvertake.length === 0
-                        && <ComboboxChipsInput placeholder={currentOvertake ? 'Overtake' : ''} />
+                        && <ComboboxChipsInput placeholder="Overtake" />
                       }
                     </>
                   )}

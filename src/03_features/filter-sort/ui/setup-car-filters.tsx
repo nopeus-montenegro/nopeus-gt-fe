@@ -1,11 +1,12 @@
 'use client';
 
-import { BopTrackClass, TrackClass, TrackRegion, TrackSurface } from '@prisma/client';
+import { AspirationType, CarClass, Drivetrain, EngineLayout, OvertakeType } from '@prisma/client';
 import { ArrowBigRightDash, ArrowDownAZ, ArrowDownZA, SlidersHorizontal, StickyNoteX } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
-import { SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE, TRACK_FILTER, TRACK_SORT } from '@/05_shared/lib/const';
-import { BOP_CLASS_LABEL, REGION_LABEL, SETUP_TRACK_SORT_LABELS, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
+import { LapTimeCarInclude } from '@/04_entities/lap-time';
+import { CAR_FILTER, CAR_SORT, SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
+import { ASPIRATION, CAR_CLASS, DRIVETRAIN, ENGINE_LAYOUT, OVERTAKE, SETUP_CAR_SORT_LABELS } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Checkbox } from '@/05_shared/ui/shadcn/checkbox';
 import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxItem, ComboboxList, ComboboxValue, useComboboxAnchor } from '@/05_shared/ui/shadcn/combobox';
@@ -14,10 +15,16 @@ import { Label } from '@/05_shared/ui/shadcn/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/05_shared/ui/shadcn/select';
 import { Slider } from '@/05_shared/ui/shadcn/slider';
 import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
-
 import { useUrlFilters } from '../hooks/use-url-filters';
 
-export function SetupTrackFilters() {
+interface Props {
+  lapTimes: LapTimeCarInclude[];
+}
+
+export function SetupCarFilters({ lapTimes }: Props) {
+  const countries = lapTimes.reduce<string[]>((acc, lapTime) => acc.includes(lapTime.setup.car.country) ? acc : [...acc, lapTime.setup.car.country], []);
+  const manufacturers = lapTimes.reduce<string[]>((acc, lapTime) => acc.includes(lapTime.setup.car.manufacturer) ? acc : [...acc, lapTime.setup.car.manufacturer], []);
+
   const [isOpen, setIsOpen] = useState(false);
   const openDrawer = () => {
     setCurrentFilters(getFiltersFromUrl());
@@ -29,15 +36,17 @@ export function SetupTrackFilters() {
 
   const { searchParams, setFilter, clearFilters } = useUrlFilters();
   const getFiltersFromUrl = useCallback(() => ({
-    [SORT_TYPE.DATA]: searchParams.get(SORT_TYPE.DATA) || TRACK_SORT.NAME,
+    [SORT_TYPE.DATA]: searchParams.get(SORT_TYPE.DATA) || CAR_SORT.YEAR,
     [SORT_TYPE.DIRECTION]: searchParams.get(SORT_TYPE.DIRECTION) || SORT_DIRECTION.ASCENDING,
 
-    [TRACK_FILTER.REGION]: searchParams.get(TRACK_FILTER.REGION),
-    [TRACK_FILTER.SURFACE]: searchParams.get(TRACK_FILTER.SURFACE),
-    [TRACK_FILTER.TRACK_CLASS]: searchParams.get(TRACK_FILTER.TRACK_CLASS),
-    [TRACK_FILTER.BOP]: searchParams.get(TRACK_FILTER.BOP),
-    [TRACK_FILTER.RAIN]: searchParams.get(TRACK_FILTER.RAIN),
-    [TRACK_FILTER.SOPHY]: searchParams.get(TRACK_FILTER.SOPHY),
+    [CAR_FILTER.COUNTRY]: searchParams.get(CAR_FILTER.COUNTRY),
+    [CAR_FILTER.MANUFACTURER]: searchParams.get(CAR_FILTER.MANUFACTURER),
+    [CAR_FILTER.HYBRID]: searchParams.get(CAR_FILTER.HYBRID),
+    [CAR_FILTER.ASPIRATION]: searchParams.get(CAR_FILTER.ASPIRATION),
+    [CAR_FILTER.CAR_CLASS]: searchParams.get(CAR_FILTER.CAR_CLASS),
+    [CAR_FILTER.DRIVETRAIN]: searchParams.get(CAR_FILTER.DRIVETRAIN),
+    [CAR_FILTER.ENGINE_LAYOUT]: searchParams.get(CAR_FILTER.ENGINE_LAYOUT),
+    [CAR_FILTER.OVERTAKE]: searchParams.get(CAR_FILTER.OVERTAKE),
 
     [SETUP_FILTER.PP_LIM_MIN]: searchParams.get(SETUP_FILTER.PP_LIM_MIN),
     [SETUP_FILTER.PP_LIM_MAX]: searchParams.get(SETUP_FILTER.PP_LIM_MAX),
@@ -63,10 +72,13 @@ export function SetupTrackFilters() {
     closeDrawer();
   };
 
-  const regionRef = useComboboxAnchor();
-  const surfaceRef = useComboboxAnchor();
+  const countryRef = useComboboxAnchor();
+  const manufacturerRef = useComboboxAnchor();
+  const aspirationRef = useComboboxAnchor();
   const classRef = useComboboxAnchor();
-  const bopRef = useComboboxAnchor();
+  const drivetrainRef = useComboboxAnchor();
+  const layoutRef = useComboboxAnchor();
+  const overtakeRef = useComboboxAnchor();
 
   return (
     <>
@@ -148,7 +160,7 @@ export function SetupTrackFilters() {
           <div className="space-y-2">
             <Select
               value={currentFilters[SORT_TYPE.DATA]!}
-              onValueChange={key => onFiltersChange({ key: SORT_TYPE.DATA, value: key as TRACK_SORT })}
+              onValueChange={key => onFiltersChange({ key: SORT_TYPE.DATA, value: key as CAR_SORT & SETUP_SORT })}
             >
               <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
                 <SelectValue placeholder="Choose Sort" />
@@ -158,7 +170,7 @@ export function SetupTrackFilters() {
                 className="p-1 bg-zinc-900 border-zinc-800 text-slate-200"
                 position="popper"
               >
-                {(Object.entries(SETUP_TRACK_SORT_LABELS) as [TRACK_SORT & SETUP_SORT, string][]).map(([key, value]) => (
+                {(Object.entries(SETUP_CAR_SORT_LABELS) as [CAR_SORT & SETUP_SORT, string][]).map(([key, value]) => (
                   <SelectItem key={key} value={key}>
                     {value}
                   </SelectItem>
@@ -169,40 +181,40 @@ export function SetupTrackFilters() {
         </div>
 
         <div className="mt-4 space-y-4">
-          <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
 
           <div className="space-y-2">
             <Combobox
               multiple
               autoHighlight
-              items={Object.keys(REGION_LABEL) as TrackRegion[]}
-              value={currentFilters[TRACK_FILTER.REGION] ? currentFilters[TRACK_FILTER.REGION]?.split(',') as TrackRegion[] : []}
-              onValueChange={key => onFiltersChange({ key: TRACK_FILTER.REGION, value: key.join(',') })}
+              items={countries}
+              value={currentFilters[CAR_FILTER.COUNTRY] ? currentFilters[CAR_FILTER.COUNTRY]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.COUNTRY, value: key.join(',') })}
             >
-              <ComboboxChips ref={regionRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={countryRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
                       {values.map((value: string) => (
                         <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                          {REGION_LABEL[value as TrackRegion]}
+                          {value}
                         </ComboboxChip>
                       ))}
 
                       {
-                        !currentFilters[TRACK_FILTER.REGION]
-                        && <ComboboxChipsInput placeholder={currentFilters[TRACK_FILTER.REGION] ? '' : 'Region'} />
+                        !currentFilters[CAR_FILTER.COUNTRY]
+                        && <ComboboxChipsInput placeholder="Country" />
                       }
                     </>
                   )}
                 </ComboboxValue>
               </ComboboxChips>
 
-              <ComboboxContent anchor={regionRef}>
+              <ComboboxContent anchor={countryRef}>
                 <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
                   {item => (
                     <ComboboxItem key={item} value={item}>
-                      {REGION_LABEL[item as TrackRegion]}
+                      {item}
                     </ComboboxItem>
                   )}
                 </ComboboxList>
@@ -214,34 +226,34 @@ export function SetupTrackFilters() {
             <Combobox
               multiple
               autoHighlight
-              items={Object.keys(SURFACE_LABEL) as TrackSurface[]}
-              value={currentFilters[TRACK_FILTER.SURFACE] ? currentFilters[TRACK_FILTER.SURFACE]?.split(',') as TrackSurface[] : []}
-              onValueChange={key => onFiltersChange({ key: TRACK_FILTER.SURFACE, value: key.join(',') })}
+              items={manufacturers}
+              value={currentFilters[CAR_FILTER.MANUFACTURER] ? currentFilters[CAR_FILTER.MANUFACTURER]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.MANUFACTURER, value: key.join(',') })}
             >
-              <ComboboxChips ref={surfaceRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={manufacturerRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
                       {values.map((value: string) => (
                         <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                          {SURFACE_LABEL[value as TrackSurface]}
+                          {value}
                         </ComboboxChip>
                       ))}
 
                       {
-                        !currentFilters[TRACK_FILTER.SURFACE]
-                        && <ComboboxChipsInput placeholder={currentFilters[TRACK_FILTER.SURFACE] ? '' : 'Surface'} />
+                        !currentFilters[CAR_FILTER.MANUFACTURER]
+                        && <ComboboxChipsInput placeholder="Manufacturer" />
                       }
                     </>
                   )}
                 </ComboboxValue>
               </ComboboxChips>
 
-              <ComboboxContent anchor={surfaceRef}>
+              <ComboboxContent anchor={manufacturerRef}>
                 <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
                   {item => (
                     <ComboboxItem key={item} value={item}>
-                      {SURFACE_LABEL[item as TrackSurface]}
+                      {item}
                     </ComboboxItem>
                   )}
                 </ComboboxList>
@@ -253,9 +265,48 @@ export function SetupTrackFilters() {
             <Combobox
               multiple
               autoHighlight
-              items={Object.keys(TRACK_CLASS_LABEL) as TrackClass[]}
-              value={currentFilters[TRACK_FILTER.TRACK_CLASS] ? currentFilters[TRACK_FILTER.TRACK_CLASS]?.split(',') as TrackClass[] : []}
-              onValueChange={key => onFiltersChange({ key: TRACK_FILTER.TRACK_CLASS, value: key.join(',') })}
+              items={Object.keys(ASPIRATION) as AspirationType[]}
+              value={currentFilters[CAR_FILTER.ASPIRATION] ? currentFilters[CAR_FILTER.ASPIRATION]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.ASPIRATION, value: key.join(',') })}
+            >
+              <ComboboxChips ref={aspirationRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                <ComboboxValue>
+                  {values => (
+                    <>
+                      {values.map((value: string) => (
+                        <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                          {ASPIRATION[value as AspirationType]}
+                        </ComboboxChip>
+                      ))}
+
+                      {
+                        !currentFilters[CAR_FILTER.ASPIRATION]
+                        && <ComboboxChipsInput placeholder="Aspiration" />
+                      }
+                    </>
+                  )}
+                </ComboboxValue>
+              </ComboboxChips>
+
+              <ComboboxContent anchor={aspirationRef}>
+                <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                  {item => (
+                    <ComboboxItem key={item} value={item}>
+                      {ASPIRATION[item as AspirationType]}
+                    </ComboboxItem>
+                  )}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
+          </div>
+
+          <div className="space-y-2">
+            <Combobox
+              multiple
+              autoHighlight
+              items={Object.keys(CAR_CLASS) as CarClass[]}
+              value={currentFilters[CAR_FILTER.CAR_CLASS] ? currentFilters[CAR_FILTER.CAR_CLASS]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.CAR_CLASS, value: key.join(',') })}
             >
               <ComboboxChips ref={classRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
@@ -263,13 +314,13 @@ export function SetupTrackFilters() {
                     <>
                       {values.map((value: string) => (
                         <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                          {TRACK_CLASS_LABEL[value as TrackClass]}
+                          {CAR_CLASS[value as CarClass]}
                         </ComboboxChip>
                       ))}
 
                       {
-                        !currentFilters[TRACK_FILTER.TRACK_CLASS]
-                        && <ComboboxChipsInput placeholder={currentFilters[TRACK_FILTER.TRACK_CLASS] ? '' : 'Class'} />
+                        !currentFilters[CAR_FILTER.CAR_CLASS]
+                        && <ComboboxChipsInput placeholder="Car Class" />
                       }
                     </>
                   )}
@@ -280,7 +331,7 @@ export function SetupTrackFilters() {
                 <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
                   {item => (
                     <ComboboxItem key={item} value={item}>
-                      {TRACK_CLASS_LABEL[item as TrackClass]}
+                      {CAR_CLASS[item as CarClass]}
                     </ComboboxItem>
                   )}
                 </ComboboxList>
@@ -292,34 +343,112 @@ export function SetupTrackFilters() {
             <Combobox
               multiple
               autoHighlight
-              items={Object.keys(BOP_CLASS_LABEL) as BopTrackClass[]}
-              value={currentFilters[TRACK_FILTER.BOP] ? currentFilters[TRACK_FILTER.BOP]?.split(',') as BopTrackClass[] : []}
-              onValueChange={key => onFiltersChange({ key: TRACK_FILTER.BOP, value: key.join(',') })}
+              items={Object.keys(DRIVETRAIN) as Drivetrain[]}
+              value={currentFilters[CAR_FILTER.DRIVETRAIN] ? currentFilters[CAR_FILTER.DRIVETRAIN]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.DRIVETRAIN, value: key.join(',') })}
             >
-              <ComboboxChips ref={bopRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+              <ComboboxChips ref={drivetrainRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
                 <ComboboxValue>
                   {values => (
                     <>
                       {values.map((value: string) => (
                         <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                          {BOP_CLASS_LABEL[value as BopTrackClass]}
+                          {DRIVETRAIN[value as Drivetrain]}
                         </ComboboxChip>
                       ))}
 
                       {
-                        !currentFilters[TRACK_FILTER.BOP]
-                        && <ComboboxChipsInput placeholder={currentFilters[TRACK_FILTER.BOP] ? '' : 'BoP'} />
+                        !currentFilters[CAR_FILTER.DRIVETRAIN]
+                        && <ComboboxChipsInput placeholder="Drivetrain" />
                       }
                     </>
                   )}
                 </ComboboxValue>
               </ComboboxChips>
 
-              <ComboboxContent anchor={bopRef}>
+              <ComboboxContent anchor={drivetrainRef}>
                 <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
                   {item => (
                     <ComboboxItem key={item} value={item}>
-                      {BOP_CLASS_LABEL[item as BopTrackClass]}
+                      {DRIVETRAIN[item as Drivetrain]}
+                    </ComboboxItem>
+                  )}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
+          </div>
+
+          <div className="space-y-2">
+            <Combobox
+              multiple
+              autoHighlight
+              items={Object.keys(ENGINE_LAYOUT) as EngineLayout[]}
+              value={currentFilters[CAR_FILTER.ENGINE_LAYOUT] ? currentFilters[CAR_FILTER.ENGINE_LAYOUT]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.ENGINE_LAYOUT, value: key.join(',') })}
+            >
+              <ComboboxChips ref={layoutRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                <ComboboxValue>
+                  {values => (
+                    <>
+                      {values.map((value: string) => (
+                        <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                          {ENGINE_LAYOUT[value as EngineLayout]}
+                        </ComboboxChip>
+                      ))}
+
+                      {
+                        !currentFilters[CAR_FILTER.ENGINE_LAYOUT]
+                        && <ComboboxChipsInput placeholder="Engine Layout" />
+                      }
+                    </>
+                  )}
+                </ComboboxValue>
+              </ComboboxChips>
+
+              <ComboboxContent anchor={layoutRef}>
+                <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                  {item => (
+                    <ComboboxItem key={item} value={item}>
+                      {ENGINE_LAYOUT[item as EngineLayout]}
+                    </ComboboxItem>
+                  )}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
+          </div>
+
+          <div className="space-y-2">
+            <Combobox
+              multiple
+              autoHighlight
+              items={Object.keys(OVERTAKE) as OvertakeType[]}
+              value={currentFilters[CAR_FILTER.OVERTAKE] ? currentFilters[CAR_FILTER.OVERTAKE]?.split(',') : []}
+              onValueChange={key => onFiltersChange({ key: CAR_FILTER.OVERTAKE, value: key.join(',') })}
+            >
+              <ComboboxChips ref={overtakeRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                <ComboboxValue>
+                  {values => (
+                    <>
+                      {values.map((value: string) => (
+                        <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                          {OVERTAKE[value as OvertakeType]}
+                        </ComboboxChip>
+                      ))}
+
+                      {
+                        !currentFilters[CAR_FILTER.OVERTAKE]
+                        && <ComboboxChipsInput placeholder="Overtake" />
+                      }
+                    </>
+                  )}
+                </ComboboxValue>
+              </ComboboxChips>
+
+              <ComboboxContent anchor={overtakeRef}>
+                <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                  {item => (
+                    <ComboboxItem key={item} value={item}>
+                      {OVERTAKE[item as OvertakeType]}
                     </ComboboxItem>
                   )}
                 </ComboboxList>
@@ -331,64 +460,16 @@ export function SetupTrackFilters() {
             <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
               <Field orientation="horizontal" className="gap-3">
                 <Checkbox
-                  id={TRACK_FILTER.RAIN}
-                  name={TRACK_FILTER.RAIN}
-                  checked={!!currentFilters[TRACK_FILTER.RAIN]}
-                  onCheckedChange={checked => onFiltersChange({
-                    key: TRACK_FILTER.RAIN,
-                    value: checked ? 'true' : '',
-                  })}
+                  id={CAR_FILTER.HYBRID}
+                  name={CAR_FILTER.HYBRID}
+                  checked={!!currentFilters[CAR_FILTER.HYBRID]}
+                  onCheckedChange={checked => onFiltersChange({ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' })}
                 />
                 <FieldContent>
-                  <FieldTitle className="text-muted-foreground">Rain available</FieldTitle>
+                  <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
                 </FieldContent>
               </Field>
             </FieldLabel>
-          </div>
-
-          <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
-              <Field orientation="horizontal" className="gap-3">
-                <Checkbox
-                  id={TRACK_FILTER.SOPHY}
-                  name={TRACK_FILTER.SOPHY}
-                  checked={!!currentFilters[TRACK_FILTER.SOPHY]}
-                  onCheckedChange={checked => onFiltersChange({
-                    key: TRACK_FILTER.SOPHY,
-                    value: checked ? 'true' : '',
-                  })}
-                />
-                <FieldContent>
-                  <FieldTitle className="text-muted-foreground">Sophy available</FieldTitle>
-                </FieldContent>
-              </Field>
-            </FieldLabel>
-          </div>
-
-          <div className="mx-auto grid w-full gap-3 space-y-2">
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
-              <span className="text-sm text-muted-foreground">
-                {currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0}
-                {' - '}
-                {currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP}
-              </span>
-            </div>
-
-            <Slider
-              id="slider-pp"
-              value={[
-                currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0,
-                currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP,
-              ]}
-              onValueChange={(value) => {
-                onFiltersChange({ key: SETUP_FILTER.PP_LIM_MIN, value: value[0].toString() });
-                onFiltersChange({ key: SETUP_FILTER.PP_LIM_MAX, value: value[1].toString() });
-              }}
-              min={0}
-              max={MAX_LIMITS.PP}
-              step={1}
-            />
           </div>
 
           <div className="mx-auto grid w-full gap-3 space-y-2">

@@ -24,7 +24,7 @@ export function SetupTrack({ lapTime }: Props) {
       target="_blank"
       className="flex flex-col rounded-xl border border-white/5 bg-slate-900/20 backdrop-blur-sm hover:bg-slate-900/40 transition-all hover:-translate-y-0.5 hover:shadow-lg"
     >
-      <div className="h-full w-fit mx-auto py-6 px-6 md:px-8 flex flex-col md:grid md:grid-cols-5 items-center gap-8">
+      <div className="h-full w-full py-6 px-6 md:px-8 flex flex-col md:grid md:grid-cols-5 items-center gap-8">
         <div className="w-full col-span-2 flex flex-col items-start gap-1">
           <h3 className="flex items-center font-bold text-secondary text-lg">
             {lapTime.setup.title}
