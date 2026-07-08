@@ -7,6 +7,10 @@ export const getTrackList = unstable_cache(
     return (
       await prisma.track.findMany({
         orderBy: { name: 'asc' },
+        cacheStrategy: {
+          ttl: 3600,
+          swr: 86400,
+        },
       })
     );
   },

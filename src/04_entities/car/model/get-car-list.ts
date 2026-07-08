@@ -13,6 +13,10 @@ export const getCarList = unstable_cache(
           { name: 'asc' },
         ],
         include: carInclude,
+        cacheStrategy: {
+          ttl: 3600,
+          swr: 86400,
+        },
       }) as CarInclude[]);
   },
   ['global-car-list-include-base-setup'],

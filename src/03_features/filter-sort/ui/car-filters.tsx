@@ -43,7 +43,7 @@ export function CarFilters({ cars }: Props) {
   const currentCountry = searchParams.get(CAR_FILTER.COUNTRY)?.split(',') || [];
   const currentManufacturer = searchParams.get(CAR_FILTER.MANUFACTURER)?.split(',') || [];
   const isHybrid = searchParams.get(CAR_FILTER.HYBRID) === true.toString();
-  const currentAspiretion = searchParams.get(CAR_FILTER.ASPIRATION)?.split(',') as AspirationType[] || [];
+  const currentAspiration = searchParams.get(CAR_FILTER.ASPIRATION)?.split(',') as AspirationType[] || [];
   const currentCarClass = searchParams.get(CAR_FILTER.CAR_CLASS)?.split(',') as CarClass[] || [];
   const currentDrivetrain = searchParams.get(CAR_FILTER.DRIVETRAIN)?.split(',') as Drivetrain[] || [];
   const currentEngineLayout = searchParams.get(CAR_FILTER.ENGINE_LAYOUT)?.split(',') as EngineLayout[] || [];
@@ -251,7 +251,7 @@ export function CarFilters({ cars }: Props) {
               multiple
               autoHighlight
               items={Object.keys(ASPIRATION) as AspirationType[]}
-              value={currentAspiretion}
+              value={currentAspiration}
               onValueChange={key => setFilter([{ key: CAR_FILTER.ASPIRATION, value: key.join(',') }])}
             >
               <ComboboxChips ref={aspirationRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
@@ -265,7 +265,7 @@ export function CarFilters({ cars }: Props) {
                       ))}
 
                       {
-                        currentAspiretion.length === 0
+                        currentAspiration.length === 0
                         && <ComboboxChipsInput placeholder="Aspiration" />
                       }
                     </>

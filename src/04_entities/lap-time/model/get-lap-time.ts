@@ -1,7 +1,7 @@
 import { AspirationType, BopTrackClass, CarClass, Drivetrain, EngineLayout, OvertakeType, Prisma, TrackClass, TrackRegion, TrackSurface, VerificationStatus } from '@prisma/client';
 import { cache } from 'react';
 
-import { CAR_FILTER, CAR_SORT, LAP_TIME_FILTER, LAP_TIME_SORT, SETUP_FILTER, SETUP_SORT, SORT_TYPE, TRACK_FILTER, TRACK_SORT } from '@/05_shared/lib/const';
+import { CAR_FILTER, CAR_SORT, CARDS_PER_PAGE, LAP_TIME_FILTER, LAP_TIME_SORT, SETUP_FILTER, SETUP_SORT, SORT_TYPE, TRACK_FILTER, TRACK_SORT } from '@/05_shared/lib/const';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { MAX_LIMITS, parseLimits } from '@/05_shared/utils/parse-limits';
@@ -27,7 +27,6 @@ function getSetupLimits(searchParams: ResolvedPageSearchParams): Prisma.SetupWhe
 }
 
 export const getLapTimeCar = cache(async function (trackId: string, searchParams: ResolvedPageSearchParams) {
-  const LIMIT = 12;
   const currentPage = Number(searchParams.page) || 1;
 
   const carClass = parsePrismaEnum(searchParams[CAR_FILTER.CAR_CLASS], CarClass);
@@ -92,14 +91,17 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
       include: lapTimeCarInclude,
       distinct: ['setupId'],
       orderBy,
-      take: LIMIT,
-      skip: (currentPage - 1) * LIMIT,
+      take: CARDS_PER_PAGE,
+      skip: (currentPage - 1) * CARDS_PER_PAGE,
+      cacheStrategy: {
+        ttl: 90,
+        swr: 600,
+      },
     })
   );
 });
 
 export const getLapTimeTrack = cache(async function (carId: string, searchParams: ResolvedPageSearchParams) {
-  const LIMIT = 12;
   const currentPage = Number(searchParams.page) || 1;
 
   const region = parsePrismaEnum(searchParams[TRACK_FILTER.REGION], TrackRegion);
@@ -166,8 +168,12 @@ export const getLapTimeTrack = cache(async function (carId: string, searchParams
       include: lapTimeTrackInclude,
       orderBy,
       distinct: ['setupId', 'trackId'],
-      take: LIMIT,
-      skip: (currentPage - 1) * LIMIT,
+      take: CARDS_PER_PAGE,
+      skip: (currentPage - 1) * CARDS_PER_PAGE,
+      cacheStrategy: {
+        ttl: 90,
+        swr: 600,
+      },
     })
   );
 });

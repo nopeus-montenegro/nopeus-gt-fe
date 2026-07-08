@@ -8,6 +8,10 @@ export const getSetup = cache(async function (carId: string) {
     await prisma.setup.findUnique({
       where: { id: carId },
       include: setupInclude,
+      cacheStrategy: {
+        ttl: 300,
+        swr: 3600,
+      },
     })
   );
 });

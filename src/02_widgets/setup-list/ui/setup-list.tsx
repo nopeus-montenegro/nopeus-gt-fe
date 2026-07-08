@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { LapTimeCarInclude, LapTimeTrackInclude } from '@/04_entities/lap-time';
+import { CARDS_PER_PAGE } from '@/05_shared/lib/const';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 
 dayjs.extend(relativeTime);
@@ -48,7 +49,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
         setData(prev => [...prev, ...newItems]);
         setPage(nextPage);
 
-        if (newItems.length < 12) setHasMore(false);
+        if (newItems.length < CARDS_PER_PAGE) setHasMore(false);
       }
     } catch (error) {
       console.error('Fetch error:', error);
