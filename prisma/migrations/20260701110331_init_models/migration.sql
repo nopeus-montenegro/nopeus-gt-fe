@@ -145,6 +145,7 @@ CREATE TABLE "Setup" (
     "torque" DOUBLE PRECISION NOT NULL,
     "torqueRpm" INTEGER NOT NULL,
     "weight" INTEGER NOT NULL,
+    "wpr" DOUBLE PRECISION NOT NULL,
     "weightBalanceFront" INTEGER NOT NULL,
     "weightBalanceRear" INTEGER NOT NULL,
     "hasWideBody" BOOLEAN NOT NULL DEFAULT false,
@@ -242,6 +243,7 @@ CREATE TABLE "Track" (
     "trackClass" "TrackClass" NOT NULL,
     "bopClass" "BopTrackClass" NOT NULL,
     "hasRain" BOOLEAN NOT NULL DEFAULT false,
+    "hasSophy" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

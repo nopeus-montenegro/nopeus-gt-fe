@@ -1,4 +1,4 @@
-import { AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, EngineUpgradeTier, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, Prisma, PrismaClient, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType, VerificationStatus } from '@/generated/prisma';
+import { AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, EngineUpgradeTier, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, Prisma, PrismaClient, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType, VerificationStatus } from '@prisma/client';
 import { parse } from 'csv-parse/sync';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -81,6 +81,7 @@ async function main() {
     trackClass: String(track.trackClass).trim() as TrackClass,
     bopClass: String(track.bopClass).trim() as BopTrackClass,
     hasRain: String(track.hasRain).toUpperCase() === 'TRUE',
+    hasSophy: String(track.hasSophy).toUpperCase() === 'TRUE',
   }));
 
   console.log(`Tracks ready to upload: ${tracksData.length}`);
@@ -126,6 +127,7 @@ async function main() {
       torque: parseFloat(basicSetup.torque),
       torqueRpm: parseInt(basicSetup.torqueRpm, 10),
       weight: parseInt(basicSetup.weight, 10),
+      wpr: parseFloat((parseInt(basicSetup.weight, 10) / parseInt(basicSetup.power, 10)).toFixed(2)),
       weightBalanceFront: parseInt(basicSetup.weightBalanceFront, 10),
       weightBalanceRear: parseInt(basicSetup.weightBalanceRear, 10),
 
@@ -274,6 +276,7 @@ async function main() {
           torque: parseFloat(techSetup.torque),
           torqueRpm: parseInt(techSetup.torqueRpm, 10),
           weight: parseInt(techSetup.weight, 10),
+          wpr: parseFloat(parseInt(techSetup.weight, 10 / parseInt(techSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(techSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(techSetup.weightBalanceRear, 10),
 
@@ -431,6 +434,7 @@ async function main() {
           torque: parseFloat(hybridSetup.torque),
           torqueRpm: parseInt(hybridSetup.torqueRpm, 10),
           weight: parseInt(hybridSetup.weight, 10),
+          wpr: parseFloat(parseInt(hybridSetup.weight, 10 / parseInt(hybridSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(hybridSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(hybridSetup.weightBalanceRear, 10),
 
@@ -586,6 +590,7 @@ async function main() {
           torque: parseFloat(speedSetup.torque),
           torqueRpm: parseInt(speedSetup.torqueRpm, 10),
           weight: parseInt(speedSetup.weight, 10),
+          wpr: parseFloat(parseInt(speedSetup.weight, 10 / parseInt(speedSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(speedSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(speedSetup.weightBalanceRear, 10),
 
@@ -749,6 +754,7 @@ interface RawTrackRow {
   trackClass: string;
   bopClass: string;
   hasRain: string;
+  hasSophy: string;
 }
 
 interface RawSetupRow {

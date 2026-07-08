@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -60,6 +59,7 @@ model Setup {
   torque             Float // kgfm
   torqueRpm          Int
   weight             Int // kg
+  wpr                Float // Weight to Power Ratio
   weightBalanceFront Int
   weightBalanceRear  Int
 
@@ -228,6 +228,7 @@ model Track {
   trackClass TrackClass
   bopClass   BopTrackClass
   hasRain    Boolean       @default(false)
+  hasSophy   Boolean       @default(false)
 
   lapTimes  LapTime[]
   createdAt DateTime  @default(now())
