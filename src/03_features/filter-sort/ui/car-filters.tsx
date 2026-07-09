@@ -66,6 +66,15 @@ export function CarFilters({ cars }: Props) {
   const [weightSlider, setWeightSlider] = useState([currentWeightMin ? parseInt(currentWeightMin, 10) : 0, currentWeightMax ? parseInt(currentWeightMax, 10) : MAX_LIMITS.WEIGHT]);
   const [wprSlider, setWprSlider] = useState([currentWprMin ? parseInt(currentWprMin, 10) : 0, currentWprMax ? parseInt(currentWprMax, 10) : MAX_LIMITS.WPR]);
 
+  const onFiltersClear = () => {
+    clearFilters();
+    setPpSlider([0, MAX_LIMITS.PP]);
+    setPowerSlider([0, MAX_LIMITS.POWER]);
+    setTorqueSlider([0, MAX_LIMITS.TORQUE]);
+    setWeightSlider([0, MAX_LIMITS.WEIGHT]);
+    setWprSlider([0, MAX_LIMITS.WPR]);
+  };
+
   const toggleDrawer = () => setIsOpen(current => !current);
 
   return (
@@ -109,7 +118,7 @@ export function CarFilters({ cars }: Props) {
 
           <div>
             <button
-              onClick={clearFilters}
+              onClick={onFiltersClear}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
               <StickyNoteX className="w-6 h-6" />
@@ -145,7 +154,7 @@ export function CarFilters({ cars }: Props) {
           <div className="space-y-2">
             <Select
               value={currentSortBy}
-              onValueChange={key => setFilter([{ key: SORT_TYPE.DATA, value: key as CAR_SORT & SETUP_SORT }])}
+              onValueChange={key => setFilter([{ key: SORT_TYPE.DATA, value: key as CAR_SORT | SETUP_SORT }])}
             >
               <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
                 <SelectValue placeholder="Choose Sort" />
@@ -155,7 +164,7 @@ export function CarFilters({ cars }: Props) {
                 className="p-1 bg-zinc-900 border-zinc-800 text-slate-200"
                 position="popper"
               >
-                {(Object.entries(CAR_SORT_LABELS) as [CAR_SORT & SETUP_SORT, string][]).map(([key, value]) => (
+                {(Object.entries(CAR_SORT_LABELS) as [CAR_SORT | SETUP_SORT, string][]).map(([key, value]) => (
                   <SelectItem key={key} value={key}>
                     {value}
                   </SelectItem>
@@ -442,7 +451,7 @@ export function CarFilters({ cars }: Props) {
           </div>
 
           <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
+            <FieldLabel>
               <Field orientation="horizontal" className="gap-3">
                 <Checkbox id={CAR_FILTER.HYBRID} name={CAR_FILTER.HYBRID} checked={isHybrid} onCheckedChange={checked => setFilter([{ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' }])} />
                 <FieldContent>

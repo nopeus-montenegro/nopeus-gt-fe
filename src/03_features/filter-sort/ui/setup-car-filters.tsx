@@ -456,7 +456,7 @@ export function SetupCarFilters({ filterList }: Props) {
           </div>
 
           <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
+            <FieldLabel>
               <Field orientation="horizontal" className="gap-3">
                 <Checkbox
                   id={CAR_FILTER.HYBRID}
@@ -469,6 +469,32 @@ export function SetupCarFilters({ filterList }: Props) {
                 </FieldContent>
               </Field>
             </FieldLabel>
+          </div>
+
+          <div className="mx-auto grid w-full gap-3 space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
+              <span className="text-sm text-muted-foreground">
+                {currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0}
+                {' - '}
+                {currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP}
+              </span>
+            </div>
+
+            <Slider
+              id="slider-pp"
+              value={[
+                currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0,
+                currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP,
+              ]}
+              onValueChange={(value) => {
+                onFiltersChange({ key: SETUP_FILTER.PP_LIM_MIN, value: value[0].toString() });
+                onFiltersChange({ key: SETUP_FILTER.PP_LIM_MAX, value: value[1].toString() });
+              }}
+              min={0}
+              max={MAX_LIMITS.PP}
+              step={1}
+            />
           </div>
 
           <div className="mx-auto grid w-full gap-3 space-y-2">

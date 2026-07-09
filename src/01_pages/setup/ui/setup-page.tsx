@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import { SetupCarousel } from '@/02_widgets/setup-carousel';
 import { SetupInclude } from '@/04_entities/setup';
 import { getSetup } from '@/04_entities/setup/index.server';
@@ -10,6 +12,10 @@ interface Props {
 
 export async function SetupPage({ setupId }: Props) {
   const setup = await getSetup(setupId) as SetupInclude;
+
+  if (!setup) {
+    notFound();
+  }
 
   return (
     <div className="flex flex-col h-dvh w-full">

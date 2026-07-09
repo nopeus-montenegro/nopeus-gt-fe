@@ -291,7 +291,7 @@ export function TrackFilters() {
           </div>
 
           <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
+            <FieldLabel>
               <Field orientation="horizontal">
                 <Checkbox id={TRACK_FILTER.RAIN} name={TRACK_FILTER.RAIN} checked={hasRain} onCheckedChange={checked => setFilter([{ key: TRACK_FILTER.RAIN, value: checked ? 'true' : '' }])} />
                 <FieldContent>
@@ -302,7 +302,7 @@ export function TrackFilters() {
           </div>
 
           <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
+            <FieldLabel>
               <Field orientation="horizontal">
                 <Checkbox id={TRACK_FILTER.SOPHY} name={TRACK_FILTER.SOPHY} checked={hasSophy} onCheckedChange={checked => setFilter([{ key: TRACK_FILTER.SOPHY, value: checked ? 'true' : '' }])} />
                 <FieldContent>

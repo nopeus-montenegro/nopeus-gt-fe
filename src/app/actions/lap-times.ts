@@ -17,5 +17,5 @@ export async function fetchMoreLapTimesTrack(
   nextPage: number,
   currentSearchParams: ResolvedPageSearchParams,
 ) {
-  return await getLapTimeTrack(id, { ...currentSearchParams, page: String(nextPage) }) as LapTimeTrackInclude[];
+  return await getLapTimeTrack(id, { ...currentSearchParams, page: String(Math.max(1, Math.trunc(nextPage))) }) as LapTimeTrackInclude[];
 }

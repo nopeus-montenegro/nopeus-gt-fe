@@ -1,7 +1,6 @@
 import { AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, EngineUpgradeTier, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, Prisma, PrismaClient, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType, VerificationStatus } from '@prisma/client';
 import { parse } from 'csv-parse/sync';
 import * as fs from 'fs';
-import { revalidateTag } from 'next/cache';
 import * as path from 'path';
 
 const prisma = new PrismaClient({
@@ -65,7 +64,6 @@ async function main() {
     data: carsData,
     skipDuplicates: true,
   });
-  revalidateTag('car-list', 'default');
   console.log(`Cars loaded: ${carsResult.count} new records.`);
 
   console.log('Reading tracks data...');
@@ -91,7 +89,6 @@ async function main() {
     data: tracksData,
     skipDuplicates: true,
   });
-  revalidateTag('track-list', 'default');
   console.log(`Tracks loaded: ${tracksResult.count} new configurations.`);
 
   // --- STAGE 2: Dealership Specs (isBase: true) ---
@@ -113,9 +110,8 @@ async function main() {
     const carId = carMap.get(carKey);
 
     if (!carId) {
-      console.warn(`Unable to find the car: ${carKey}`);
-      return null;
-    };
+      throw new Error(`CRITICAL: Unable to find the car: ${carKey}. Seed data is corrupted!`);
+    }
 
     return {
       title: String(basicSetup.title).trim(),
@@ -249,9 +245,8 @@ async function main() {
       const carId = carMap.get(carKey);
 
       if (!carId) {
-        console.warn(`Unable to find the car: ${carKey}`);
         skippedCount++;
-        return null;
+        throw new Error(`CRITICAL: Unable to find the car: ${carKey}. Seed data is corrupted!`);
       };
 
       await prisma.setup.create({
@@ -279,7 +274,7 @@ async function main() {
           torque: parseFloat(techSetup.torque),
           torqueRpm: parseInt(techSetup.torqueRpm, 10),
           weight: parseInt(techSetup.weight, 10),
-          wpr: parseFloat(parseInt(techSetup.weight, 10 / parseInt(techSetup.power, 10)).toFixed(2)),
+          wpr: parseFloat((parseInt(techSetup.weight, 10) / parseInt(techSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(techSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(techSetup.weightBalanceRear, 10),
 
@@ -408,8 +403,7 @@ async function main() {
       const carId = carMap.get(carKey);
 
       if (!carId) {
-        console.warn(`Unable to find the car: ${carKey}`);
-        return null;
+        throw new Error(`CRITICAL: Unable to find the car: ${carKey}. Seed data is corrupted!`);
       };
 
       await prisma.setup.create({
@@ -437,7 +431,7 @@ async function main() {
           torque: parseFloat(hybridSetup.torque),
           torqueRpm: parseInt(hybridSetup.torqueRpm, 10),
           weight: parseInt(hybridSetup.weight, 10),
-          wpr: parseFloat(parseInt(hybridSetup.weight, 10 / parseInt(hybridSetup.power, 10)).toFixed(2)),
+          wpr: parseFloat((parseInt(hybridSetup.weight, 10) / parseInt(hybridSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(hybridSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(hybridSetup.weightBalanceRear, 10),
 
@@ -564,8 +558,7 @@ async function main() {
       const carId = carMap.get(carKey);
 
       if (!carId) {
-        console.warn(`Unable to find the car: ${carKey}`);
-        return null;
+        throw new Error(`CRITICAL: Unable to find the car: ${carKey}. Seed data is corrupted!`);
       };
 
       await prisma.setup.create({
@@ -593,7 +586,7 @@ async function main() {
           torque: parseFloat(speedSetup.torque),
           torqueRpm: parseInt(speedSetup.torqueRpm, 10),
           weight: parseInt(speedSetup.weight, 10),
-          wpr: parseFloat(parseInt(speedSetup.weight, 10 / parseInt(speedSetup.power, 10)).toFixed(2)),
+          wpr: parseFloat((parseInt(speedSetup.weight, 10) / parseInt(speedSetup.power, 10)).toFixed(2)),
           weightBalanceFront: parseInt(speedSetup.weightBalanceFront, 10),
           weightBalanceRear: parseInt(speedSetup.weightBalanceRear, 10),
 

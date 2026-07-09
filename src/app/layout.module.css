@@ -1,16 +1,16 @@
 .spherePurple {
-  animation: driftTopLeft 25s ease-in-out infinite alternate;
+  animation: drift-top-left 25s ease-in-out infinite alternate;
 }
 
 .sphereBlue {
-  animation: driftBottomRight 30s ease-in-out infinite alternate;
+  animation: drift-bottom-right 30s ease-in-out infinite alternate;
 }
 
 .sphereRed {
-  animation: pulseCenter 20s ease-in-out infinite alternate;
+  animation: pulse-center 20s ease-in-out infinite alternate;
 }
 
-@keyframes driftTopLeft {
+@keyframes drift-top-left {
   0% {
     transform: translate(0, 0) scale(1);
   }
@@ -20,7 +20,7 @@
   }
 }
 
-@keyframes driftBottomRight {
+@keyframes drift-bottom-right {
   0% {
     transform: translate(0, 0) scale(1);
   }
@@ -30,7 +30,7 @@
   }
 }
 
-@keyframes pulseCenter {
+@keyframes pulse-center {
   0% {
     transform: translate(0, 0) scale(1);
     opacity: 0.5;

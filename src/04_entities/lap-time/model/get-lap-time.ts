@@ -54,35 +54,35 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
     },
   };
 
-  let orderBy: Prisma.LapTimeOrderByWithRelationInput;
+  let orderBy: Prisma.LapTimeOrderByWithRelationInput[];
   switch (searchParams[SORT_TYPE.DATA]) {
     case CAR_SORT.YEAR:
-      orderBy = { setup: { car: { year: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } } };
+      orderBy = [{ setup: { car: { year: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } } }, { id: 'asc' }];
       break;
     case CAR_SORT.DISPLACEMENT:
-      orderBy = { setup: { car: { displacement: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } } };
+      orderBy = [{ setup: { car: { displacement: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } } }, { id: 'asc' }];
       break;
     case CAR_SORT.GEARBOX:
-      orderBy = { setup: { car: { gearbox: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } } };
+      orderBy = [{ setup: { car: { gearbox: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } } }, { id: 'asc' }];
       break;
     case SETUP_SORT.PP:
-      orderBy = { setup: { pp: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } };
+      orderBy = [{ setup: { pp: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { id: 'asc' }];
       break;
     case SETUP_SORT.POWER:
-      orderBy = { setup: { power: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } };
+      orderBy = [{ setup: { power: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { id: 'asc' }];
       break;
     case SETUP_SORT.TORQUE:
-      orderBy = { setup: { torque: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } };
+      orderBy = [{ setup: { torque: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { id: 'asc' }];
       break;
     case SETUP_SORT.WEIGHT:
-      orderBy = { setup: { weight: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } };
+      orderBy = [{ setup: { weight: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { id: 'asc' }];
       break;
     case SETUP_SORT.WPR:
-      orderBy = { setup: { wpr: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } };
+      orderBy = [{ setup: { wpr: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { id: 'asc' }];
       break;
     case LAP_TIME_SORT.LAP_TIME:
     default:
-      orderBy = { lapTime: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' };
+      orderBy = [{ lapTime: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' }, { id: 'asc' }];
   };
 
   return (
@@ -131,35 +131,35 @@ export const getLapTimeTrack = cache(async function (carId: string, searchParams
   let orderBy: Prisma.LapTimeOrderByWithRelationInput[];
   switch (searchParams[SORT_TYPE.DATA]) {
     case SETUP_SORT.PP:
-      orderBy = [{ setup: { pp: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ setup: { pp: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case SETUP_SORT.POWER:
-      orderBy = [{ setup: { power: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ setup: { power: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case SETUP_SORT.TORQUE:
-      orderBy = [{ setup: { torque: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ setup: { torque: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case SETUP_SORT.WEIGHT:
-      orderBy = [{ setup: { weight: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ setup: { weight: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case SETUP_SORT.WPR:
-      orderBy = [{ setup: { wpr: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ setup: { wpr: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case TRACK_SORT.LENGTH:
-      orderBy = [{ track: { length: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ track: { length: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case TRACK_SORT.CORNERS:
-      orderBy = [{ track: { cornerCount: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ track: { cornerCount: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case TRACK_SORT.STRAIGHT:
-      orderBy = [{ track: { longestStraight: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ track: { longestStraight: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case TRACK_SORT.ELEVATION:
-      orderBy = [{ track: { elevationDiff: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ track: { elevationDiff: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
       break;
     case TRACK_SORT.NAME:
     default:
-      orderBy = [{ track: { name: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }];
+      orderBy = [{ track: { name: parsePrismaEnum(searchParams[SORT_TYPE.DIRECTION], Prisma.SortOrder)[0] || 'asc' } }, { lapTime: 'asc' }, { id: 'asc' }];
   };
 
   return (

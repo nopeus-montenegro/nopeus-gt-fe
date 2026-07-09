@@ -35,7 +35,7 @@ export function SuperchargerCard({ setup }: Props) {
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
-        <div className="my-1 text-xs text-slate-400 mb-1">Spercharger:</div>
+        <div className="my-1 text-xs text-slate-400 mb-1">Supercharger:</div>
 
         <div className="text-base text-white">
           {SUPERCHARGER[superchargerType]}

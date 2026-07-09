@@ -1,7 +1,7 @@
 import {
   AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
 } from '@prisma/client';
-import { CAR_SORT, LAP_TIME_SORT, SETUP_SORT, TRACK_SORT } from './const';
+import { CAR_SORT, SETUP_SORT, TRACK_SORT } from './const';
 
 export const REGION_LABEL: Record<TrackRegion, string> = {
   [TrackRegion.EUROPE_MIDDLE_EAST]: 'Europe & Middle East',
@@ -147,7 +147,7 @@ export const PROPELLER_SHAFT: Record<PropellerShaftType, string> = {
 
 export const HANDBRAKE: Record<HandbrakeType, string> = {
   [HandbrakeType.NORMAL]: 'Normal',
-  [HandbrakeType.HYDRAULIC]: 'Sports',
+  [HandbrakeType.HYDRAULIC]: 'Hydraulic',
 };
 
 export const STEERING: Record<SteeringAngleKitType, string> = {
@@ -162,7 +162,7 @@ export const AWS: Record<FourWheelSteeringType, string> = {
 
 export const BRAKE_BALANCE: Record<BrakeBalanceType, string> = {
   [BrakeBalanceType.NORMAL]: 'Normal',
-  [BrakeBalanceType.CONTROLLER]: 'Sports',
+  [BrakeBalanceType.CONTROLLER]: 'Controller',
 };
 
 export const TURBO: Record<TurbochargerType, string> = {
@@ -242,7 +242,7 @@ export const TRACK_SORT_LABELS: Record<TRACK_SORT, string> = {
   [TRACK_SORT.ELEVATION]: 'By Elevation Difference',
 };
 
-export const CAR_SORT_LABELS: Record<CAR_SORT & SETUP_SORT, string> = {
+export const CAR_SORT_LABELS: Record<CAR_SORT | SETUP_SORT, string> = {
   [CAR_SORT.MANUFACTURER]: 'By Manufacturer',
   [CAR_SORT.YEAR]: 'By Year',
   [CAR_SORT.DISPLACEMENT]: 'By Displacement',
@@ -254,7 +254,7 @@ export const CAR_SORT_LABELS: Record<CAR_SORT & SETUP_SORT, string> = {
   [SETUP_SORT.WPR]: 'By WPR',
 };
 
-export const SETUP_TRACK_SORT_LABELS: Record<TRACK_SORT & SETUP_SORT & LAP_TIME_SORT, string> = {
+export const SETUP_TRACK_SORT_LABELS: Record<TRACK_SORT | SETUP_SORT, string> = {
   [TRACK_SORT.NAME]: 'By Name',
   [TRACK_SORT.LENGTH]: 'By Length',
   [TRACK_SORT.STRAIGHT]: 'By Longest Straight',

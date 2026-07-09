@@ -328,7 +328,7 @@ export function SetupTrackFilters() {
           </div>
 
           <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
+            <FieldLabel>
               <Field orientation="horizontal" className="gap-3">
                 <Checkbox
                   id={TRACK_FILTER.RAIN}
@@ -347,7 +347,7 @@ export function SetupTrackFilters() {
           </div>
 
           <div className="space-y-2">
-            <FieldLabel className="bg-zinc-900 border-zinc-800 text-slate-200">
+            <FieldLabel>
               <Field orientation="horizontal" className="gap-3">
                 <Checkbox
                   id={TRACK_FILTER.SOPHY}

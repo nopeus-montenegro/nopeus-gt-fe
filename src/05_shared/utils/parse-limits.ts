@@ -1,4 +1,4 @@
-export const enum MAX_LIMITS {
+export enum MAX_LIMITS {
   PP = 1500,
   POWER = 3000,
   TORQUE = 150,
