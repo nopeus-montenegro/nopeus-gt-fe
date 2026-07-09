@@ -1,10 +1,12 @@
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { cn } from '@/05_shared/lib/shadcn/utils';
-import styles from './layout.module.css';
 
 import './globals.css';
+import styles from './layout.module.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,7 +36,6 @@ export default function RootLayout({
       <body>
         <div className="relative min-h-screen bg-[#0B0F19] text-slate-200 overflow-hidden">
           <div className="fixed inset-0 z-0 pointer-events-none">
-
             <div
               className={cn(
                 'absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-600/15 blur-[120px]',
@@ -63,6 +64,9 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
