@@ -6,18 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate"
   },
+  "exclude": [
+    "prisma/seed.ts"
+  ],
   "dependencies": {
+    "@base-ui/react": "^1.6.0",
     "@paralleldrive/cuid2": "^3.3.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@prisma/extension-accelerate": "^3.0.1",
     "@tailwindcss/postcss": "^4.3.0",
     "@tanstack/react-query": "^5.100.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "country-codes-list": "^2.0.0",
     "dayjs": "^1.11.20",
-    "dotenv": "^17.4.2",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
     "pg": "^8.20.0",
@@ -25,7 +32,9 @@
     "query-string": "^9.3.1",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
+    "react-country-flag": "^3.1.0",
     "react-dom": "19.2.4",
+    "react-intersection-observer": "^10.0.3",
     "shadcn": "^4.7.0",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0",
@@ -41,10 +50,12 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.5.0",
     "babel-plugin-react-compiler": "1.0.0",
+    "csv-parse": "^6.2.1",
+    "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "prisma": "^7.8.0",
-    "tsx": "^4.22.0",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "overrides": {

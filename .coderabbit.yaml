@@ -1,0 +1,8 @@
+language: "en"
+reviews:
+  auto_review:
+    enabled: false
+  instructions:
+    - "Do not suggest N+1 optimizations for Prisma queries if the related entities are semantically required by domain logic."
+    - "Ignore architectural overengineering (e.g., adding audit trails like updated_by) unless explicitly requested."
+    - "Focus on severe bugs, type safety, and React/Next.js runtime errors."
