@@ -4,6 +4,7 @@ import { SetupCarousel } from '@/02_widgets/setup-carousel';
 import { SetupInclude } from '@/04_entities/setup';
 import { getSetup } from '@/04_entities/setup/index.server';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
+import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 
 interface Props {
@@ -71,6 +72,10 @@ export async function SetupPage({ setupId }: Props) {
             {setup.car.drivetrain}
           </Badge>
         </div>
+      </div>
+
+      <div className="container px-4 pb-4 max-w-5xl">
+        <Breadcrumbs dynamicNames={{ [setupId]: setup.title }} />
       </div>
 
       <SetupCarousel setup={setup} />

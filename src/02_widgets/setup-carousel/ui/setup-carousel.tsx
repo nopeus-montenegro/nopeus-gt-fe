@@ -89,9 +89,9 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
       </CarouselContent>
 
-      <CarouselPrevious className="absolute hidden md:flex -top-18 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
+      <CarouselPrevious className="absolute hidden md:flex -top-27 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
 
-      <CarouselNext className="absolute hidden md:flex -top-18 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
+      <CarouselNext className="absolute hidden md:flex -top-27 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
     </Carousel>
   );
 }
