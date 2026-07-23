@@ -66,11 +66,11 @@ export default function RootLayout({
             {children}
 
             <Popover>
-              <PopoverTrigger className="fixed bottom-6 right-6">
+              <PopoverTrigger className="fixed z-40 bottom-6 right-6">
                 <div
                   // onClick={toggleDrawer}
                   className={cn(
-                    'group z-40',
+                    'group',
                     'm-0 px-2 py-2',
                     'flex items-center gap-2',
                     'rounded-full border border-secondary/5 bg-secondary/10',
