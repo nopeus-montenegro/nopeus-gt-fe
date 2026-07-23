@@ -5,6 +5,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 
 import { cn } from '@/05_shared/lib/shadcn/utils';
 
+import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/05_shared/ui/shadcn/popover';
+import { Copyright, Info } from 'lucide-react';
 import './globals.css';
 import styles from './layout.module.css';
 
@@ -62,6 +64,49 @@ export default function RootLayout({
 
           <main className="relative z-10 container mx-auto px-6 lg:px-12 min-h-dvh w-full">
             {children}
+
+            <Popover>
+              <PopoverTrigger className="fixed bottom-6 right-6">
+                <div
+                  // onClick={toggleDrawer}
+                  className={cn(
+                    'group z-40',
+                    'm-0 px-2 py-2',
+                    'flex items-center gap-2',
+                    'rounded-full border border-secondary/5 bg-secondary/10',
+                    'text-sm font-medium text-slate-200/90',
+                    'shadow-xl backdrop-blur-md transition-transform',
+                    'hover:scale-105 active:scale-95',
+                  )}
+                >
+                  <Info className="w-7 h-7 text-white/90" />
+                  <span className="hidden md:group-hover:block mr-1">Info</span>
+                </div>
+              </PopoverTrigger>
+
+              <PopoverContent align="end" className="border border-secondary/5 bg-primary/20 backdrop-blur-lg">
+                <PopoverHeader className="flex flex-col gap-4">
+                  <PopoverTitle className="flex gap-1 text-white/80">
+                    <span>Copyright</span>
+                    <Copyright className="w-5 h-5" />
+                    <span>2026 Nopeus DOO</span>
+                  </PopoverTitle>
+                  <PopoverDescription className="flex flex-col gap-4 text-white/40">
+                    <span>
+                      Nopeus&nbsp;GT is an independent project developed by Nopeus&nbsp;DOO and
+                      is not affiliated with, authorized, maintained, sponsored or endorsed by
+                      Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc, Polyphony&nbsp;Digital&nbsp;Inc or Gran&nbsp;Turismo.
+                    </span>
+
+                    <span>
+                      All game content, images, car names, track names, logos and
+                      trademarks belong to their respective owners - Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc,
+                      Polyphony&nbsp;Digital&nbsp;Inc and respective automotive manufacturers.
+                    </span>
+                  </PopoverDescription>
+                </PopoverHeader>
+              </PopoverContent>
+            </Popover>
           </main>
         </div>
 

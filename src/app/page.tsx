@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { CAR_FILTER } from '@/05_shared/lib/const';
