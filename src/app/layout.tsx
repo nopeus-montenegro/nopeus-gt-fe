@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nopeus-gt.app'),
   title: {
     template: '%s | Nopeus GT',
     default: 'Nopeus GT — Gran Turismo 7 Setups Sharing Hub',
@@ -68,7 +69,6 @@ export default function RootLayout({
             <Popover>
               <PopoverTrigger className="fixed bottom-6 right-6">
                 <div
-                  // onClick={toggleDrawer}
                   className={cn(
                     'group z-40',
                     'm-0 px-2 py-2',
