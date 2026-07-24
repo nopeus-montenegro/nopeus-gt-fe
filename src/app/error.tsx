@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/05_shared/ui/shadcn/button';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { startTransition, useEffect } from 'react';
 
@@ -17,33 +18,39 @@ export default function ErrorPage({ error, reset }: Props) {
   }, [error]);
 
   return (
-    <div className="flex flex-col gap-8 h-screen items-center justify-center text-center text-white">
-      <div className="grid grid-cols-2 gap-y-8">
-        <h1 className="flex flex-row align-middle border-r pr-6 text-2xl font-bold leading-12 border-white/30">
-          Ooops!
-        </h1>
+    <>
+      <title>Ooops! — Engine misfire | Nopeus GT</title>
+      <meta name="description" content="Something went wrong." />
+      <meta name="robots" content="noindex, nofollow" />
 
-        <h2 className="m-0 pl-8 text-sm font-normal text-start leading-12">
-          Engine misfire
-        </h2>
+      <div className="flex flex-col gap-8 h-screen items-center justify-center text-center text-white">
+        <div className="grid grid-cols-2 gap-y-8">
+          <h1 className="flex flex-row align-middle border-r pr-6 text-2xl font-bold leading-12 border-white/30">
+            Ooops!
+          </h1>
 
-        <Button
-          className="mr-8"
-          variant="outline"
-          onClick={() => {
-            startTransition(() => {
-              router.refresh();
-              reset();
-            });
-          }}
-        >
-          Restart
-        </Button>
+          <h2 className="m-0 pl-8 text-sm font-normal text-start leading-12">
+            Engine misfire
+          </h2>
 
-        <Button className="ml-8" variant="outline" onClick={() => router.push('/')}>
-          Main
-        </Button>
+          <Button
+            className="mr-8"
+            variant="outline"
+            onClick={() => {
+              startTransition(() => {
+                router.refresh();
+                reset();
+              });
+            }}
+          >
+            Restart
+          </Button>
+
+          <Button className="ml-8" asChild variant="outline">
+            <Link href="/">Main</Link>
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

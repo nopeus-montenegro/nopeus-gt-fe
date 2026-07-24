@@ -1,6 +1,7 @@
 import { CarPage } from '@/01_pages/car';
 import { getCar } from '@/04_entities/car/index.server';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
+import { notFound } from 'next/navigation';
 
 interface Params {
   params: Promise<{
@@ -14,9 +15,16 @@ export async function generateMetadata({ params }: Params) {
   const { carId } = await params;
   const car = await getCar(carId);
 
+  if (!car) {
+    notFound();
+  };
+
   return {
     title: `${car?.manufacturer} ${car?.name} ${car?.year} specification`,
     description: `Get the perfect Gran Turismo 7 setup for ${car?.manufacturer} ${car?.name} ${car?.year}.`,
+    alternates: {
+      canonical: `/car/${carId}`,
+    },
   };
 }
 

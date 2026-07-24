@@ -85,16 +85,16 @@ export function SetupCarFilters({ filterList }: Props) {
         onClick={openDrawer}
         type="button"
         className={cn(
-          'group fixed bottom-6 right-6 z-40',
-          'm-0 px-4 py-3',
+          'group fixed bottom-20 right-6 z-40',
+          'm-0 px-3 py-3',
           'flex items-center gap-2',
-          'rounded-full border border-zinc-800 bg-zinc-900/90',
-          'text-sm font-medium text-slate-200',
+          'rounded-full border border-secondary/5 bg-secondary/10',
+          'text-sm font-medium text-slate-200/90',
           'shadow-xl backdrop-blur-md transition-transform',
           'hover:scale-105 active:scale-95',
         )}
       >
-        <SlidersHorizontal className="w-5 h-5 text-slate-400" />
+        <SlidersHorizontal className="w-5 h-5 text-white/90" />
         <span className="hidden md:group-hover:block ">Filters</span>
       </button>
 

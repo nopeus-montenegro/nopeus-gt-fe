@@ -47,3 +47,9 @@ To ensure codebase scalability, data integrity, and strict separation of concern
 - Codebase Abstraction: Heavy telemetry modules (such as the Phase 3 UDP parser) are decoupled from the main repository. They are developed as isolated, specialized packages and integrated into the primary Next.js application as compiled dependencies, ensuring a clean monolithic architecture.
 
 - Access Control & Lifecycle Management: Technical documentation is split into logical modules strictly based on the technical stack. While the foundational data schema and repo structure are open-source friendly, production deployment environments, environment variables, and specific database seeds are strictly isolated using standard dev/prod workflows.
+
+## Trademark & Non-Affiliation Disclaimer
+
+Nopeus GT is an independent community project developed by Nopeus DOO and is not affiliated with, authorized, maintained, sponsored or endorsed by Sony Interactive Entertainment Inc, Polyphony Digital Inc or Gran Turismo.
+
+All game content, images, car names, track names, logos and registered trademarks belong to their respective owners (Sony Interactive Entertainment Inc, Polyphony Digital Inc and respective automotive manufacturers).
