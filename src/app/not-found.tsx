@@ -7,25 +7,31 @@ export default function NotFoundPage() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col gap-8 h-screen items-center justify-center text-center text-white">
-      <div className="grid grid-cols-2 gap-y-8">
-        <h1 className="flex flex-row align-middle border-r pr-6 text-3xl font-bold leading-12 border-white/30">
-          <span className="text-sm font-normal mr-4 my-auto">Garage </span>
-          404
-        </h1>
+    <>
+      <title>Garage 404 — Route Not Found | Nopeus GT</title>
+      <meta name="description" content="The page you are looking for does not exist." />
+      <meta name="robots" content="noindex, nofollow" />
 
-        <h2 className="m-0 pl-8 text-sm font-normal text-start leading-12">
-          Wrong lane
-        </h2>
+      <div className="flex flex-col gap-8 h-screen items-center justify-center text-center text-white">
+        <div className="grid grid-cols-2 gap-y-8">
+          <h1 className="flex flex-row align-middle border-r pr-6 text-3xl font-bold leading-12 border-white/30">
+            <span className="text-sm font-normal mr-4 my-auto">Garage </span>
+            404
+          </h1>
 
-        <Button className="mr-6" variant="outline" onClick={() => router.back()}>
-          Reverse
-        </Button>
+          <h2 className="m-0 pl-8 text-sm font-normal text-start leading-12">
+            Wrong lane
+          </h2>
 
-        <Button className="ml-6 mr-6" variant="outline" onClick={() => router.push('/')}>
-          Main
-        </Button>
+          <Button className="mr-6" variant="outline" onClick={() => router.back()}>
+            Reverse
+          </Button>
+
+          <Button className="ml-6 mr-6" variant="outline" onClick={() => router.push('/')}>
+            Main
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
