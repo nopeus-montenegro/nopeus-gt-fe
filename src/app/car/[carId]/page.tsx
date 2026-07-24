@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: Params) {
   return {
     title: `${car?.manufacturer} ${car?.name} ${car?.year} specification`,
     description: `Get the perfect Gran Turismo 7 setup for ${car?.manufacturer} ${car?.name} ${car?.year}.`,
+    alternates: {
+      canonical: `/car/${carId}`,
+    },
   };
 }
 

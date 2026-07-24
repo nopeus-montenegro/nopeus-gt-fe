@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/05_shared/ui/shadcn/button';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { startTransition, useEffect } from 'react';
 
@@ -45,8 +46,8 @@ export default function ErrorPage({ error, reset }: Props) {
             Restart
           </Button>
 
-          <Button className="ml-8" variant="outline" onClick={() => router.push('/')}>
-            Main
+          <Button className="ml-8" asChild variant="outline">
+            <Link href="/">Main</Link>
           </Button>
         </div>
       </div>

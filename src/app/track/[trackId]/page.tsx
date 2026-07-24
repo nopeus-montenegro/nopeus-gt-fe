@@ -21,6 +21,9 @@ export async function generateMetadata({ params }: Params) {
   return {
     title: `${track?.name}${track?.configName ? ` ${track?.configName}` : ''} details`,
     description: `Tune your favorite Gran Turismo 7 car the fastest on ${track?.name}${track?.configName ? ` ${track?.configName}` : ''}`,
+    alternates: {
+      canonical: `/track/${trackId}`,
+    },
   };
 }
 

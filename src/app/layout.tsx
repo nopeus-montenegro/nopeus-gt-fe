@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     default: 'Nopeus GT — Gran Turismo 7 Setups Sharing Hub',
   },
   description: 'Manage and explore optimal setups, car details, and track data for Gran Turismo 7.',
+  alternates: {
+    canonical: './',
+  },
 };
 
 export default function RootLayout({
