@@ -1,5 +1,6 @@
 import { SetupPage } from '@/01_pages/setup';
 import { getSetup } from '@/04_entities/setup/index.server';
+import { notFound } from 'next/navigation';
 
 interface Params {
   params: Promise<{
@@ -10,6 +11,10 @@ interface Params {
 export async function generateMetadata({ params }: Params) {
   const { setupId } = await params;
   const setup = await getSetup(setupId);
+
+  if (!setup) {
+    notFound();
+  };
 
   return {
     title: setup?.title,
