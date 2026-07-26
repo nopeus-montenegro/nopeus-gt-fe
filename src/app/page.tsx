@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 
 import { getKeywords } from '@/05_shared/config/seo';
