@@ -1,5 +1,6 @@
 import { CarPage } from '@/01_pages/car';
 import { getCar } from '@/04_entities/car/index.server';
+import { getKeywords } from '@/05_shared/config/seo';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { notFound } from 'next/navigation';
 
@@ -19,9 +20,20 @@ export async function generateMetadata({ params }: Params) {
     notFound();
   };
 
+  const fullName = `${car.manufacturer} ${car.name} ${car.year}`;
+
   return {
-    title: `${car?.manufacturer} ${car?.name} ${car?.year} specification`,
-    description: `Get the perfect Gran Turismo 7 setup for ${car?.manufacturer} ${car?.name} ${car?.year}.`,
+    title: `${fullName} — GT7 Setups, Tunes & Specs`,
+    description: `Find optimal Gran Turismo 7 setups and tunes for ${fullName}. Browse track-specific setups, performance specs, and custom tuning configurations.`,
+    keywords: getKeywords([
+      `${car.name}`,
+      `${car.manufacturer} ${car.name}`,
+      `${car.name} bop`,
+      `${car.name} gt7 setup`,
+      `${car.name} tuning`,
+      `${fullName} specs`,
+      'track setups',
+    ]),
     alternates: {
       canonical: `/car/${carId}`,
     },
