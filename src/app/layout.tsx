@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <div className="relative min-h-screen bg-[#0B0F19] text-slate-200 overflow-hidden">
+        <div className="relative min-h-dvh bg-[#0B0F19] text-slate-200 overflow-hidden">
           <div className="fixed inset-0 z-0 pointer-events-none">
             <div
               className={cn(

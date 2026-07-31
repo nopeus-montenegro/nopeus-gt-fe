@@ -1,5 +1,5 @@
 import {
-  AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
+  AirCleanerType, AntiLagType, AspirationType, BopTrackClass, BrakeBalanceType, BrakePadsType, BrakeSystemType, CarClass, ClutchFlywheelType, CustomPartType, CustomWingType, DifferentialType, Drivetrain, EcuType, EngineLayout, EngineUpgradeTier, ExhaustManifoldType, FourWheelSteeringType, HandbrakeType, IntercoolerType, NitroType, OvertakeType, PropellerShaftType, SilencerType, SteeringAngleKitType, SuperchargerType, SuspensionType, TorqueVectoringType, TrackClass, TrackRegion, TrackSurface, TransmissionType, TurbochargerType, TyreType,
 } from '@prisma/client';
 import { CAR_SORT, SETUP_SORT, TRACK_SORT } from './const';
 
@@ -232,6 +232,12 @@ export const OVERTAKE: Record<OvertakeType, string> = {
   [OvertakeType.ENGINE_BOOST]: 'Engine Boost',
   [OvertakeType.KERS]: 'KERS',
   [OvertakeType.NONE]: 'None',
+};
+
+export const ENGINE_UPGRADE: Record<EngineUpgradeTier, string> = {
+  [EngineUpgradeTier.NONE]: 'None',
+  [EngineUpgradeTier.NORMAL]: 'Installed',
+  [EngineUpgradeTier.S]: 'Installed S',
 };
 
 export const TRACK_SORT_LABELS: Record<TRACK_SORT, string> = {

@@ -27,7 +27,7 @@ export async function CarPage({ carId, searchParams }: Props) {
   }
 
   return (
-    <div className="relative min-h-screen pt-64 sm:pt-48 md:pt-144">
+    <div className="relative min-h-dvh pt-64 sm:pt-48 md:pt-148">
       <div className="container mx-auto px-4 max-w-5xl">
         <CarStickyHeader car={car} />
       </div>
