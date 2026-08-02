@@ -1,6 +1,6 @@
 'use server';
 
-import { NewsPostMeta } from '@/04_entities/news';
+import { NewsPost, NewsPostMeta } from '@/04_entities/news';
 import { CARDS_PER_PAGE } from '@/05_shared/lib/const';
 import matter from 'gray-matter';
 
@@ -39,10 +39,10 @@ export async function getNewsFeed(page: number = 1, limit: number = CARDS_PER_PA
   }
 }
 
-export async function getNewsPost(slug: string) {
+export async function getNewsPost(slug: string): Promise<NewsPost | null> {
   try {
     const res = await fetch(
-      `${process.env.GITHUB_NL_CONTENT_URL}news/${slug}.md`,
+      `${process.env.GITHUB_NL_CONTENT_URL}${slug}.md`,
       {
         headers: {
           Authorization: `Bearer ${process.env.GITHUB_NL_TOKEN}`,
@@ -64,6 +64,7 @@ export async function getNewsPost(slug: string) {
       date: data.date || '',
       cover: data.cover || '',
       description: data.description || '',
+      slug: data.slug || '',
       content,
     };
   } catch (error) {

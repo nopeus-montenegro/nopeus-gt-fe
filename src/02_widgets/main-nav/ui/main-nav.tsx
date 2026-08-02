@@ -11,7 +11,7 @@ export function MainNav() {
       <nav
         className={cn(
           'w-full max-w-5xl pointer-events-auto',
-          'flex items-center justify-start md:justify-around gap-4',
+          'flex items-center justify-start lg:justify-between gap-4',
           'px-6 py-6 shadow-xl shadow-black/40',
           'rounded-b-2xl md:rounded-2xl',
           'border border-secondary/5 bg-secondary/30 backdrop-blur-sm',
@@ -22,12 +22,12 @@ export function MainNav() {
           <span className="text-blue-500 not-italic">GT</span>
         </h1>
 
-        <div className="flex flex-col lg:flex-row gap-2">
+        <div className="flex gap-2 ml-auto lg:ml-0">
           <Button asChild variant="outline">
-            <Link href="/car">CARS</Link>
+            <Link href="/car" className="px-4 sm:px-8 lg:px-3">CARS</Link>
           </Button>
 
-          <ButtonGroup className="hidden md:flex">
+          <ButtonGroup className="hidden lg:flex">
             {[
               { label: 'Gr.1', value: CarClass.GR_1 },
               { label: 'Gr.2', value: CarClass.GR_2 },
@@ -48,12 +48,12 @@ export function MainNav() {
           </ButtonGroup>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-2">
+        <div className="flex gap-2">
           <Button asChild variant="outline">
-            <Link href="/track">TRACKS</Link>
+            <Link href="/track" className="px-4 sm:px-8 lg:px-3">TRACKS</Link>
           </Button>
 
-          <ButtonGroup className="hidden md:flex">
+          <ButtonGroup className="hidden lg:flex">
             {[
               { label: 'BoP: High-Speed', value: BopTrackClass.HIGH_SPEED },
               { label: 'BoP: Mid-Speed', value: BopTrackClass.MID_SPEED },

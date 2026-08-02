@@ -12,9 +12,10 @@ import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
   track: Track;
+  priority?: boolean;
 }
 
-export function TrackCard({ track }: Props) {
+export function TrackCard({ track, priority = false }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
@@ -50,11 +51,13 @@ export function TrackCard({ track }: Props) {
       </CardHeader>
 
       <Image
-        className="col-span-2 w-full rounded-sm"
+        className="col-span-2 w-full rounded-sm object-contain"
         src="https://19z3gdb0u05zouco.public.blob.vercel-storage.com/tracks/autodrome_lago_maggiore_west_end.webp"
         alt="alt"
         width={800}
         height={550}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px"
+        priority={priority}
       />
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">

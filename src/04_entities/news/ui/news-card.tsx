@@ -7,9 +7,10 @@ import { NewsPostMeta } from '../lib/types';
 
 interface Props {
   news: NewsPostMeta;
+  priority?: boolean;
 }
 
-export function NewsCard({ news }: Props) {
+export function NewsCard({ news, priority = false }: Props) {
   return (
     <Link
       href={newsPostRoute(news.slug)}
@@ -28,6 +29,8 @@ export function NewsCard({ news }: Props) {
         alt={news.title}
         width={1200}
         height={750}
+        sizes="(max-width: 768px) 100vw, 320px"
+        priority={priority}
       />
       <div className="flex flex-col justify-between col-span-3 h-full">
         <div className="flex flex-col gap-2">

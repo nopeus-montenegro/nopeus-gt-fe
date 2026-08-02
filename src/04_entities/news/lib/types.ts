@@ -5,3 +5,7 @@ export interface NewsPostMeta {
   description: string;
   cover: string;
 }
+
+export interface NewsPost extends NewsPostMeta {
+  content: string;
+}

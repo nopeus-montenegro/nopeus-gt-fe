@@ -157,11 +157,13 @@ export function TrackStickyHeader({ track }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div className="md:col-span-2 h-full rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
                   <Image
-                    className="w-full rounded-sm"
+                    className="w-full rounded-sm object-contain"
                     src="https://19z3gdb0u05zouco.public.blob.vercel-storage.com/tracks/autodrome_lago_maggiore_west_end.webp"
                     alt="alt"
+                    priority
                     width={800}
                     height={550}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
                   />
                 </div>
 

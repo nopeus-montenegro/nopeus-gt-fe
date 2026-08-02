@@ -31,7 +31,7 @@ export async function TrackPage({ trackId, searchParams }: Props) {
   }
 
   return (
-    <div className="relative min-h-dvh pt-54 sm:pt-48 md:pt-112">
+    <div className="relative min-h-dvh pt-56 sm:pt-40 md:pt-148 lg:pt-148">
       <div className="container mx-auto px-4 max-w-5xl">
         <TrackStickyHeader track={track} />
       </div>

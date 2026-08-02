@@ -1,6 +1,7 @@
 'use client';
 
 import { NewsCard, NewsPostMeta } from '@/04_entities/news';
+import { CARDS_PER_VIEW } from '@/05_shared/lib/const';
 import { getNewsFeed } from '@/app/actions/news-feed';
 import { useCallback, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -46,8 +47,12 @@ export function NewsList({ initialNews, initialHasMore }: NewsFeedProps) {
   return (
     <div className="space-y-6">
       <div className="space-y-6">
-        {news.map(post => (
-          <NewsCard key={post.slug} news={post} />
+        {news.map((post, index) => (
+          <NewsCard
+            key={post.slug}
+            news={post}
+            priority={index < CARDS_PER_VIEW}
+          />
         ))}
       </div>
 
