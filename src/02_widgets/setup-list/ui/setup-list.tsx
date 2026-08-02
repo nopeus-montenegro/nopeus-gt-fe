@@ -23,7 +23,7 @@ interface Props<T extends LapTimeCarInclude | LapTimeTrackInclude> {
 export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ lapTimeList, children, id, searchParams, fetch }: Props<T>) {
   const [data, setData] = useState(lapTimeList);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(lapTimeList.length === 12);
+  const [hasMore, setHasMore] = useState(lapTimeList.length === CARDS_PER_PAGE);
   const [isLoading, setIsLoading] = useState(false);
 
   const { ref } = useInView({

@@ -9,6 +9,7 @@ import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { ReactCountryFlag } from 'react-country-flag';
 
@@ -63,7 +64,7 @@ export function TrackStickyHeader({ track }: Props) {
     <header className="fixed top-0 md:top-8 left-0 right-0 z-20 flex justify-center w-full px-0 md:px-8 transition-colors duration-300 touch-none pointer-events-none">
       <div
         className={cn(
-          'w-full max-w-5xl pointer-events-auto', // Впитали в себя свойства удаленного div.container
+          'w-full max-w-5xl pointer-events-auto',
           'rounded-b-2xl md:rounded-2xl border border-secondary/5 bg-secondary/30 backdrop-blur-sm pb-4 md:pb-0 transition-all duration-300',
           !isMobileExpanded && 'py-4 shadow-xl shadow-black/40',
           isScrolled
@@ -155,12 +156,17 @@ export function TrackStickyHeader({ track }: Props) {
             <div className="overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div className="md:col-span-2 h-full rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
-                  <span className="absolute top-2 left-2 text-[10px] text-slate-600">TRACK LAYOUT</span>
-                  [ Track scheme ]
+                  <Image
+                    className="w-full rounded-sm"
+                    src="https://19z3gdb0u05zouco.public.blob.vercel-storage.com/tracks/autodrome_lago_maggiore_west_end.webp"
+                    alt="alt"
+                    width={800}
+                    height={550}
+                  />
                 </div>
 
-                <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex justify-between sm:flex-col px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                <div className="md:col-span-2 grid grid-cols-1 gap-4">
+                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
                     <div className="my-1 text-xs text-slate-400">Length:</div>
                     <div className="text-base font-bold text-white">
                       {track.length}
@@ -168,7 +174,7 @@ export function TrackStickyHeader({ track }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex justify-between sm:flex-col px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
                     <div className="my-1 text-xs text-slate-400 mb-1">Longest Straight:</div>
                     <div className="text-base font-bold text-white">
                       {track.longestStraight}
@@ -176,12 +182,12 @@ export function TrackStickyHeader({ track }: Props) {
                     </div>
                   </div>
 
-                  <div className="flex justify-between sm:flex-col px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
                     <div className="my-1 text-xs text-slate-400 mb-1">Corners:</div>
                     <div className="text-base font-bold text-white">{track.cornerCount}</div>
                   </div>
 
-                  <div className="flex justify-between sm:flex-col px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
                     <div className="my-1 text-xs text-slate-400 mb-1">Elevation Difference:</div>
                     <div className="text-base font-bold text-white">
                       {track.elevationDiff}

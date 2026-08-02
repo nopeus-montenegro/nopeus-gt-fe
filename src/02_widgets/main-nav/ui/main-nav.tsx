@@ -11,7 +11,7 @@ export function MainNav() {
       <nav
         className={cn(
           'w-full max-w-5xl pointer-events-auto',
-          'flex items-center justify-start md:justify-between gap-4',
+          'flex items-center justify-start md:justify-around gap-4',
           'px-6 py-6 shadow-xl shadow-black/40',
           'rounded-b-2xl md:rounded-2xl',
           'border border-secondary/5 bg-secondary/30 backdrop-blur-sm',
@@ -74,70 +74,6 @@ export function MainNav() {
             ))}
           </ButtonGroup>
         </div>
-
-        {/* <div>
-          <h1 className={cn(
-            'font-bold tracking-tight bg-linear-to-br from-white to-white/40 bg-clip-text text-transparent',
-            'text-xl md:text-2xl',
-          )}
-          >
-            {car.manufacturer}
-            {' '}
-            {car.name}
-            {' • '}
-            {car.year}
-          </h1>
-
-          <p className="text-xs text-slate-400 font-medium tracking-wide uppercase">
-            {car.setups[0].power}
-                  &nbsp;
-            {'BHP • '}
-            {car.setups[0].weight}
-                  &nbsp;
-            {'kg • '}
-            {car.setups[0].weightBalanceFront}
-            :
-            {car.setups[0].weightBalanceRear}
-          </p>
-        </div>
-
-        <div className="flex flex-wrap md:flex-nowrap items-center gap-2">
-          {
-            car.isHybrid
-            && (
-              <Badge variant="outline" className="h-8 p-4 border border-secondary/30 bg-secondary/10 text-secondary">
-                HYBRID
-              </Badge>
-            )
-          }
-
-          {
-            car.overtake !== 'NONE' && (
-              <Badge variant="outline" className="h-8 p-4 border border-secondary/30 bg-secondary/10 text-secondary">
-                {car.overtake.replace('_', ' ')}
-              </Badge>
-            )
-          }
-
-          <Badge variant="outline" className="h-8 p-4 border border-secondary/30 bg-secondary/10 text-secondary">
-            {car.engineLayout}
-            -ENGINE
-          </Badge>
-
-          <Badge variant="outline" className="h-8 p-4 border border-secondary/30 bg-secondary/10 text-secondary">
-            {car.aspiration.replace('_', ' + ')}
-          </Badge>
-
-          <Badge variant="outline" className="h-8 p-4 border border-secondary/30 bg-secondary/10 text-secondary">
-            {car.drivetrain}
-          </Badge>
-
-          <Badge variant="outline" className="h-8 p-4 border border-secondary/30 bg-secondary/10 text-secondary">
-            {car.class !== 'ROAD' && `${CAR_CLASS[car.class]} / `}
-            {'PP '}
-            {car.setups[0].pp.toFixed(2)}
-          </Badge>
-        </div> */}
       </nav>
     </header>
   );
