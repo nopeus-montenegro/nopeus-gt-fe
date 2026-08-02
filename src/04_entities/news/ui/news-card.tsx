@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { setupDetailRoute } from '@/05_shared/lib/next/routes';
+import { newsPostRoute } from '@/05_shared/lib/next/routes';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { NewsPostMeta } from '../lib/types';
 
@@ -12,7 +12,7 @@ interface Props {
 export function NewsCard({ news }: Props) {
   return (
     <Link
-      href={setupDetailRoute('cmr1zewws00ycd2bysg63xkfe')}
+      href={newsPostRoute(news.slug)}
       target="_blank"
       className={cn(
         'flex flex-col md:grid md:grid-cols-5 items-center gap-16',

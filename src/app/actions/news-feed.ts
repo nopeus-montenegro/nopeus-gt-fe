@@ -2,6 +2,7 @@
 
 import { NewsPostMeta } from '@/04_entities/news';
 import { CARDS_PER_PAGE } from '@/05_shared/lib/const';
+import matter from 'gray-matter';
 
 export async function getNewsFeed(page: number = 1, limit: number = CARDS_PER_PAGE) {
   try {
@@ -35,5 +36,38 @@ export async function getNewsFeed(page: number = 1, limit: number = CARDS_PER_PA
   } catch (error) {
     console.error('Error fetching news feed:', error);
     return { news: [], hasMore: false };
+  }
+}
+
+export async function getNewsPost(slug: string) {
+  try {
+    const res = await fetch(
+      `${process.env.GITHUB_NL_CONTENT_URL}news/${slug}.md`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_NL_TOKEN}`,
+        },
+        next: {
+          revalidate: 86400,
+          tags: [`news-post-${slug}`],
+        },
+      },
+    );
+
+    if (!res.ok) return null;
+
+    const rawMd = await res.text();
+    const { data, content } = matter(rawMd);
+
+    return {
+      title: data.title || 'Untitled',
+      date: data.date || '',
+      cover: data.cover || '',
+      description: data.description || '',
+      content,
+    };
+  } catch (error) {
+    console.error(`Failed to fetch post: ${slug}`, error);
+    return null;
   }
 }

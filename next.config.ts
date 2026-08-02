@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   typedRoutes: true,
   async redirects() {
@@ -9,6 +8,11 @@ const nextConfig: NextConfig = {
       {
         source: '/setup',
         destination: '/car',
+        permanent: true,
+      },
+      {
+        source: '/news',
+        destination: '/',
         permanent: true,
       },
     ];
