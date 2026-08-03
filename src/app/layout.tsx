@@ -70,7 +70,7 @@ export default function RootLayout({
             {children}
 
             <Popover>
-              <PopoverTrigger className="fixed z-40 bottom-6 right-6">
+              <PopoverTrigger className="fixed z-40 bottom-6 right-6" aria-label="App Info">
                 <div
                   className={cn(
                     'group',

@@ -25,17 +25,11 @@ export default function NotFoundPage() {
           Wrong lane
         </h2>
 
-        {/* <Button className="mr-6" variant="outline" onClick={() => router.back()}>
-          Reverse
-        </Button> */}
         <ButtonBack />
 
         <Button className="ml-6 mr-6" asChild variant="outline">
           <Link href="/">Main</Link>
         </Button>
-        {/* <Button className="ml-6 mr-6" variant="outline" onClick={() => router.push('/')}>
-          Main
-        </Button> */}
       </div>
     </div>
   );

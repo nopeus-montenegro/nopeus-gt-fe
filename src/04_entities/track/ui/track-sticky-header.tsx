@@ -143,15 +143,17 @@ export function TrackStickyHeader({ track }: Props) {
             </div>
           </div>
 
-          <div className={cn(
-            'grid transition-all duration-300 ease-in-out overflow-hidden',
-            isMobileExpanded
-              ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/5'
-              : 'grid-rows-[0fr] opacity-0 mt-0 pt-0 border-t-transparent',
-            !isScrolled
-              ? 'md:grid-rows-[1fr] md:opacity-100 md:mt-6 md:pt-6 md:border-t md:border-white/5'
-              : 'md:grid-rows-[0fr] md:opacity-0 md:mt-0 md:pt-0 md:border-t-transparent',
-          )}
+          <div
+            className={cn(
+              'grid transition-all duration-300 ease-in-out overflow-hidden',
+              isMobileExpanded
+                ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/5'
+                : 'grid-rows-[0fr] opacity-0 mt-0 pt-0 border-t-transparent',
+              !isScrolled
+                ? 'md:grid-rows-[1fr] md:opacity-100 md:mt-6 md:pt-6 md:border-t md:border-white/5'
+                : 'md:grid-rows-[0fr] md:opacity-0 md:mt-0 md:pt-0 md:border-t-transparent',
+            )}
+            id="header-content"
           >
             <div className="overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
@@ -203,7 +205,11 @@ export function TrackStickyHeader({ track }: Props) {
           </div>
         </div>
 
-        <div
+        <button
+          type="button"
+          aria-expanded={isMobileExpanded}
+          aria-label={isMobileExpanded ? 'Collapse track info header' : 'Expand track info header'}
+          aria-controls="header-content"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -219,8 +225,9 @@ export function TrackStickyHeader({ track }: Props) {
                 ? 'md:scale-x-85 md:opacity-60'
                 : 'md:rotate-0 md:scale-x-100 md:opacity-100',
             )}
+            aria-hidden="true"
           />
-        </div>
+        </button>
       </div>
     </header>
   );

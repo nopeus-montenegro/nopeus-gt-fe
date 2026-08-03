@@ -55,7 +55,7 @@ export function CarStickyHeader({ car }: Props) {
     <header className="fixed top-0 md:top-8 left-0 right-0 z-20 flex justify-center w-full px-0 md:px-8 transition-colors duration-300 touch-none pointer-events-none">
       <div
         className={cn(
-          'w-full max-w-5xl pointer-events-auto', // Впитали в себя свойства удаленного div.container
+          'w-full max-w-5xl pointer-events-auto',
           'rounded-b-2xl md:rounded-2xl border border-secondary/5 bg-secondary/30 backdrop-blur-sm pb-4 md:pb-0 transition-all duration-300',
           !isMobileExpanded && 'py-4 shadow-xl shadow-black/40',
           isScrolled
@@ -141,15 +141,18 @@ export function CarStickyHeader({ car }: Props) {
             </div>
           </div>
 
-          <div className={cn(
-            'grid transition-all duration-300 ease-in-out overflow-hidden',
-            isMobileExpanded
-              ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/5'
-              : 'grid-rows-[0fr] opacity-0 mt-0 pt-0 border-t-transparent',
-            !isScrolled
-              ? 'md:grid-rows-[1fr] md:opacity-100 md:mt-6 md:pt-6 md:border-t md:border-white/5'
-              : 'md:grid-rows-[0fr] md:opacity-0 md:mt-0 md:pt-0 md:border-t-transparent',
-          )}
+          <div
+            className={cn(
+              'grid transition-all duration-300 ease-in-out overflow-hidden',
+              isMobileExpanded
+                ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/5'
+                : 'grid-rows-[0fr] opacity-0 mt-0 pt-0 border-t-transparent',
+              !isScrolled
+                ? 'md:grid-rows-[1fr] md:opacity-100 md:mt-6 md:pt-6 md:border-t md:border-white/5'
+                : 'md:grid-rows-[0fr] md:opacity-0 md:mt-0 md:pt-0 md:border-t-transparent',
+            )}
+            id="header-content"
+
           >
             <div className="overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
@@ -208,7 +211,11 @@ export function CarStickyHeader({ car }: Props) {
           </div>
         </div>
 
-        <div
+        <button
+          type="button"
+          aria-expanded={isMobileExpanded}
+          aria-label={isMobileExpanded ? 'Collapse car info header' : 'Expand car info header'}
+          aria-controls="header-content"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -224,8 +231,9 @@ export function CarStickyHeader({ car }: Props) {
                 ? 'md:scale-x-85 md:opacity-60'
                 : 'md:rotate-0 md:scale-x-100 md:opacity-100',
             )}
+            aria-hidden="true"
           />
-        </div>
+        </button>
       </div>
     </header>
   );
