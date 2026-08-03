@@ -1,6 +1,7 @@
 import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
+import Image from 'next/image';
 
 import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
@@ -11,9 +12,10 @@ import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
   track: Track;
+  priority?: boolean;
 }
 
-export function TrackCard({ track }: Props) {
+export function TrackCard({ track, priority = false }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
@@ -47,6 +49,16 @@ export function TrackCard({ track }: Props) {
           />
         </div>
       </CardHeader>
+
+      <Image
+        className="col-span-2 w-full rounded-sm object-contain"
+        src="https://19z3gdb0u05zouco.public.blob.vercel-storage.com/tracks/autodrome_lago_maggiore_west_end.webp"
+        alt="alt"
+        width={800}
+        height={550}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px"
+        priority={priority}
+      />
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">
         <div className="flex flex-col gap-2">

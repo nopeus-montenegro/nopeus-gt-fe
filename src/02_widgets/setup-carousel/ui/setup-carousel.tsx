@@ -2,7 +2,8 @@
 
 import { SetupInclude } from '@/04_entities/setup';
 import {
-  Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,
+  Carousel, CarouselContent,
+  CarouselItem, CarouselNext, CarouselPrevious,
 } from '@/05_shared/ui/shadcn/carousel';
 
 import { AerodynamicsCard } from './aerodynamics-card';
@@ -32,8 +33,12 @@ export function SetupCarousel({ setup }: Props) {
     <Carousel
       opts={{ align: 'start' }}
       className="flex-1 min-h-0 w-full"
+      aria-label="Setup details carousel"
     >
-      <CarouselContent className="h-full">
+      <CarouselContent
+        className="h-full"
+        aria-live="polite"
+      >
         <CarouselItem className="flex h-full pl-4 basis-full md:basis-1/2 xl:basis-1/3">
           <div className="relative flex-1 h-full w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <EngineCard setup={setup} />
@@ -89,9 +94,15 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
       </CarouselContent>
 
-      <CarouselPrevious className="absolute hidden md:flex -top-27 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
+      <CarouselPrevious
+        className="absolute hidden md:flex -top-27 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white"
+        aria-label="Previous setup section"
+      />
 
-      <CarouselNext className="absolute hidden md:flex -top-27 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white" />
+      <CarouselNext
+        className="absolute hidden md:flex -top-27 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white"
+        aria-label="Next setup section"
+      />
     </Carousel>
   );
 }

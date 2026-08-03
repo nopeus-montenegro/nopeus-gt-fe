@@ -82,6 +82,7 @@ export function SetupTrackFilters() {
           'shadow-xl backdrop-blur-md transition-transform',
           'hover:scale-105 active:scale-95',
         )}
+        aria-label="Setup Filters"
       >
         <SlidersHorizontal className="w-5 h-5 text-white/90" />
         <span className="hidden md:group-hover:block ">Filters</span>
