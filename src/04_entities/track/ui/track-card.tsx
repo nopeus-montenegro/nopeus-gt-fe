@@ -8,6 +8,7 @@ import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
+import { slugify } from '@/05_shared/utils/slugify';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
@@ -51,9 +52,9 @@ export function TrackCard({ track, priority = false }: Props) {
       </CardHeader>
 
       <Image
-        className="col-span-2 w-full rounded-sm object-contain"
-        src="https://19z3gdb0u05zouco.public.blob.vercel-storage.com/tracks/autodrome_lago_maggiore_west_end.webp"
-        alt="alt"
+        className="col-span-2 w-full px-4 rounded-sm object-contain"
+        src={`${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`}
+        alt={`${track.name} ${track.configName} scheme`}
         width={800}
         height={550}
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px"

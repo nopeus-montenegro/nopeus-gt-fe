@@ -6,6 +6,7 @@ import { useStickyHeader } from '@/05_shared/hooks/use-sticky-header';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
+import { slugify } from '@/05_shared/utils/slugify';
 import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
@@ -74,10 +75,10 @@ export function TrackStickyHeader({ track }: Props) {
       >
         <div className={cn(
           isMobileExpanded
-            ? 'py-4 px-6 max-h-[80dvh] overflow-y-auto overscroll-contain scrollbar-none'
-            : 'px-6 py-4 overflow-hidden max-h-none',
+            ? 'pt-4 px-6 max-h-[80dvh] overflow-y-auto overscroll-contain scrollbar-none'
+            : 'px-6 overflow-hidden max-h-none',
           !isScrolled
-            ? 'md:py-6 md:max-h-[80dvh] md:overflow-y-auto md:overscroll-contain md:scrollbar-none'
+            ? 'md:max-h-[80dvh] md:overflow-y-auto md:overscroll-contain md:scrollbar-none'
             : 'md:overflow-visible md:max-h-none',
         )}
         >
@@ -160,8 +161,8 @@ export function TrackStickyHeader({ track }: Props) {
                 <div className="md:col-span-2 h-full rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
                   <Image
                     className="w-full rounded-sm object-contain"
-                    src="https://19z3gdb0u05zouco.public.blob.vercel-storage.com/tracks/autodrome_lago_maggiore_west_end.webp"
-                    alt="alt"
+                    src={`${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`}
+                    alt={`${track.name} ${track.configName} scheme`}
                     priority
                     width={800}
                     height={550}
@@ -169,30 +170,30 @@ export function TrackStickyHeader({ track }: Props) {
                   />
                 </div>
 
-                <div className="md:col-span-2 grid grid-cols-1 gap-4">
-                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
-                    <div className="my-1 text-xs text-slate-400">Length:</div>
+                <div className="h-full md:col-span-2 flex flex-col gap-4">
+                  <div className="flex grow justify-between items-center px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-sm text-slate-400">Length:</div>
                     <div className="text-base font-bold text-white">
                       {track.length}
                       {' m'}
                     </div>
                   </div>
 
-                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
-                    <div className="my-1 text-xs text-slate-400 mb-1">Longest Straight:</div>
+                  <div className="flex grow justify-between items-center px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-sm text-slate-400 mb-1">Longest Straight:</div>
                     <div className="text-base font-bold text-white">
                       {track.longestStraight}
                       {' m'}
                     </div>
                   </div>
 
-                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
-                    <div className="my-1 text-xs text-slate-400 mb-1">Corners:</div>
+                  <div className="flex grow justify-between items-center px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-sm text-slate-400 mb-1">Corners:</div>
                     <div className="text-base font-bold text-white">{track.cornerCount}</div>
                   </div>
 
-                  <div className="flex justify-between px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
-                    <div className="my-1 text-xs text-slate-400 mb-1">Elevation Difference:</div>
+                  <div className="flex grow justify-between items-center px-6 py-4 bg-slate-950/20 rounded-xl border border-white/5">
+                    <div className="my-1 text-sm text-slate-400 mb-1">Elevation Difference:</div>
                     <div className="text-base font-bold text-white">
                       {track.elevationDiff}
                       {' m'}
@@ -213,7 +214,7 @@ export function TrackStickyHeader({ track }: Props) {
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
-          className="block md:hidden w-full cursor-pointer group select-none py-1"
+          className="block md:hidden w-full cursor-pointer group select-none py-1 mt-3"
         >
           <div
             className={cn(
@@ -221,9 +222,6 @@ export function TrackStickyHeader({ track }: Props) {
               isMobileExpanded
                 ? 'scale-x-85 opacity-60'
                 : 'rotate-0 scale-x-100 opacity-100',
-              !isScrolled
-                ? 'md:scale-x-85 md:opacity-60'
-                : 'md:rotate-0 md:scale-x-100 md:opacity-100',
             )}
             aria-hidden="true"
           />
