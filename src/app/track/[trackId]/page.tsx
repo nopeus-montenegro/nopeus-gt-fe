@@ -1,14 +1,12 @@
 import { TrackPage } from '@/01_pages/track';
 import { getTrack } from '@/04_entities/track/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
-import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { notFound } from 'next/navigation';
 
 interface Params {
   params: Promise<{
     trackId: string;
   }>;
-  searchParams: AsyncPageSearchParams;
 }
 
 export async function generateMetadata({ params }: Params) {
@@ -39,10 +37,10 @@ export async function generateMetadata({ params }: Params) {
   };
 }
 
-export default async function TrackAppPage({ params, searchParams }: Params) {
+export default async function TrackAppPage({ params }: Params) {
   const { trackId } = await params;
 
   return (
-    <TrackPage trackId={trackId} searchParams={searchParams} />
+    <TrackPage trackId={trackId} />
   );
 }

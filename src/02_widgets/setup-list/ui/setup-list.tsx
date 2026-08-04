@@ -16,7 +16,7 @@ interface Props<T extends LapTimeCarInclude | LapTimeTrackInclude> {
   lapTimeList: T[];
   id: string;
   searchParams: ResolvedPageSearchParams;
-  fetch: (id: string, nextPage: number, currentSearchParams: ResolvedPageSearchParams) => Promise<T[]>;
+  fetch: (id: string, currentSearchParams: ResolvedPageSearchParams, nextPage?: number) => Promise<T[]>;
   children: (item: T) => React.ReactNode;
 }
 
@@ -41,7 +41,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
     const nextPage = page + 1;
 
     try {
-      const newItems = await fetch(id, nextPage, searchParams);
+      const newItems = await fetch(id, searchParams, nextPage);
 
       if (newItems.length === 0) {
         setHasMore(false);
