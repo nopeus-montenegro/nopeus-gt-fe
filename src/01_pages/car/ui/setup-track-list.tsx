@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useTransition } from 'react';
 import { SetupTrackFilters } from '@/03_features/filter-sort';
 import { useUrlFilters } from '@/03_features/filter-sort/hooks/use-url-filters';
 import { LapTimeTrackInclude } from '@/04_entities/lap-time';
-import { SetupTrack } from '@/04_entities/setup';
+import { SetupSkeleton, SetupTrack } from '@/04_entities/setup';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { fetchLapTimesTrack } from '@/app/actions/lap-times';
 import { SetupList } from '../../../02_widgets/setup-list/ui/setup-list';
@@ -27,6 +27,8 @@ export function SetupTrackList({ carId, initialLapTimes }: Props) {
 
   const isFirstRender = useRef(true);
   const cacheRef = useRef<Record<string, LapTimeTrackInclude[]>>({});
+
+  const isInitialLoading = hasUrlFiltersOnMount && listKey === 'loading';
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -57,15 +59,29 @@ export function SetupTrackList({ carId, initialLapTimes }: Props) {
     <>
       <SetupTrackFilters isLoading={isPending} />
 
-      <SetupList
-        key={listKey}
-        lapTimeList={lapTimes}
-        id={carId}
-        searchParams={currentParams}
-        fetch={fetchLapTimesTrack}
-      >
-        {item => <SetupTrack lapTime={item} />}
-      </SetupList>
+      {
+        isInitialLoading
+          ? <SetupSkeleton />
+          : (
+              <div
+                className={
+                  isPending
+                    ? 'pointer-events-none opacity-40 transition-opacity duration-200'
+                    : 'opacity-100 transition-opacity duration-200'
+                }
+              >
+                <SetupList
+                  key={listKey}
+                  lapTimeList={lapTimes}
+                  id={carId}
+                  searchParams={currentParams}
+                  fetch={fetchLapTimesTrack}
+                >
+                  {item => <SetupTrack lapTime={item} />}
+                </SetupList>
+              </div>
+            )
+      }
     </>
   );
 }

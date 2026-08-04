@@ -6,6 +6,7 @@ import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { getLapTimeTrackCached } from '@/04_entities/lap-time/model/get-lap-time';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs/ui/breadcrumbs';
+import { Suspense } from 'react';
 import { SetupTrackList } from './setup-track-list';
 
 interface Props {
@@ -33,10 +34,12 @@ export async function CarPage({ carId, searchParams }: Props) {
         <Breadcrumbs dynamicNames={{ [carId]: `${car.manufacturer} ${car.name} ${car.year}` }} />
       </div>
 
-      <SetupTrackList
-        initialLapTimes={lapTimes}
-        carId={carId}
-      />
+      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+        <SetupTrackList
+          initialLapTimes={lapTimes}
+          carId={carId}
+        />
+      </Suspense>
     </div>
   );
 }

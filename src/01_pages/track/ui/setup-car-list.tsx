@@ -4,7 +4,7 @@ import { SetupList } from '@/02_widgets/setup-list';
 import { FilterList, SetupCarFilters } from '@/03_features/filter-sort';
 import { useUrlFilters } from '@/03_features/filter-sort/hooks/use-url-filters';
 import { LapTimeCarInclude } from '@/04_entities/lap-time';
-import { SetupCar } from '@/04_entities/setup';
+import { SetupCar, SetupSkeleton } from '@/04_entities/setup';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { fetchLapTimesCar } from '@/app/actions/lap-times';
 import { useEffect, useRef, useState, useTransition } from 'react';
@@ -27,6 +27,8 @@ export function SetupCarList({ trackId, initialLapTimes, filterList }: Props) {
 
   const isFirstRender = useRef(true);
   const cacheRef = useRef<Record<string, LapTimeCarInclude[]>>({});
+
+  const isInitialLoading = hasUrlFiltersOnMount && listKey === 'loading';
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -60,15 +62,29 @@ export function SetupCarList({ trackId, initialLapTimes, filterList }: Props) {
         isLoading={isPending}
       />
 
-      <SetupList
-        key={listKey}
-        lapTimeList={lapTimes}
-        id={trackId}
-        searchParams={currentParams}
-        fetch={fetchLapTimesCar}
-      >
-        {item => <SetupCar lapTime={item} />}
-      </SetupList>
+      {
+        isInitialLoading
+          ? <SetupSkeleton />
+          : (
+              <div
+                className={
+                  isPending && hasUrlFiltersOnMount
+                    ? 'pointer-events-none opacity-40 transition-opacity duration-200'
+                    : 'opacity-100 transition-opacity duration-200'
+                }
+              >
+                <SetupList
+                  key={listKey}
+                  lapTimeList={lapTimes}
+                  id={trackId}
+                  searchParams={currentParams}
+                  fetch={fetchLapTimesCar}
+                >
+                  {item => <SetupCar lapTime={item} />}
+                </SetupList>
+              </div>
+            )
+      }
     </>
   );
 }

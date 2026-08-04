@@ -18,9 +18,7 @@ export async function CarListPage() {
       <Breadcrumbs />
 
       <div className="space-y-12">
-        <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
-          <CarList cars={cars} />
-        </Suspense>
+        <CarList cars={cars} />
       </div>
 
       <Suspense fallback={<div className="text-slate-400">Loading...</div>}>

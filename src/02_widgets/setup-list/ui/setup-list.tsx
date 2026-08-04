@@ -59,7 +59,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
   };
 
   return (
-    <div className="relative z-10 container mx-auto px-4 max-w-5xl mt-6 pb-24">
+    <div className="relative z-10 container mx-auto px-4 max-w-5xl mt-6 pb-20">
       <div className="flex items-center gap-2 mb-6">
         <Wrench className="w-5 h-5 text-slate-400" />
         <h2 className="text-xl font-semibold tracking-tight text-white">Setups:</h2>

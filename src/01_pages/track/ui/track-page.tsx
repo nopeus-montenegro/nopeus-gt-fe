@@ -10,6 +10,7 @@ import { TrackStickyHeader } from '@/04_entities/track';
 import { getTrack } from '@/04_entities/track/index.server';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
+import { Suspense } from 'react';
 import { SetupCarList } from './setup-car-list';
 
 interface Props {
@@ -37,11 +38,13 @@ export async function TrackPage({ trackId }: Props) {
         <Breadcrumbs dynamicNames={{ [trackId]: `${track.name} ${track.configName}` }} />
       </div>
 
-      <SetupCarList
-        trackId={trackId}
-        initialLapTimes={lapTimes}
-        filterList={getFilterList(cars)}
-      />
+      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+        <SetupCarList
+          trackId={trackId}
+          initialLapTimes={lapTimes}
+          filterList={getFilterList(cars)}
+        />
+      </Suspense>
     </div>
   );
 }
