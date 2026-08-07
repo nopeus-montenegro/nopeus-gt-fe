@@ -28,6 +28,9 @@ export function NewsContent({ news }: Props) {
               {children}
             </ul>
           ),
+          hr: () => (
+            <hr className="border-white/60 mt-8 mb-1" />
+          ),
         }}
       >
         {news.content}

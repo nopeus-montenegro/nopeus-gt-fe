@@ -186,7 +186,7 @@ export const getLapTimeTrackCached = (trackId: string, searchParams: ResolvedPag
     async () => getLapTimeTrack(trackId, searchParams),
     [cacheKey],
     {
-      revalidate: 300,
+      revalidate: 1000,
       tags: [`track-${trackId}`, 'lap-times'],
     },
   )();
@@ -199,7 +199,7 @@ export const getLapTimeCarCached = (carId: string, searchParams: ResolvedPageSea
     async () => getLapTimeCar(carId, searchParams),
     [cacheKey],
     {
-      revalidate: 300,
+      revalidate: 1000,
       tags: [`car-${carId}`, 'lap-times'],
     },
   )();

@@ -34,7 +34,7 @@ export function NewsCard({ news, priority = false }: Props) {
       />
       <div className="flex flex-col justify-between col-span-3 h-full">
         <div className="flex flex-col gap-2">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-2xl font-bold text-balance">
             {news.title}
           </h2>
 
