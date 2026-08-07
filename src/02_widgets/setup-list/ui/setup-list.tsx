@@ -16,7 +16,7 @@ interface Props<T extends LapTimeCarInclude | LapTimeTrackInclude> {
   lapTimeList: T[];
   id: string;
   searchParams: ResolvedPageSearchParams;
-  fetch: (id: string, nextPage: number, currentSearchParams: ResolvedPageSearchParams) => Promise<T[]>;
+  fetch: (id: string, currentSearchParams: ResolvedPageSearchParams, nextPage?: number) => Promise<T[]>;
   children: (item: T) => React.ReactNode;
 }
 
@@ -41,7 +41,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
     const nextPage = page + 1;
 
     try {
-      const newItems = await fetch(id, nextPage, searchParams);
+      const newItems = await fetch(id, searchParams, nextPage);
 
       if (newItems.length === 0) {
         setHasMore(false);
@@ -59,7 +59,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
   };
 
   return (
-    <div className="relative z-10 container mx-auto px-4 max-w-5xl mt-6 pb-24">
+    <div className="relative z-10 container mx-auto px-4 max-w-5xl mt-6 pb-20">
       <div className="flex items-center gap-2 mb-6">
         <Wrench className="w-5 h-5 text-slate-400" />
         <h2 className="text-xl font-semibold tracking-tight text-white">Setups:</h2>
@@ -76,7 +76,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
       </div>
 
       {hasMore && (
-        <div ref={ref} className="w-full flex justify-center p-8">
+        <div ref={ref} className="w-full flex justify-center">
           <span className="text-slate-500 animate-pulse text-sm uppercase tracking-widest">
             Loading...
           </span>

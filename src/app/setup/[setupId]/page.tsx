@@ -3,6 +3,8 @@ import { getSetup } from '@/04_entities/setup/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 86400;
+
 interface Params {
   params: Promise<{
     setupId: string;

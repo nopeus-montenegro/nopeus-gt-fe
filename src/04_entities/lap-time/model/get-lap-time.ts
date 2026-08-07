@@ -7,6 +7,7 @@ import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { MAX_LIMITS, parseLimits } from '@/05_shared/utils/parse-limits';
 import { parsePrismaEnum } from '@/05_shared/utils/parse-prisma-enum';
 
+import { unstable_cache } from 'next/cache';
 import { lapTimeCarInclude, lapTimeTrackInclude } from './config';
 
 function getSetupLimits(searchParams: ResolvedPageSearchParams): Prisma.SetupWhereInput {
@@ -101,7 +102,7 @@ export const getLapTimeCar = cache(async function (trackId: string, searchParams
   );
 });
 
-export const getLapTimeTrack = cache(async function (carId: string, searchParams: ResolvedPageSearchParams) {
+export const getLapTimeTrack = async function (carId: string, searchParams: ResolvedPageSearchParams) {
   const currentPage = Number(searchParams.page) || 1;
 
   const region = parsePrismaEnum(searchParams[TRACK_FILTER.REGION], TrackRegion);
@@ -176,4 +177,30 @@ export const getLapTimeTrack = cache(async function (carId: string, searchParams
       },
     })
   );
-});
+};
+
+export const getLapTimeTrackCached = (trackId: string, searchParams: ResolvedPageSearchParams) => {
+  const cacheKey = `lap-times-${trackId}-${JSON.stringify(searchParams)}`;
+
+  return unstable_cache(
+    async () => getLapTimeTrack(trackId, searchParams),
+    [cacheKey],
+    {
+      revalidate: 1000,
+      tags: [`track-${trackId}`, 'lap-times'],
+    },
+  )();
+};
+
+export const getLapTimeCarCached = (carId: string, searchParams: ResolvedPageSearchParams) => {
+  const cacheKey = `lap-times-${carId}-${JSON.stringify(searchParams)}`;
+
+  return unstable_cache(
+    async () => getLapTimeCar(carId, searchParams),
+    [cacheKey],
+    {
+      revalidate: 1000,
+      tags: [`car-${carId}`, 'lap-times'],
+    },
+  )();
+};

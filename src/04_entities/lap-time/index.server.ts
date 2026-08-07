@@ -1,1 +1,1 @@
-export { getLapTimeCar, getLapTimeTrack } from './model/get-lap-time';
+export { getLapTimeCarCached, getLapTimeTrackCached } from './model/get-lap-time';

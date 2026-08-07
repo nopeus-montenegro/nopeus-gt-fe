@@ -14,16 +14,16 @@ import { Label } from '@/05_shared/ui/shadcn/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/05_shared/ui/shadcn/select';
 import { Slider } from '@/05_shared/ui/shadcn/slider';
 import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
+
 import { useUrlFilters } from '../hooks/use-url-filters';
+import { FilterList } from '../lib/types';
 
 interface Props {
-  filterList: {
-    countries: string[];
-    manufacturers: string[];
-  };
+  filterList: FilterList;
+  isLoading: boolean;
 }
 
-export function SetupCarFilters({ filterList }: Props) {
+export function SetupCarFilters({ filterList, isLoading }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const openDrawer = () => {
     setCurrentFilters(getFiltersFromUrl());
@@ -125,6 +125,7 @@ export function SetupCarFilters({ filterList }: Props) {
                 clearFilters();
                 closeDrawer();
               }}
+              type="button"
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
               <StickyNoteX className="w-6 h-6" />
@@ -132,6 +133,7 @@ export function SetupCarFilters({ filterList }: Props) {
 
             <button
               onClick={closeDrawer}
+              type="button"
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
               <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
@@ -148,6 +150,7 @@ export function SetupCarFilters({ filterList }: Props) {
                 ? () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING })
                 : () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING })}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+              type="button"
             >
               {
                 currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
@@ -605,7 +608,9 @@ export function SetupCarFilters({ filterList }: Props) {
 
         <div className="mt-8 border-t border-zinc-900 pt-4">
           <button
+            type="button"
             onClick={onFiltersApply}
+            disabled={isLoading}
             className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
           >
             Apply Filters

@@ -119,6 +119,7 @@ export function CarFilters({ cars }: Props) {
 
           <div>
             <button
+              type="button"
               onClick={onFiltersClear}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
@@ -126,6 +127,7 @@ export function CarFilters({ cars }: Props) {
             </button>
 
             <button
+              type="button"
               onClick={toggleDrawer}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
@@ -139,6 +141,7 @@ export function CarFilters({ cars }: Props) {
             <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Sort:</h3>
 
             <button
+              type="button"
               onClick={currentSortDir === SORT_DIRECTION.ASCENDING
                 ? () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING }])
                 : () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING }])}
@@ -595,6 +598,7 @@ export function CarFilters({ cars }: Props) {
 
         <div className="mt-8 border-t border-zinc-900 pt-4 md:hidden">
           <button
+            type="button"
             onClick={toggleDrawer}
             className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
           >

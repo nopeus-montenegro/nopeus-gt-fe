@@ -17,7 +17,11 @@ import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
 
 import { useUrlFilters } from '../hooks/use-url-filters';
 
-export function SetupTrackFilters() {
+interface Props {
+  isLoading: boolean;
+}
+
+export function SetupTrackFilters({ isLoading }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const openDrawer = () => {
     setCurrentFilters(getFiltersFromUrl());
@@ -115,6 +119,7 @@ export function SetupTrackFilters() {
                 closeDrawer();
               }}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+              type="button"
             >
               <StickyNoteX className="w-6 h-6" />
             </button>
@@ -122,6 +127,7 @@ export function SetupTrackFilters() {
             <button
               onClick={closeDrawer}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+              type="button"
             >
               <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
             </button>
@@ -137,6 +143,7 @@ export function SetupTrackFilters() {
                 ? () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING })
                 : () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING })}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+              type="button"
             >
               {
                 currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
@@ -499,7 +506,9 @@ export function SetupTrackFilters() {
 
         <div className="mt-8 border-t border-zinc-900 pt-4">
           <button
+            type="button"
             onClick={onFiltersApply}
+            disabled={isLoading}
             className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
           >
             Apply Filters
