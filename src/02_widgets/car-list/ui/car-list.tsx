@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import { CarCard, type CarInclude } from '@/04_entities/car';
+import { CARDS_PER_PAGE } from '@/05_shared/lib/const';
 import { carDetailRoute } from '@/05_shared/lib/next/routes';
 import { useFilter } from '../hooks/use-filter';
 import { useSort } from '../hooks/use-sort';
@@ -31,12 +32,13 @@ export function CarList({ cars }: Props) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {carList.map(car => (
+          {carList.map((car, index) => (
             <Link
               key={car.id}
               href={carDetailRoute(car.id)}
+              className="grid grid-rows-subgrid row-span-3"
             >
-              <CarCard car={car} />
+              <CarCard car={car} priority={index < CARDS_PER_PAGE} />
             </Link>
           ))}
         </div>
