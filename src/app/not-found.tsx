@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Garage 404 — Route Not Found',
+  title: 'Garage 404 - Route Not Found',
   description: 'The page you are looking for does not exist.',
   robots: {
     index: false,

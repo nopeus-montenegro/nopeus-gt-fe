@@ -39,6 +39,28 @@ export async function getNewsFeed(page: number = 1, limit: number = CARDS_PER_PA
   }
 }
 
+export async function getFullNewsFeed(): Promise<NewsPostMeta[]> {
+  try {
+    const res = await fetch(process.env.GITHUB_NL_URL!, {
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_NL_TOKEN}`,
+        Accept: 'application/json',
+      },
+      next: {
+        revalidate: 86400,
+        tags: ['news-manifest'],
+      },
+    });
+
+    if (!res.ok) throw new Error('Failed to fetch manifest');
+
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching all news posts for sitemap:', error);
+    return [];
+  }
+}
+
 export async function getNewsPost(slug: string): Promise<NewsPost | null> {
   try {
     const res = await fetch(

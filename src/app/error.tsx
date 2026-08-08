@@ -19,7 +19,7 @@ export default function ErrorPage({ error, reset }: Props) {
 
   return (
     <>
-      <title>Ooops! — Engine misfire | Nopeus GT</title>
+      <title>Ooops! - Engine misfire | Nopeus GT</title>
       <meta name="description" content="Something went wrong." />
       <meta name="robots" content="noindex, nofollow" />
 

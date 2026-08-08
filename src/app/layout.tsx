@@ -24,11 +24,18 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://nopeus-gt.app'),
   title: {
     template: '%s | Nopeus GT',
-    default: 'Nopeus GT — Gran Turismo 7 Setups Sharing Hub',
+    default: 'Nopeus GT - Gran Turismo 7 Setups Sharing Hub',
   },
   description: 'Manage and explore optimal setups, car details, and track data for Gran Turismo 7.',
   alternates: {
     canonical: './',
+  },
+  openGraph: {
+    siteName: 'Nopeus GT',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
 };
 
