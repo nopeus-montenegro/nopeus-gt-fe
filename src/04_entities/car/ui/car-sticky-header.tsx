@@ -4,6 +4,8 @@ import { useStickyHeader } from '@/05_shared/hooks/use-sticky-header';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
+import { slugify } from '@/05_shared/utils/slugify';
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { CarInclude } from '../lib/types';
 
@@ -157,7 +159,15 @@ export function CarStickyHeader({ car }: Props) {
             <div className="overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div className="md:col-span-2 h-full rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
-                  [ Car image ]
+                  <Image
+                    className="w-full h-full rounded-xl object-cover"
+                    src={`${process.env.NEXT_PUBLIC_BLOB_URL}/cars/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`}
+                    alt={`${car.manufacturer} ${car.name} ${car.year}`}
+                    priority
+                    width={1200}
+                    height={750}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+                  />
                 </div>
 
                 <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
