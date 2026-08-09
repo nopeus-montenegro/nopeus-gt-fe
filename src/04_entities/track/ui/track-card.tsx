@@ -1,19 +1,22 @@
 import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
+import Image from 'next/image';
 
 import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
+import { slugify } from '@/05_shared/utils/slugify';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
   track: Track;
+  preload?: boolean;
 }
 
-export function TrackCard({ track }: Props) {
+export function TrackCard({ track, preload = false }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
@@ -47,6 +50,16 @@ export function TrackCard({ track }: Props) {
           />
         </div>
       </CardHeader>
+
+      <Image
+        className="col-span-2 w-full px-4 rounded-sm object-contain"
+        src={`${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`}
+        alt={`${track.name} ${track.configName} scheme`}
+        width={800}
+        height={550}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px"
+        preload={preload}
+      />
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">
         <div className="flex flex-col gap-2">

@@ -1,4 +1,5 @@
 export const CARDS_PER_PAGE = 12;
+export const CARDS_PER_VIEW = 5;
 
 export enum SERVICE_SEARCH_PARAMS {
   PAGE = 'page',

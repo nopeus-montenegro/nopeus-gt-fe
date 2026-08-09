@@ -17,7 +17,7 @@ export async function TrackListPage() {
       <Breadcrumbs />
 
       <div className="space-y-12">
-        <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+        <Suspense>
           <TrackList tracks={tracks} />
         </Suspense>
       </div>

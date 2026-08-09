@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Garage 404 — Route Not Found',
+  title: 'Garage 404 - Route Not Found',
   description: 'The page you are looking for does not exist.',
   robots: {
     index: false,
@@ -25,17 +25,11 @@ export default function NotFoundPage() {
           Wrong lane
         </h2>
 
-        {/* <Button className="mr-6" variant="outline" onClick={() => router.back()}>
-          Reverse
-        </Button> */}
         <ButtonBack />
 
         <Button className="ml-6 mr-6" asChild variant="outline">
           <Link href="/">Main</Link>
         </Button>
-        {/* <Button className="ml-6 mr-6" variant="outline" onClick={() => router.push('/')}>
-          Main
-        </Button> */}
       </div>
     </div>
   );

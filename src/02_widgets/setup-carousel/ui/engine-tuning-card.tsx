@@ -1,4 +1,5 @@
 import { SetupInclude } from '@/04_entities/setup';
+import { ENGINE_UPGRADE } from '@/05_shared/lib/dictionaries';
 
 interface Props {
   setup: SetupInclude;
@@ -16,56 +17,56 @@ export function EngineTuningCard({ setup }: Props) {
         <div className="my-1 text-xs text-slate-400 mb-1">Bore Up:</div>
 
         <div className="text-base text-white">
-          {engineBoreUp ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineBoreUp]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Stroke Up:</div>
 
         <div className="text-base text-white">
-          {engineStrokeUp ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineStrokeUp]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Engine Balance Tuning:</div>
 
         <div className="text-base text-white">
-          {engineBalanceTuning ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineBalanceTuning]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Polish Ports:</div>
 
         <div className="text-base text-white">
-          {enginePolishPorts ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[enginePolishPorts]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">High Lift Camshaft:</div>
 
         <div className="text-base text-white">
-          {engineHighLiftCamshaft ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineHighLiftCamshaft]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Titanium Connecting Rods & Pistons:</div>
 
         <div className="text-base text-white">
-          {engineTitaniumRods ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineTitaniumRods]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">Racing Crank Shaft:</div>
 
         <div className="text-base text-white">
-          {engineRacingCrank ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineRacingCrank]}
         </div>
       </div>
       <div className="flex gap-2 justify-between p-3 bg-slate-950/20 rounded-xl border border-white/5 text-nowrap">
         <div className="my-1 text-xs text-slate-400 mb-1">High Compression Pistons:</div>
 
         <div className="text-base text-white">
-          {engineHighCompPistons ? 'Installed' : 'None'}
+          {ENGINE_UPGRADE[engineHighCompPistons]}
         </div>
       </div>
     </div>

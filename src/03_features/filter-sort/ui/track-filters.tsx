@@ -48,6 +48,7 @@ export function TrackFilters() {
           'shadow-xl backdrop-blur-md transition-transform',
           'hover:scale-105 active:scale-95',
         )}
+        aria-label="Track Filters"
       >
         <SlidersHorizontal className="w-5 h-5 text-white/90" />
         <span className="hidden md:group-hover:block ">Filters</span>
@@ -76,6 +77,7 @@ export function TrackFilters() {
           <div>
             <button
               onClick={clearFilters}
+              type="button"
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
               <StickyNoteX className="w-6 h-6" />
@@ -83,6 +85,7 @@ export function TrackFilters() {
 
             <button
               onClick={toggleDrawer}
+              type="button"
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
             >
               <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
@@ -95,6 +98,7 @@ export function TrackFilters() {
             <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Sort:</h3>
 
             <button
+              type="button"
               onClick={currentSortDir === SORT_DIRECTION.ASCENDING
                 ? () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING }])
                 : () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING }])}
@@ -315,6 +319,7 @@ export function TrackFilters() {
 
         <div className="mt-8 border-t border-zinc-900 pt-4 md:hidden">
           <button
+            type="button"
             onClick={toggleDrawer}
             className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
           >

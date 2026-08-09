@@ -24,11 +24,18 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://nopeus-gt.app'),
   title: {
     template: '%s | Nopeus GT',
-    default: 'Nopeus GT — Gran Turismo 7 Setups Sharing Hub',
+    default: 'Nopeus GT - Gran Turismo 7 Setups Sharing Hub',
   },
   description: 'Manage and explore optimal setups, car details, and track data for Gran Turismo 7.',
   alternates: {
     canonical: './',
+  },
+  openGraph: {
+    siteName: 'Nopeus GT',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
 };
 
@@ -40,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <div className="relative min-h-screen bg-[#0B0F19] text-slate-200 overflow-hidden">
+        <div className="relative min-h-dvh bg-[#0B0F19] text-slate-200 overflow-hidden">
           <div className="fixed inset-0 z-0 pointer-events-none">
             <div
               className={cn(
@@ -70,10 +77,10 @@ export default function RootLayout({
             {children}
 
             <Popover>
-              <PopoverTrigger className="fixed bottom-6 right-6">
+              <PopoverTrigger className="fixed z-40 bottom-6 right-6" aria-label="App Info">
                 <div
                   className={cn(
-                    'group z-40',
+                    'group',
                     'm-0 px-2 py-2',
                     'flex items-center gap-2',
                     'rounded-full border border-secondary/5 bg-secondary/10',

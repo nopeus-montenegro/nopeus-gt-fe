@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { CarList } from '@/02_widgets/car-ist';
+import { CarList } from '@/02_widgets/car-list';
 import { CarFilters } from '@/03_features/filter-sort';
 import { getCarList } from '@/04_entities/car/index.server';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
@@ -18,7 +18,7 @@ export async function CarListPage() {
       <Breadcrumbs />
 
       <div className="space-y-12">
-        <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+        <Suspense>
           <CarList cars={cars} />
         </Suspense>
       </div>

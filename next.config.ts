@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   typedRoutes: true,
   async redirects() {
@@ -11,7 +10,15 @@ const nextConfig: NextConfig = {
         destination: '/car',
         permanent: true,
       },
+      {
+        source: '/news',
+        destination: '/',
+        permanent: true,
+      },
     ];
+  },
+  images: {
+    remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_BLOB_URL}/**`)],
   },
 };
 

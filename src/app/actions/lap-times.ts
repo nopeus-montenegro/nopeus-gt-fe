@@ -1,21 +1,33 @@
 'use server';
 
 import { LapTimeCarInclude, LapTimeTrackInclude } from '@/04_entities/lap-time';
-import { getLapTimeCar, getLapTimeTrack } from '@/04_entities/lap-time/index.server';
+import { getLapTimeCarCached, getLapTimeTrackCached } from '@/04_entities/lap-time/model/get-lap-time';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 
-export async function fetchMoreLapTimesCar(
+export async function fetchLapTimesCar(
   id: string,
-  nextPage: number,
   currentSearchParams: ResolvedPageSearchParams,
+  nextPage?: number,
 ) {
-  return await getLapTimeCar(id, { ...currentSearchParams, page: String(nextPage) }) as LapTimeCarInclude[];
+  return await getLapTimeCarCached(
+    id,
+    {
+      ...currentSearchParams,
+      page: nextPage ? String(nextPage) : undefined,
+    },
+  ) as LapTimeCarInclude[];
 }
 
-export async function fetchMoreLapTimesTrack(
+export async function fetchLapTimesTrack(
   id: string,
-  nextPage: number,
   currentSearchParams: ResolvedPageSearchParams,
+  nextPage?: number,
 ) {
-  return await getLapTimeTrack(id, { ...currentSearchParams, page: String(Math.max(1, Math.trunc(nextPage))) }) as LapTimeTrackInclude[];
+  return await getLapTimeTrackCached(
+    id,
+    {
+      ...currentSearchParams,
+      page: nextPage ? String(nextPage) : undefined,
+    },
+  ) as LapTimeTrackInclude[];
 }
