@@ -51,7 +51,7 @@ export function NewsList({ initialNews, initialHasMore }: NewsFeedProps) {
           <NewsCard
             key={post.slug}
             news={post}
-            priority={index < CARDS_PER_VIEW}
+            preload={index < CARDS_PER_VIEW}
           />
         ))}
       </div>

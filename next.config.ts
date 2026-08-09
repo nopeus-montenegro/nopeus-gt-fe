@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    remotePatterns: [new URL('https://19z3gdb0u05zouco.public.blob.vercel-storage.com/**')],
+    remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_BLOB_URL}/**`)],
   },
 };
 

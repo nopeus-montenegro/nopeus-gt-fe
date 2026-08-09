@@ -1,6 +1,6 @@
 import { NewsPage } from '@/01_pages/news';
 import { getKeywords } from '@/05_shared/config/seo';
-import { getNewsFeed, getNewsPost } from '@/app/actions/news-feed';
+import { getFullNewsFeed, getNewsPost } from '@/app/actions/news-feed';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -8,8 +8,8 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const manifest = await getNewsFeed();
-  return manifest.news.map(news => ({
+  const manifest = await getFullNewsFeed();
+  return manifest.map(news => ({
     slug: news.slug,
   }));
 }

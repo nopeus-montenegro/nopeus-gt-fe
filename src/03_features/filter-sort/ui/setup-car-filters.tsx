@@ -121,22 +121,24 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
 
           <div>
             <button
+              type="button"
               onClick={() => {
                 clearFilters();
                 closeDrawer();
               }}
-              type="button"
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+              aria-label="Clear filters"
             >
-              <StickyNoteX className="w-6 h-6" />
+              <StickyNoteX className="w-6 h-6" aria-hidden="true" />
             </button>
 
             <button
-              onClick={closeDrawer}
               type="button"
+              onClick={closeDrawer}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+              aria-label="Close filters tab"
             >
-              <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
+              <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -151,11 +153,13 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
                 : () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING })}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
               type="button"
+              aria-label={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
+              title={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
             >
               {
                 currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
-                  ? <ArrowDownAZ className="w-6 h-6 cursor-pointer" />
-                  : <ArrowDownZA className="w-6 h-6 cursor-pointer" />
+                  ? <ArrowDownAZ className="w-6 h-6 cursor-pointer" aria-hidden="true" />
+                  : <ArrowDownZA className="w-6 h-6 cursor-pointer" aria-hidden="true" />
               }
             </button>
           </div>

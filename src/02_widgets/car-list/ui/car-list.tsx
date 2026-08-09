@@ -38,7 +38,7 @@ export function CarList({ cars }: Props) {
               href={carDetailRoute(car.id)}
               className="grid grid-rows-subgrid row-span-3"
             >
-              <CarCard car={car} priority={index < CARDS_PER_PAGE} />
+              <CarCard car={car} preload={index < CARDS_PER_PAGE} />
             </Link>
           ))}
         </div>

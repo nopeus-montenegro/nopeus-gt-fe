@@ -7,14 +7,15 @@ import { NewsPostMeta } from '../lib/types';
 
 interface Props {
   news: NewsPostMeta;
-  priority?: boolean;
+  preload?: boolean;
 }
 
-export function NewsCard({ news, priority = false }: Props) {
+export function NewsCard({ news, preload = false }: Props) {
   return (
     <Link
       href={newsPostRoute(news.slug)}
       target="_blank"
+      rel="noreferrer noopener"
       className={cn(
         'flex flex-col md:grid md:grid-cols-5 items-center gap-16',
         'py-6 px-6 md:px-8',
@@ -30,7 +31,7 @@ export function NewsCard({ news, priority = false }: Props) {
         width={1200}
         height={750}
         sizes="(max-width: 768px) 100vw, 320px"
-        priority={priority}
+        preload={preload}
       />
       <div className="flex flex-col justify-between col-span-3 h-full">
         <div className="flex flex-col gap-2">

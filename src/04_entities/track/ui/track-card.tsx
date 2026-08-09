@@ -13,10 +13,10 @@ import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
   track: Track;
-  priority?: boolean;
+  preload?: boolean;
 }
 
-export function TrackCard({ track, priority = false }: Props) {
+export function TrackCard({ track, preload = false }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
@@ -58,7 +58,7 @@ export function TrackCard({ track, priority = false }: Props) {
         width={800}
         height={550}
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px"
-        priority={priority}
+        preload={preload}
       />
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">

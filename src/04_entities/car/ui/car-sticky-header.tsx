@@ -163,7 +163,7 @@ export function CarStickyHeader({ car }: Props) {
                     className="w-full h-full rounded-xl object-cover"
                     src={`${process.env.NEXT_PUBLIC_BLOB_URL}/cars/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`}
                     alt={`${car.manufacturer} ${car.name} ${car.year}`}
-                    priority
+                    preload
                     width={1200}
                     height={750}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"

@@ -7,10 +7,10 @@ import { CarInclude } from '../lib/types';
 
 interface Props {
   car: CarInclude;
-  priority?: boolean;
+  preload?: boolean;
 }
 
-export function CarCard({ car, priority }: Props) {
+export function CarCard({ car, preload }: Props) {
   return (
     <Card className="relative grid grid-rows-subgrid row-span-3 overflow-hidden min-h-52 h-full bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/20">
       <div className="absolute -inset-0.5 bg-linear-to-br from-white/20 to-transparent opacity-0 transition-opacity hover:opacity-100 pointer-events-none rounded-xl" />
@@ -35,7 +35,7 @@ export function CarCard({ car, priority }: Props) {
           width={1200}
           height={750}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px"
-          priority={priority}
+          preload={preload}
         />
 
         <CardContent className="flex flex-col gap-2 p-0">

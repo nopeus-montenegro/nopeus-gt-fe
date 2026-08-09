@@ -40,7 +40,7 @@ export function TrackList({ tracks }: Props) {
                 key={track.id}
                 href={trackDetailRoute(track.id)}
               >
-                <TrackCard track={track} priority={index < CARDS_PER_PAGE} />
+                <TrackCard track={track} preload={index < CARDS_PER_PAGE} />
               </Link>
             ))}
           </div>

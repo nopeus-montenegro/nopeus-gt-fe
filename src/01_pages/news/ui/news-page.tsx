@@ -39,7 +39,7 @@ export async function NewsPage({ slug }: Props) {
           width={1200}
           height={750}
           sizes="(max-width: 1024px) 100vw, 768px"
-          priority
+          preload
         />
       </div>
 

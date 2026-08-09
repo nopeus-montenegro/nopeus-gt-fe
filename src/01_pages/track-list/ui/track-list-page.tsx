@@ -17,7 +17,9 @@ export async function TrackListPage() {
       <Breadcrumbs />
 
       <div className="space-y-12">
-        <TrackList tracks={tracks} />
+        <Suspense>
+          <TrackList tracks={tracks} />
+        </Suspense>
       </div>
 
       <Suspense>

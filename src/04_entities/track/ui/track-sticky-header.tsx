@@ -163,7 +163,7 @@ export function TrackStickyHeader({ track }: Props) {
                     className="w-full rounded-sm object-contain"
                     src={`${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`}
                     alt={`${track.name} ${track.configName} scheme`}
-                    priority
+                    preload
                     width={800}
                     height={550}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"

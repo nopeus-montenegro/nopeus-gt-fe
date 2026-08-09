@@ -23,6 +23,7 @@ export function SetupTrack({ lapTime }: Props) {
       key={lapTime.id}
       href={setupDetailRoute(lapTime.setup.id)}
       target="_blank"
+      rel="noreferrer noopener"
       className={cn(
         'flex flex-col md:grid md:grid-cols-5 items-center gap-8',
         'py-6 px-6 md:px-8',
