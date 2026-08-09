@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description: 'Manage and explore optimal setups, car details, and track data for Gran Turismo 7.',
   alternates: {
-    canonical: './',
+    canonical: '/',
   },
   openGraph: {
     siteName: 'Nopeus GT',
