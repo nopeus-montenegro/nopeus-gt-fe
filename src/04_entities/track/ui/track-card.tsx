@@ -57,6 +57,7 @@ export function TrackCard({ track, preload = false }: Props) {
               objectFit: 'cover',
             }}
             title={track.country}
+            alt={`${track.country} flag`}
           />
         </div>
       </CardHeader>

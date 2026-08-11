@@ -89,6 +89,8 @@ export function TrackStickyHeader({ track }: Props) {
                   countryCode={countryCodes.findOne('countryNameEn', track.country)?.countryCode as string}
                   svg
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  title={track.country}
+                  alt={`${track.country} flag`}
                 />
               </div>
 
