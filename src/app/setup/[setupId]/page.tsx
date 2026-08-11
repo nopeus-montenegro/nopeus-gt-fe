@@ -1,4 +1,5 @@
 import { SetupPage } from '@/01_pages/setup';
+import { getSetupJsonLd } from '@/04_entities/setup';
 import { getSetup } from '@/04_entities/setup/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { slugify } from '@/05_shared/utils/slugify';
@@ -66,8 +67,20 @@ export async function generateMetadata({ params }: Params) {
 
 export default async function SetupAppPage({ params }: Params) {
   const { setupId } = await params;
+  const setup = await getSetup(setupId);
+
+  if (!setup) {
+    notFound();
+  };
 
   return (
-    <SetupPage setupId={setupId} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getSetupJsonLd(setup)) }}
+      />
+
+      <SetupPage setupId={setupId} />
+    </>
   );
 }

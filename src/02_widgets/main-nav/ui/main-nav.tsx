@@ -18,8 +18,10 @@ export function MainNav() {
         )}
       >
         <h1 className="text-2xl text-center font-black tracking-tighter uppercase italic">
-          Nopeus&nbsp;
-          <span className="text-blue-500 not-italic">GT</span>
+          <Link href="/">
+            Nopeus&nbsp;
+            <span className="text-blue-500 not-italic">GT</span>
+          </Link>
         </h1>
 
         <div className="flex gap-2 ml-auto lg:ml-0">

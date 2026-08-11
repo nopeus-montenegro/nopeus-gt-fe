@@ -12,12 +12,9 @@ interface Props {
 
 export function NewsCard({ news, preload = false }: Props) {
   return (
-    <Link
-      href={newsPostRoute(news.slug)}
-      target="_blank"
-      rel="noreferrer noopener"
+    <article
       className={cn(
-        'flex flex-col md:grid md:grid-cols-5 items-center gap-16',
+        'relative flex flex-col md:grid md:grid-cols-5 items-center gap-16',
         'py-6 px-6 md:px-8',
         'rounded-xl border border-white/5',
         'bg-slate-900/20 backdrop-blur-sm',
@@ -36,7 +33,14 @@ export function NewsCard({ news, preload = false }: Props) {
       <div className="flex flex-col justify-between col-span-3 h-full">
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl font-bold text-balance">
-            {news.title}
+            <Link
+              href={newsPostRoute(news.slug)}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="after:absolute after:inset-0"
+            >
+              {news.title}
+            </Link>
           </h2>
 
           <p className="text-slate-400">
@@ -48,7 +52,7 @@ export function NewsCard({ news, preload = false }: Props) {
           {news.date}
         </p>
       </div>
-    </Link>
+    </article>
 
   );
 }

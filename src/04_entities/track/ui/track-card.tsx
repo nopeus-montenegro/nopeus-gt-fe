@@ -6,9 +6,11 @@ import Image from 'next/image';
 import { TRACK_SURFACE_ICONS } from '@/05_shared/config/surface-icons';
 import { TRACK_CLASS_ICONS } from '@/05_shared/config/track-icons';
 import { BOP_CLASS_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
+import { trackDetailRoute } from '@/05_shared/lib/next/routes';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
 import { slugify } from '@/05_shared/utils/slugify';
+import Link from 'next/link';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
@@ -26,7 +28,15 @@ export function TrackCard({ track, preload = false }: Props) {
 
       <CardHeader className="pb-3 flex flex-row gap-8 items-start justify-between space-y-0">
         <div>
-          <CardTitle className="text-2xl font-bold tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent">{track.name}</CardTitle>
+          <CardTitle className="text-2xl font-bold tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent">
+            <Link
+              href={trackDetailRoute(track.id)}
+              className="after:absolute after:inset-0"
+            >
+              {track.name}
+            </Link>
+          </CardTitle>
+
           {track.configName
             && (
               <p className="text-base tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent mt-1 flex items-center gap-1">

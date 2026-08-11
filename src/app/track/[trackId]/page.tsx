@@ -1,4 +1,5 @@
 import { TrackPage } from '@/01_pages/track';
+import { getTrackJsonLd } from '@/04_entities/track';
 import { getTrack } from '@/04_entities/track/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { slugify } from '@/05_shared/utils/slugify';
@@ -62,8 +63,20 @@ export async function generateMetadata({ params }: Params) {
 
 export default async function TrackAppPage({ params }: Params) {
   const { trackId } = await params;
+  const track = await getTrack(trackId);
+
+  if (!track) {
+    notFound();
+  };
 
   return (
-    <TrackPage trackId={trackId} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getTrackJsonLd(track)) }}
+      />
+
+      <TrackPage trackId={trackId} />
+    </>
   );
 }

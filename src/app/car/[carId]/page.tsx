@@ -1,4 +1,5 @@
 import { CarPage } from '@/01_pages/car';
+import { getCarJsonLd } from '@/04_entities/car';
 import { getCar } from '@/04_entities/car/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
@@ -64,8 +65,20 @@ export async function generateMetadata({ params }: Params) {
 
 export default async function CarAppPage({ params, searchParams }: Params) {
   const { carId } = await params;
+  const car = await getCar(carId);
+
+  if (!car) {
+    notFound();
+  }
 
   return (
-    <CarPage carId={carId} searchParams={searchParams} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getCarJsonLd(car)) }}
+      />
+
+      <CarPage carId={carId} searchParams={searchParams} />
+    </>
   );
 }

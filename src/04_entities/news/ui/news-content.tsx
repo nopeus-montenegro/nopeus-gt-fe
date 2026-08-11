@@ -15,7 +15,7 @@ export function NewsContent({ news }: Props) {
         remarkPlugins={[remarkGfm]}
         components={{
           h2: ({ children }) => (
-            <h2 className="pb-2 mt-6 mb-3 border-b border-white/10 text-xl font-semibold text-slate-100 tracking-wide">
+            <h2 className="pb-2 mt-8 mb-3 border-b border-white/10 text-2xl font-semibold text-slate-100 tracking-wide">
               {children}
             </h2>
           ),

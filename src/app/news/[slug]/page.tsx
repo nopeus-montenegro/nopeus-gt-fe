@@ -1,4 +1,5 @@
 import { NewsPage } from '@/01_pages/news';
+import { getNewsJsonLd } from '@/04_entities/news';
 import { getKeywords } from '@/05_shared/config/seo';
 import { getFullNewsFeed, getNewsPost } from '@/app/actions/news-feed';
 import { notFound } from 'next/navigation';
@@ -58,6 +59,20 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function NewsArticlePage({ params }: PageProps) {
   const { slug } = await params;
+  const news = await getNewsPost(slug);
 
-  return <NewsPage slug={slug} />;
+  if (!news) {
+    notFound();
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getNewsJsonLd(news)) }}
+      />
+
+      <NewsPage slug={slug} />
+    </>
+  );
 }

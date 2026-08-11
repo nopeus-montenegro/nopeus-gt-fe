@@ -1,4 +1,6 @@
 import { TrackListPage } from '@/01_pages/track-list';
+import { getTrackListJsonLd } from '@/04_entities/track';
+import { getTrackList } from '@/04_entities/track/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { Metadata } from 'next';
 
@@ -22,6 +24,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TrackListAppPage() {
-  return <TrackListPage />;
+export default async function TrackListAppPage() {
+  const tracks = await getTrackList();
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getTrackListJsonLd(tracks)) }}
+      />
+
+      <TrackListPage />
+    </>
+  );
 }

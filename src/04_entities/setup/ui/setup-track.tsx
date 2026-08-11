@@ -19,13 +19,10 @@ export function SetupTrack({ lapTime }: Props) {
   const SurfaceIcon = TRACK_SURFACE_ICONS[lapTime.track.surface];
 
   return (
-    <Link
+    <div
       key={lapTime.id}
-      href={setupDetailRoute(lapTime.setup.id)}
-      target="_blank"
-      rel="noreferrer noopener"
       className={cn(
-        'flex flex-col md:grid md:grid-cols-5 items-center gap-8',
+        'relative flex flex-col md:grid md:grid-cols-5 items-center gap-8',
         'py-6 px-6 md:px-8',
         'rounded-xl border border-white/5',
         'bg-slate-900/20 backdrop-blur-sm',
@@ -34,7 +31,14 @@ export function SetupTrack({ lapTime }: Props) {
     >
       <div className="w-full col-span-2 flex flex-col items-start gap-1">
         <h3 className="flex items-center font-bold text-secondary text-lg">
-          {lapTime.setup.title}
+          <Link
+            href={setupDetailRoute(lapTime.setup.id)}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="after:absolute after:inset-0"
+          >
+            {lapTime.setup.title}
+          </Link>
         </h3>
 
         <p className="flex flex-col gap-4 text-xs text-slate-400">
@@ -133,6 +137,6 @@ export function SetupTrack({ lapTime }: Props) {
           {dayjs(lapTime.createdAt).fromNow()}
         </p>
       </div>
-    </Link>
+    </div>
   );
 };

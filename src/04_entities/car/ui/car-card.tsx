@@ -1,8 +1,10 @@
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
+import { carDetailRoute } from '@/05_shared/lib/next/routes';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
 import { slugify } from '@/05_shared/utils/slugify';
 import Image from 'next/image';
+import Link from 'next/link';
 import { CarInclude } from '../lib/types';
 
 interface Props {
@@ -18,9 +20,15 @@ export function CarCard({ car, preload }: Props) {
       <div className="grid grid-rows-subgrid row-span-3 gap-y-8 h-full px-4">
         <CardHeader className="flex justify-between gap-4 p-0 tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent">
           <CardTitle className="text-2xl font-bold">
-            {car.manufacturer}
-            {' • '}
-            {car.name}
+            <Link
+              key={car.id}
+              href={carDetailRoute(car.id)}
+              className="after:absolute after:inset-0"
+            >
+              {car.manufacturer}
+              {' • '}
+              {car.name}
+            </Link>
           </CardTitle>
 
           <p className="text-2xl font-light">

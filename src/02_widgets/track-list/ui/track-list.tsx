@@ -1,13 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-
 import { Track, TrackRegion } from '@prisma/client';
 
 import { TrackCard } from '@/04_entities/track';
 import { REGIONS_PRELOAD } from '@/05_shared/lib/const';
 import { REGION_LABEL } from '@/05_shared/lib/dictionaries';
-import { trackDetailRoute } from '@/05_shared/lib/next/routes';
 import { useFilter } from '../hooks/use-filter';
 import { useSort } from '../hooks/use-sort';
 
@@ -36,12 +33,7 @@ export function TrackList({ tracks }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {regionTracks.map(track => (
-              <Link
-                key={track.id}
-                href={trackDetailRoute(track.id)}
-              >
-                <TrackCard track={track} preload={index < REGIONS_PRELOAD} />
-              </Link>
+              <TrackCard key={track.id} track={track} preload={index < REGIONS_PRELOAD} />
             ))}
           </div>
         </section>

@@ -1,4 +1,6 @@
 import { CarListPage } from '@/01_pages/car-list';
+import { getCarListJsonLd } from '@/04_entities/car';
+import { getCarList } from '@/04_entities/car/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { Metadata } from 'next';
 
@@ -25,7 +27,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CarListAppPage() {
+export default async function CarListAppPage() {
+  const cars = await getCarList();
+
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(getCarListJsonLd(cars)) }}
+  />;
+
   return (
     <CarListPage />
   );
