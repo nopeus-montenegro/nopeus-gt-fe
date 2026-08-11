@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { CarCard, type CarInclude } from '@/04_entities/car';
-import { CARDS_PER_PAGE } from '@/05_shared/lib/const';
+import { MANUFACTURERS_PRELOAD } from '@/05_shared/lib/const';
 import { carDetailRoute } from '@/05_shared/lib/next/routes';
 import { useFilter } from '../hooks/use-filter';
 import { useSort } from '../hooks/use-sort';
@@ -24,7 +24,7 @@ export function CarList({ cars }: Props) {
   }, {} as Record<string, CarInclude[]>);
 
   return (
-    Object.entries(groupedCars).toSorted(([a], [b]) => a.localeCompare(b)).map(([manufacturer, carList]) => (
+    Object.entries(groupedCars).toSorted(([a], [b]) => a.localeCompare(b)).map(([manufacturer, carList], index) => (
       <section key={manufacturer} className="space-y-3">
         <div className="flex items-center gap-4 mb-6">
           <h2 className="text-2xl font-semibold tracking-tight">{manufacturer}</h2>
@@ -32,13 +32,13 @@ export function CarList({ cars }: Props) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {carList.map((car, index) => (
+          {carList.map(car => (
             <Link
               key={car.id}
               href={carDetailRoute(car.id)}
               className="grid grid-rows-subgrid row-span-3"
             >
-              <CarCard car={car} preload={index < CARDS_PER_PAGE} />
+              <CarCard car={car} preload={index < MANUFACTURERS_PRELOAD} />
             </Link>
           ))}
         </div>

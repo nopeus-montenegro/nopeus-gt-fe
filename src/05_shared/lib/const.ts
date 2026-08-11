@@ -1,4 +1,6 @@
 export const CARDS_PER_PAGE = 12;
+export const MANUFACTURERS_PRELOAD = 3;
+export const REGIONS_PRELOAD = 1;
 export const CARDS_PER_VIEW = 5;
 
 export enum SERVICE_SEARCH_PARAMS {

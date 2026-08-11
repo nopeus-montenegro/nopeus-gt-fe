@@ -6,8 +6,9 @@ export async function POST(request: NextRequest) {
   const secret = searchParams.get('secret');
   const tag = searchParams.get('tag');
   const path = searchParams.get('path');
+  const expectedSecret = process.env.REVALIDATE_SECRET;
 
-  if (secret !== process.env.REVALIDATE_SECRET) {
+  if (!expectedSecret || !secret || secret !== expectedSecret) {
     return NextResponse.json(
       { message: 'Invalid secret token' },
       { status: 401 },

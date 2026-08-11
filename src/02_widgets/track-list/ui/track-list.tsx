@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Track, TrackRegion } from '@prisma/client';
 
 import { TrackCard } from '@/04_entities/track';
-import { CARDS_PER_PAGE } from '@/05_shared/lib/const';
+import { REGIONS_PRELOAD } from '@/05_shared/lib/const';
 import { REGION_LABEL } from '@/05_shared/lib/dictionaries';
 import { trackDetailRoute } from '@/05_shared/lib/next/routes';
 import { useFilter } from '../hooks/use-filter';
@@ -22,7 +22,7 @@ export function TrackList({ tracks }: Props) {
   const regions = Object.values(TrackRegion);
 
   return (
-    regions.map((region) => {
+    regions.map((region, index) => {
       const regionTracks = sorted.filter(t => t.region === region);
 
       if (regionTracks.length === 0) return null;
@@ -35,12 +35,12 @@ export function TrackList({ tracks }: Props) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {regionTracks.map((track, index) => (
+            {regionTracks.map(track => (
               <Link
                 key={track.id}
                 href={trackDetailRoute(track.id)}
               >
-                <TrackCard track={track} preload={index < CARDS_PER_PAGE} />
+                <TrackCard track={track} preload={index < REGIONS_PRELOAD} />
               </Link>
             ))}
           </div>
