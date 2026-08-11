@@ -169,7 +169,7 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
               value={currentFilters[SORT_TYPE.DATA]!}
               onValueChange={key => onFiltersChange({ key: SORT_TYPE.DATA, value: key as CAR_SORT & SETUP_SORT })}
             >
-              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
+              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground" aria-label="Choose sort type">
                 <SelectValue placeholder="Choose Sort" />
               </SelectTrigger>
 
@@ -471,6 +471,8 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
                   name={CAR_FILTER.HYBRID}
                   checked={!!currentFilters[CAR_FILTER.HYBRID]}
                   onCheckedChange={checked => onFiltersChange({ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' })}
+                  aria-label="Filter by Hybrid"
+                  aria-checked={!!currentFilters[CAR_FILTER.HYBRID]}
                 />
                 <FieldContent>
                   <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
