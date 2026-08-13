@@ -1,4 +1,3 @@
-import { carDetailRoute } from '@/05_shared/lib/next/routes';
 import { Car } from '@prisma/client';
 
 export function getCarListJsonLd(cars: Car[]) {
@@ -39,7 +38,7 @@ export function getCarListJsonLd(cars: Car[]) {
           'numberOfItems': cars.length,
           'itemListElement': cars.map((car, index) => ({
             '@type': 'ListItem',
-            '@id': carDetailRoute(car.id),
+            '@id': `https://nopeus-gt.app/car/${car.id}#car`,
             'position': index + 1,
             'name': `${car.manufacturer} ${car.name} ${car.year}`,
             'url': `https://nopeus-gt.app/car/${car.id}`,

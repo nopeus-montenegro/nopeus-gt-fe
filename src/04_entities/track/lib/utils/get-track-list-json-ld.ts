@@ -1,4 +1,3 @@
-import { trackDetailRoute } from '@/05_shared/lib/next/routes';
 import { Track } from '@prisma/client';
 
 export function getTrackListJsonLd(tracks: Track[]) {
@@ -39,7 +38,7 @@ export function getTrackListJsonLd(tracks: Track[]) {
           'numberOfItems': tracks.length,
           'itemListElement': tracks.map((track, index) => ({
             '@type': 'ListItem',
-            '@id': trackDetailRoute(track.id),
+            '@id': `https://nopeus-gt.app/track/${track.id}#track`,
             'position': index + 1,
             'name': `${track.name} ${track.configName}`,
             'url': `https://nopeus-gt.app/track/${track.id}`,

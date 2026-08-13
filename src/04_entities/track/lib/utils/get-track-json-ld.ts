@@ -1,4 +1,3 @@
-import { trackDetailRoute } from '@/05_shared/lib/next/routes';
 import { slugify } from '@/05_shared/utils/slugify';
 import { Track } from '@prisma/client';
 
@@ -25,13 +24,13 @@ export function getTrackJsonLd(track: Track) {
             '@type': 'ListItem',
             'position': 3,
             'name': track.name,
-            'item': trackDetailRoute(track.id),
+            'item': `https://nopeus-gt.app/track/${track.id}`,
           },
         ],
       },
       {
         '@type': 'SportsActivityLocation',
-        '@id': trackDetailRoute(track.id),
+        '@id': `https://nopeus-gt.app/track/${track.id}#track`,
         'name': `${track.name} ${track.configName}`,
         'description': `Gran Turismo 7 track ${track.name} ${track.configName}`,
         'image': `${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`,
