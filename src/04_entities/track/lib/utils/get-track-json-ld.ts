@@ -43,12 +43,14 @@ export function getTrackJsonLd(track: Track) {
             '@type': 'PropertyValue',
             'name': 'Length',
             'value': track.length,
+            'unitCode': 'MTR',
             'unitText': 'm',
           },
           {
             '@type': 'PropertyValue',
             'name': 'Longest Straight',
             'value': track.longestStraight,
+            'unitCode': 'MTR',
             'unitText': 'm',
           },
           {
@@ -60,20 +62,10 @@ export function getTrackJsonLd(track: Track) {
             '@type': 'PropertyValue',
             'name': 'Elevation Difference',
             'value': track.elevationDiff,
+            'unitCode': 'MTR',
             'unitText': 'm',
           },
         ],
-        'author': {
-          '@type': 'Person',
-          '@id': 'https://nopeus-gt.app/#author',
-          'name': 'Iurii P.',
-          'url': 'https://www.linkedin.com/in/iurii-pototskii',
-          'sameAs': [
-            'https://www.linkedin.com/in/iurii-pototskii',
-            'https://github.com/KAHUKYJlbl',
-            'https://x.com/KAHUKYJlbl_me',
-          ],
-        },
       },
     ],
   };
