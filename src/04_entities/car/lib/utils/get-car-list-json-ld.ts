@@ -11,7 +11,7 @@ export function getCarListJsonLd(cars: Car[]) {
             '@type': 'ListItem',
             'position': 1,
             'name': 'Home',
-            'item': 'https://nopeus-gt.app',
+            'item': 'https://nopeus-gt.app/',
           },
           {
             '@type': 'ListItem',

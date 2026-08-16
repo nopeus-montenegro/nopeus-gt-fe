@@ -5,7 +5,7 @@ import { getFullNewsFeed } from './actions/news-feed';
 export const revalidate = 86400;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://nopeus-gt.app';
+  const baseUrl = 'https://nopeus-gt.app/';
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {

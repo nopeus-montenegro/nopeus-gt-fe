@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nopeus-gt.app'),
+  metadataBase: new URL('https://nopeus-gt.app/'),
   title: {
     template: '%s | Nopeus GT',
     default: 'Nopeus GT - Gran Turismo 7 Setups Sharing Hub',

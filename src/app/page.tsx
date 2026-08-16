@@ -30,14 +30,43 @@ export default function Home() {
       {
         '@type': 'WebSite',
         '@id': 'https://nopeus-gt.app/#website',
-        'url': 'https://nopeus-gt.app',
+        'url': 'https://nopeus-gt.app/',
         'name': 'Nopeus GT',
         'description': 'Explore Gran Turismo 7 car details, track data, setups and telemetry.',
         'publisher': {
           '@id': 'https://nopeus-gt.app/#organization',
         },
       },
-
+      {
+        '@type': 'WebApplication',
+        '@id': 'https://nopeus-gt.app/#webapp',
+        'url': 'https://nopeus-gt.app/',
+        'name': 'Nopeus GT',
+        'applicationCategory': 'SportsApplication',
+        'genre': ['Simracing', 'Motorsport', 'Gran Turismo'],
+        'keywords': 'Gran Turismo 7, GT7 setups, car list, car specs, GTWS news, Daily Races, Weekly Challenges, Online Time Trial, track data, track list, WEC, IMSA, Super GT, DTM, BTCC, GTWC, IGTC, GTWCE, GTWCA',
+        'operatingSystem': 'All',
+        'browserRequirements': 'Requires JavaScript. Requires HTML5.',
+        'softwareVersion': '0.2.1',
+        'inLanguage': 'en',
+        'isAccessibleForFree': true,
+        'description': 'Gran Turismo 7 companion app: setup database, track data, car specs, game event news.',
+        'offers': {
+          '@type': 'Offer',
+          'price': '0',
+          'priceCurrency': 'USD',
+        },
+        'featureList': [
+          'Gran Turismo 7 setup database',
+          'Detailed car specs and performance metrics',
+          'Track database and layouts',
+          'Game events coverage (Weekly Challenges, Daily Races, Online Time Trial, GTWS)',
+          'Real-world motorsport newsfeed and championship updates',
+        ],
+        'provider': {
+          '@id': 'https://nopeus-gt.app/#organization',
+        },
+      },
       {
         '@type': 'Organization',
         '@id': 'https://nopeus-gt.app/#organization',
@@ -64,7 +93,6 @@ export default function Home() {
           ],
         },
       },
-
       {
         '@type': 'ItemList',
         '@id': 'https://nopeus-gt.app/#navigation',

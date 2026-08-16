@@ -12,7 +12,7 @@ export function getTrackJsonLd(track: Track) {
             '@type': 'ListItem',
             'position': 1,
             'name': 'Garage',
-            'item': 'https://nopeus-gt.app',
+            'item': 'https://nopeus-gt.app/',
           },
           {
             '@type': 'ListItem',
