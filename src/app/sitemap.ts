@@ -1,4 +1,5 @@
 import { prisma } from '@/05_shared/lib/prisma/db';
+import { slugify } from '@/05_shared/utils/slugify';
 import type { MetadataRoute } from 'next';
 import { getFullNewsFeed } from './actions/news-feed';
 
@@ -31,13 +32,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const [cars, tracks, setups, news] = await Promise.all([
       prisma.car.findMany({
-        select: { id: true, updatedAt: true },
+        select: { name: true, manufacturer: true, year: true, id: true, updatedAt: true },
       }),
       prisma.track.findMany({
-        select: { id: true, updatedAt: true },
+        select: { name: true, configName: true, id: true, updatedAt: true },
       }),
       prisma.setup.findMany({
-        select: { id: true, updatedAt: true },
+        select: { car: true, id: true, updatedAt: true },
       }),
       getFullNewsFeed(),
     ]);
@@ -50,21 +51,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     const carRoutes: MetadataRoute.Sitemap = cars.map(car => ({
-      url: `${baseUrl}/car/${car.id}`,
+      url: `${baseUrl}/car/${slugify([car.manufacturer, car.name, car.year.toString(), car.id])}`,
       lastModified: car.updatedAt ?? new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
 
     const trackRoutes: MetadataRoute.Sitemap = tracks.map(track => ({
-      url: `${baseUrl}/track/${track.id}`,
+      url: `${baseUrl}/track/${slugify([track.name, track.configName, track.id])}`,
       lastModified: track.updatedAt ?? new Date(),
       changeFrequency: 'weekly',
       priority: 0.6,
     }));
 
     const setupRoutes: MetadataRoute.Sitemap = setups.map(setup => ({
-      url: `${baseUrl}/setup/${setup.id}`,
+      url: `${baseUrl}/setup/${slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString(), 'setup', setup.id])}`,
       lastModified: setup.updatedAt ?? new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
