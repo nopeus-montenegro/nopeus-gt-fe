@@ -1,6 +1,6 @@
 {
   "name": "nopeus-gt-fe",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,8 +15,8 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@paralleldrive/cuid2": "^3.3.0",
-    "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
     "@prisma/extension-accelerate": "^3.0.1",
     "@tailwindcss/postcss": "^4.3.0",
     "@tanstack/react-query": "^5.100.10",
@@ -60,13 +60,13 @@
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
-    "prisma": "^7.8.0",
+    "prisma": "^7.9.1",
     "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "overrides": {
     "postcss": "^8.5.14",
-    "@hono/node-server": "^2.0.5",
-    "sharp": "^0.35"
+    "sharp": "^0.35",
+    "deepmerge-ts": "^8.0.0"
   }
 }
