@@ -77,7 +77,7 @@ export function SetupList<T extends LapTimeCarInclude | LapTimeTrackInclude>({ l
 
       {hasMore && (
         <div ref={ref} className="w-full flex justify-center">
-          <span className="text-slate-500 animate-pulse text-sm uppercase tracking-widest">
+          <span className="mt-12 text-slate-500 animate-pulse text-sm uppercase tracking-widest">
             Loading...
           </span>
         </div>

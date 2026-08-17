@@ -32,7 +32,7 @@ export async function NewsPage({ slug }: Props) {
         <Breadcrumbs dynamicNames={{ [slug]: `${news.title}` }} />
       </div>
 
-      <div className="relative w-full mb-10 overflow-hidden rounded-xl border border-white/10">
+      <div className="relative w-full mb-10 overflow-hidden rounded-xl border border-white/10 shadow-[0_0_10px_1px_rgba(255,255,255,0.05)]">
         <Image
           src={`${process.env.NEXT_PUBLIC_BLOB_URL}${news.cover}`}
           alt={news.title}

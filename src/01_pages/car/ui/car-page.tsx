@@ -34,7 +34,7 @@ export async function CarPage({ carId, searchParams }: Props) {
         <Breadcrumbs dynamicNames={{ [carId]: `${car.manufacturer} ${car.name} ${car.year}` }} />
       </div>
 
-      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+      <Suspense>
         <SetupTrackList
           initialLapTimes={lapTimes}
           carId={carId}

@@ -38,7 +38,7 @@ export async function TrackPage({ trackId }: Props) {
         <Breadcrumbs dynamicNames={{ [trackId]: `${track.name} ${track.configName}` }} />
       </div>
 
-      <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+      <Suspense>
         <SetupCarList
           trackId={trackId}
           initialLapTimes={lapTimes}

@@ -58,7 +58,7 @@ export function NewsList({ initialNews, initialHasMore }: NewsFeedProps) {
 
       <div ref={ref} className="w-full flex justify-center">
         {isLoading && (
-          <div className="text-slate-500 animate-pulse text-sm uppercase tracking-widest">
+          <div className="mt-12 text-slate-500 animate-pulse text-sm uppercase tracking-widest">
             Loading...
           </div>
         )}

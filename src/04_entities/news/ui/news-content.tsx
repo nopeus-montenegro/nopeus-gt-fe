@@ -19,6 +19,11 @@ export function NewsContent({ news }: Props) {
               {children}
             </h2>
           ),
+          h3: ({ children }) => (
+            <h3 className="my-4 text-lg font-bold text-slate-200">
+              {children}
+            </h3>
+          ),
           strong: ({ children }) => (
             <strong className="font-semibold text-white/90">
               {children}
