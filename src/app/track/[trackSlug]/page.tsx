@@ -2,17 +2,19 @@ import { TrackPage } from '@/01_pages/track';
 import { getTrackJsonLd } from '@/04_entities/track';
 import { getTrack } from '@/04_entities/track/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
+import { deslugify } from '@/05_shared/utils/deslugify';
 import { slugify } from '@/05_shared/utils/slugify';
 import { notFound } from 'next/navigation';
 
 interface Params {
   params: Promise<{
-    trackId: string;
+    trackSlug: string;
   }>;
 }
 
 export async function generateMetadata({ params }: Params) {
-  const { trackId } = await params;
+  const { trackSlug } = await params;
+  const trackId = deslugify(trackSlug);
   const track = await getTrack(trackId);
 
   if (!track) {
@@ -36,12 +38,12 @@ export async function generateMetadata({ params }: Params) {
       'car setups by track',
     ]),
     alternates: {
-      canonical: `/track/${trackId}`,
+      canonical: `/track/${trackSlug}`,
     },
     openGraph: {
       title: fullName,
       description: `Gran Turismo 7 car setups and tunes for ${fullName}`,
-      url: `/track/${trackId}`,
+      url: `/track/${trackSlug}`,
       type: 'website',
       images: [
         {
@@ -62,7 +64,8 @@ export async function generateMetadata({ params }: Params) {
 }
 
 export default async function TrackAppPage({ params }: Params) {
-  const { trackId } = await params;
+  const { trackSlug } = await params;
+  const trackId = deslugify(trackSlug);
   const track = await getTrack(trackId);
 
   if (!track) {

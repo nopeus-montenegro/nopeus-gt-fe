@@ -30,7 +30,7 @@ export function TrackCard({ track, preload = false }: Props) {
         <div>
           <CardTitle className="text-2xl font-bold tracking-tight bg-linear-to-br from-secondary/60 via-white/50 to-secondary/40 bg-clip-text text-transparent">
             <Link
-              href={trackDetailRoute(track.id)}
+              href={trackDetailRoute(slugify([track.name, track.configName, track.id]))}
               className="after:absolute after:inset-0"
             >
               {track.name}

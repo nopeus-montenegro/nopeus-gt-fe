@@ -22,7 +22,7 @@ export function CarCard({ car, preload }: Props) {
           <CardTitle className="text-2xl font-bold">
             <Link
               key={car.id}
-              href={carDetailRoute(car.id)}
+              href={carDetailRoute(slugify([car.manufacturer, car.name, car.year.toString(), car.id]))}
               className="after:absolute after:inset-0"
             >
               {car.manufacturer}

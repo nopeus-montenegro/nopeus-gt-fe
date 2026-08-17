@@ -5,7 +5,7 @@ import { getFullNewsFeed, getNewsPost } from '@/app/actions/news-feed';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ newsSlug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -16,8 +16,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
-  const news = await getNewsPost(slug);
+  const { newsSlug } = await params;
+  const news = await getNewsPost(newsSlug);
 
   if (!news) {
     notFound();
@@ -31,12 +31,12 @@ export async function generateMetadata({ params }: PageProps) {
       'gran turismo 7 news',
     ]),
     alternates: {
-      canonical: `/news/${slug}`,
+      canonical: `/news/${newsSlug}`,
     },
     openGraph: {
       title: news.title,
       description: news.description,
-      url: `/news/${slug}`,
+      url: `/news/${newsSlug}`,
       type: 'article',
       publishedTime: new Date(news.date).toISOString(),
       images: [
@@ -58,8 +58,8 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function NewsArticlePage({ params }: PageProps) {
-  const { slug } = await params;
-  const news = await getNewsPost(slug);
+  const { newsSlug } = await params;
+  const news = await getNewsPost(newsSlug);
 
   if (!news) {
     notFound();
@@ -72,7 +72,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getNewsJsonLd(news)) }}
       />
 
-      <NewsPage slug={slug} />
+      <NewsPage newsSlug={newsSlug} />
     </>
   );
 }

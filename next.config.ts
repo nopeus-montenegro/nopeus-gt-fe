@@ -1,4 +1,19 @@
 import type { NextConfig } from 'next';
+import fs from 'node:fs';
+import path from 'node:path';
+
+function getLegacyRedirects() {
+  const filePath = path.join(__dirname, 'legacy-redirects.json');
+  if (!fs.existsSync(filePath)) return [];
+
+  const redirectsMap = JSON.parse(fs.readFileSync(filePath, 'utf8')) as [string, string];
+
+  return Object.entries(redirectsMap).map(([source, destination]) => ({
+    source,
+    destination,
+    permanent: true,
+  }));
+}
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -15,6 +30,7 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      ...getLegacyRedirects(),
     ];
   },
   images: {

@@ -8,14 +8,16 @@ import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { SetupSkeleton, SetupTrack } from '@/04_entities/setup';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { fetchLapTimesTrack } from '@/app/actions/lap-times';
+import { Car } from '@prisma/client';
 import { SetupList } from '../../../02_widgets/setup-list/ui/setup-list';
 
 interface Props {
   carId: string;
   initialLapTimes: LapTimeTrackInclude[];
+  car: Car;
 }
 
-export function SetupTrackList({ carId, initialLapTimes }: Props) {
+export function SetupTrackList({ carId, initialLapTimes, car }: Props) {
   const { searchParams } = useUrlFilters();
   const currentParams = Object.fromEntries(searchParams.entries()) as ResolvedPageSearchParams;
   const paramsString = searchParams.toString();
@@ -77,7 +79,7 @@ export function SetupTrackList({ carId, initialLapTimes }: Props) {
                   searchParams={currentParams}
                   fetch={fetchLapTimesTrack}
                 >
-                  {item => <SetupTrack lapTime={item} />}
+                  {item => <SetupTrack lapTime={item} car={car} />}
                 </SetupList>
               </div>
             )

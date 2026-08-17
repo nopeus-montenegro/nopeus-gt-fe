@@ -6,6 +6,7 @@ import { getSetup } from '@/04_entities/setup/index.server';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
+import { slugify } from '@/05_shared/utils/slugify';
 
 interface Props {
   setupId: string;
@@ -75,7 +76,7 @@ export async function SetupPage({ setupId }: Props) {
       </div>
 
       <div className="container px-4 pb-4 max-w-5xl">
-        <Breadcrumbs dynamicNames={{ [setupId]: setup.title }} />
+        <Breadcrumbs dynamicNames={{ [slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString(), 'setup', setupId])]: setup.title }} />
       </div>
 
       <SetupCarousel setup={setup} />

@@ -6,6 +6,7 @@ import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { getLapTimeTrackCached } from '@/04_entities/lap-time/model/get-lap-time';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs/ui/breadcrumbs';
+import { slugify } from '@/05_shared/utils/slugify';
 import { Suspense } from 'react';
 import { SetupTrackList } from './setup-track-list';
 
@@ -31,13 +32,14 @@ export async function CarPage({ carId, searchParams }: Props) {
       </div>
 
       <div className="container mx-auto px-4 max-w-5xl">
-        <Breadcrumbs dynamicNames={{ [carId]: `${car.manufacturer} ${car.name} ${car.year}` }} />
+        <Breadcrumbs dynamicNames={{ [slugify([car.manufacturer, car.name, car.year.toString(), carId])]: `${car.manufacturer} ${car.name} ${car.year}` }} />
       </div>
 
       <Suspense>
         <SetupTrackList
           initialLapTimes={lapTimes}
           carId={carId}
+          car={car}
         />
       </Suspense>
     </div>

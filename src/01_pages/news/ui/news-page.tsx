@@ -6,11 +6,11 @@ import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { getNewsPost } from '@/app/actions/news-feed';
 
 interface Props {
-  slug: string;
+  newsSlug: string;
 }
 
-export async function NewsPage({ slug }: Props) {
-  const news = await getNewsPost(slug);
+export async function NewsPage({ newsSlug }: Props) {
+  const news = await getNewsPost(newsSlug);
 
   if (!news) {
     notFound();
@@ -29,7 +29,7 @@ export async function NewsPage({ slug }: Props) {
       </header>
 
       <div className="container mx-auto max-w-5xl mb-6">
-        <Breadcrumbs dynamicNames={{ [slug]: `${news.title}` }} />
+        <Breadcrumbs dynamicNames={{ [newsSlug]: `${news.title}` }} />
       </div>
 
       <div className="relative w-full mb-10 overflow-hidden rounded-xl border border-white/10 shadow-[0_0_10px_1px_rgba(255,255,255,0.05)]">

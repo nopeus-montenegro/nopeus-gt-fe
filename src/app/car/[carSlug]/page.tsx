@@ -3,19 +3,21 @@ import { getCarJsonLd } from '@/04_entities/car';
 import { getCar } from '@/04_entities/car/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
+import { deslugify } from '@/05_shared/utils/deslugify';
 import { slugify } from '@/05_shared/utils/slugify';
 import { notFound } from 'next/navigation';
 
 interface Params {
   params: Promise<{
-    carId: string;
+    carSlug: string;
   }>;
   searchParams: AsyncPageSearchParams;
 
 }
 
 export async function generateMetadata({ params }: Params) {
-  const { carId } = await params;
+  const { carSlug } = await params;
+  const carId = deslugify(carSlug);
   const car = await getCar(carId);
 
   if (!car) {
@@ -38,12 +40,12 @@ export async function generateMetadata({ params }: Params) {
       'track setups',
     ]),
     alternates: {
-      canonical: `/car/${carId}`,
+      canonical: `/car/${carSlug}`,
     },
     openGraph: {
       title: fullName,
       description: `Gran Turismo 7 setups and tunes for ${fullName}`,
-      url: `/car/${carId}`,
+      url: `/car/${carSlug}`,
       type: 'website',
       images: [
         {
@@ -64,7 +66,8 @@ export async function generateMetadata({ params }: Params) {
 }
 
 export default async function CarAppPage({ params, searchParams }: Params) {
-  const { carId } = await params;
+  const { carSlug } = await params;
+  const carId = deslugify(carSlug);
   const car = await getCar(carId);
 
   if (!car) {

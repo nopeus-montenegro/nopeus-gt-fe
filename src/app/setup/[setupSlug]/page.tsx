@@ -2,6 +2,7 @@ import { SetupPage } from '@/01_pages/setup';
 import { getSetupJsonLd } from '@/04_entities/setup';
 import { getSetup } from '@/04_entities/setup/index.server';
 import { getKeywords } from '@/05_shared/config/seo';
+import { deslugify } from '@/05_shared/utils/deslugify';
 import { slugify } from '@/05_shared/utils/slugify';
 import { notFound } from 'next/navigation';
 
@@ -9,12 +10,13 @@ export const revalidate = 86400;
 
 interface Params {
   params: Promise<{
-    setupId: string;
+    setupSlug: string;
   }>;
 }
 
 export async function generateMetadata({ params }: Params) {
-  const { setupId } = await params;
+  const { setupSlug } = await params;
+  const setupId = deslugify(setupSlug);
   const setup = await getSetup(setupId);
 
   if (!setup) {
@@ -40,12 +42,12 @@ export async function generateMetadata({ params }: Params) {
       `${setup.car.name} tune`,
     ]),
     alternates: {
-      canonical: `/setup/${setupId}`,
+      canonical: `/setup/${setupSlug}`,
     },
     openGraph: {
       title: ogTitle,
       description: ogDescription,
-      url: `/setup/${setupId}`,
+      url: `/setup/${setupSlug}`,
       type: 'article',
       images: [
         {
@@ -66,7 +68,8 @@ export async function generateMetadata({ params }: Params) {
 }
 
 export default async function SetupAppPage({ params }: Params) {
-  const { setupId } = await params;
+  const { setupSlug } = await params;
+  const setupId = deslugify(setupSlug);
   const setup = await getSetup(setupId);
 
   if (!setup) {

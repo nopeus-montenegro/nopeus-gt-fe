@@ -6,6 +6,7 @@ import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
 import { setupDetailRoute } from '@/05_shared/lib/next/routes';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
+import { slugify } from '@/05_shared/utils/slugify';
 
 interface Props {
   lapTime: LapTimeCarInclude;
@@ -26,7 +27,7 @@ export function SetupCar({ lapTime }: Props) {
       <div className="w-full col-span-2 flex flex-col items-start gap-1">
         <h3 className="flex items-center font-bold text-secondary text-lg">
           <Link
-            href={setupDetailRoute(lapTime.setup.id)}
+            href={setupDetailRoute(slugify([lapTime.setup.car.manufacturer, lapTime.setup.car.name, lapTime.setup.car.year.toString(), 'setup', lapTime.setup.id]))}
             target="_blank"
             rel="noreferrer noopener"
             className="after:absolute after:inset-0"

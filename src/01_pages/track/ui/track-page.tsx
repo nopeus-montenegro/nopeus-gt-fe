@@ -10,6 +10,7 @@ import { TrackStickyHeader } from '@/04_entities/track';
 import { getTrack } from '@/04_entities/track/index.server';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
+import { slugify } from '@/05_shared/utils/slugify';
 import { Suspense } from 'react';
 import { SetupCarList } from './setup-car-list';
 
@@ -35,7 +36,7 @@ export async function TrackPage({ trackId }: Props) {
       </div>
 
       <div className="container mx-auto px-4 max-w-5xl">
-        <Breadcrumbs dynamicNames={{ [trackId]: `${track.name} ${track.configName}` }} />
+        <Breadcrumbs dynamicNames={{ [slugify([track.name, track.configName, trackId])]: `${track.name} ${track.configName}` }} />
       </div>
 
       <Suspense>
