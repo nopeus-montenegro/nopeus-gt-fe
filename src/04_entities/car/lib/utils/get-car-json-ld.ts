@@ -33,7 +33,7 @@ export function getCarJsonLd(car: CarInclude) {
         '@id': `https://nopeus-gt.app/car/${car.id}#car`,
         'name': `${car.manufacturer} ${car.name} ${car.year}`,
         'description': `Gran Turismo 7 tuning guide, specs and setups for ${car.manufacturer} ${car.name} ${car.year}.`,
-        'image': `${process.env.NEXT_PUBLIC_BLOB_URL}/cars/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`,
+        'image': `${process.env.NEXT_PUBLIC_BLOB_URL}/car/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`,
         'brand': {
           '@type': 'Brand',
           'name': car.manufacturer,

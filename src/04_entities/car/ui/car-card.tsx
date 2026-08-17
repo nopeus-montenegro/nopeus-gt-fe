@@ -38,7 +38,7 @@ export function CarCard({ car, preload }: Props) {
 
         <Image
           className="w-full rounded-sm object-contain"
-          src={`${process.env.NEXT_PUBLIC_BLOB_URL}/cars/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`}
+          src={`${process.env.NEXT_PUBLIC_BLOB_URL}/car/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`}
           alt={`${car.manufacturer} ${car.name} ${car.year}`}
           width={1200}
           height={750}

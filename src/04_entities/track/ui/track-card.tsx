@@ -64,7 +64,7 @@ export function TrackCard({ track, preload = false }: Props) {
 
       <Image
         className="col-span-2 w-full px-4 rounded-sm object-contain"
-        src={`${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`}
+        src={`${process.env.NEXT_PUBLIC_BLOB_URL}/track/${slugify([track.name, track.configName])}.webp`}
         alt={`${track.name} ${track.configName} scheme`}
         width={800}
         height={550}

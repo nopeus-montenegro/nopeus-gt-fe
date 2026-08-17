@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Params) {
 
   const fullName = `${track.name}${track.configName ? ` ${track.configName}` : ''}`;
   const slugParts = [track.name, track.configName].filter(Boolean);
-  const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify(slugParts)}.webp`;
+  const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/track/${slugify(slugParts)}.webp`;
 
   return {
     title: `${fullName} - GT7 Cars & Setups`,

@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Params) {
   const authorPart = setup.author?.username ? `by ${setup.author.username}` : '';
   const shortCode = setupId.slice(-5).toUpperCase();
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/cars/${slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString()])}.webp`;
+  const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/car/${slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString()])}.webp`;
 
   const ogTitle = `${carFullName} GT7 ${ppPart} Setup`;
   const ogDescription = `Optimal Gran Turismo 7 ${ppPart} tune for ${carFullName}`;

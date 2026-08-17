@@ -163,7 +163,7 @@ export function TrackStickyHeader({ track }: Props) {
                 <div className="md:col-span-2 h-full rounded-xl bg-slate-950/40 border border-white/5 flex items-center justify-center text-slate-500 text-sm font-mono relative">
                   <Image
                     className="w-full rounded-sm object-contain"
-                    src={`${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`}
+                    src={`${process.env.NEXT_PUBLIC_BLOB_URL}/track/${slugify([track.name, track.configName])}.webp`}
                     alt={`${track.name} ${track.configName} scheme`}
                     preload
                     width={800}

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Params) {
   }
 
   const fullName = `${car.manufacturer} ${car.name} ${car.year}`;
-  const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/cars/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`;
+  const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/car/${slugify([car.manufacturer, car.name, car.year.toString()])}.webp`;
 
   return {
     title: `${fullName} - GT7 Setups, Tunes & Specs`,

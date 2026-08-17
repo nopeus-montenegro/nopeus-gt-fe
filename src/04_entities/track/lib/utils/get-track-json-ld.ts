@@ -33,7 +33,7 @@ export function getTrackJsonLd(track: Track) {
         '@id': `https://nopeus-gt.app/track/${track.id}#track`,
         'name': `${track.name} ${track.configName}`,
         'description': `Gran Turismo 7 track ${track.name} ${track.configName}`,
-        'image': `${process.env.NEXT_PUBLIC_BLOB_URL}/tracks/${slugify([track.name, track.configName])}.webp`,
+        'image': `${process.env.NEXT_PUBLIC_BLOB_URL}/track/${slugify([track.name, track.configName])}.webp`,
         'address': {
           '@type': 'PostalAddress',
           'addressCountry': track.country,
