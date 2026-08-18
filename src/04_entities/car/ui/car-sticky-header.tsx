@@ -53,6 +53,16 @@ export function CarStickyHeader({ car }: Props) {
     (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
   };
 
+  const handlePointerCancel = (e: React.PointerEvent) => {
+    pointerStartY.current = null;
+    pointerCurrentY.current = null;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   return (
     <header className="fixed top-0 md:top-8 left-0 right-0 z-20 flex justify-center w-full px-0 md:px-8 transition-colors duration-300 touch-none pointer-events-none">
       <div
@@ -229,6 +239,7 @@ export function CarStickyHeader({ car }: Props) {
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
           className="block md:hidden w-full cursor-pointer group select-none touch-none py-1"
         >
           <div

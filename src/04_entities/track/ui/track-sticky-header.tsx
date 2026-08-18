@@ -58,6 +58,16 @@ export function TrackStickyHeader({ track }: Props) {
     (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
   };
 
+  const handlePointerCancel = (e: React.PointerEvent) => {
+    pointerStartY.current = null;
+    pointerCurrentY.current = null;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
@@ -216,6 +226,7 @@ export function TrackStickyHeader({ track }: Props) {
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
           className="block md:hidden w-full cursor-pointer group select-none py-1 mt-3"
         >
           <div

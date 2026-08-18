@@ -128,6 +128,7 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
               }}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
               aria-label="Clear filters"
+              disabled={isLoading}
             >
               <StickyNoteX className="w-6 h-6" aria-hidden="true" />
             </button>

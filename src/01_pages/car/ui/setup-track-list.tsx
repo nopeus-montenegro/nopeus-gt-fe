@@ -1,15 +1,15 @@
 'use client';
 
+import { Car } from '@prisma/client';
 import { useEffect, useRef, useState, useTransition } from 'react';
 
+import { SetupList } from '@/02_widgets/setup-list';
 import { SetupTrackFilters } from '@/03_features/filter-sort';
 import { useUrlFilters } from '@/03_features/filter-sort/hooks/use-url-filters';
 import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { SetupSkeleton, SetupTrack } from '@/04_entities/setup';
 import { ResolvedPageSearchParams } from '@/05_shared/lib/types';
 import { fetchLapTimesTrack } from '@/app/actions/lap-times';
-import { Car } from '@prisma/client';
-import { SetupList } from '../../../02_widgets/setup-list/ui/setup-list';
 
 interface Props {
   carId: string;
