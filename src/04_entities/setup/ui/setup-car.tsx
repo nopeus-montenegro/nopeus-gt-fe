@@ -75,7 +75,7 @@ export function SetupCar({ lapTime }: Props) {
         </Badge>
 
         <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-          {getSetupAspiration(lapTime.setup)}
+          {lapTime.setup.car.aspiration === 'EV' ? 'EV' : getSetupAspiration(lapTime.setup)}
         </Badge>
 
         <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
