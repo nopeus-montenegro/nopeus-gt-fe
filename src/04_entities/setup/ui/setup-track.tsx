@@ -11,6 +11,7 @@ import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { slugify } from '@/05_shared/utils/slugify';
 import { Car } from '@prisma/client';
+import { getSetupAspiration } from '../lib/utils/get-setup-aspiration';
 
 interface Props {
   lapTime: LapTimeTrackInclude;
@@ -55,6 +56,8 @@ export function SetupTrack({ lapTime, car }: Props) {
             &nbsp;
             {'PP • '}
             {lapTime.setup.power}
+            &nbsp;
+            {getSetupAspiration(lapTime.setup)}
             &nbsp;
             {'BHP • '}
             {lapTime.setup.torque}

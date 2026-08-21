@@ -7,6 +7,7 @@ import { setupDetailRoute } from '@/05_shared/lib/next/routes';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { slugify } from '@/05_shared/utils/slugify';
+import { getSetupAspiration } from '../lib/utils/get-setup-aspiration';
 
 interface Props {
   lapTime: LapTimeCarInclude;
@@ -74,7 +75,7 @@ export function SetupCar({ lapTime }: Props) {
         </Badge>
 
         <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">
-          {lapTime.setup.car.aspiration.replace('_', ' + ')}
+          {getSetupAspiration(lapTime.setup)}
         </Badge>
 
         <Badge variant="outline" className="h-8 px-4 py-2 border border-secondary/30 bg-secondary/10 text-secondary">

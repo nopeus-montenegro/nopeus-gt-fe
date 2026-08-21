@@ -32,7 +32,24 @@ export default function Home() {
         '@id': 'https://nopeus-gt.app/#website',
         'url': 'https://nopeus-gt.app/',
         'name': 'Nopeus GT',
+        'alternateName': ['NopeusGT'],
         'description': 'Explore Gran Turismo 7 car details, track data, setups and telemetry.',
+        'inLanguage': 'en',
+        'about': [
+          {
+            '@type': 'VideoGame',
+            'name': 'Gran Turismo 7',
+            'sameAs': 'https://www.wikidata.org/wiki/Q18345763',
+          },
+        ],
+        'hasPart': [
+          {
+            '@id': 'https://nopeus-gt.app/#nav-cars',
+          },
+          {
+            '@id': 'https://nopeus-gt.app/#nav-tracks',
+          },
+        ],
         'publisher': {
           '@id': 'https://nopeus-gt.app/#organization',
         },
@@ -47,8 +64,16 @@ export default function Home() {
         'keywords': 'Gran Turismo 7, GT7 setups, car list, car specs, GTWS news, Daily Races, Weekly Challenges, Online Time Trial, track data, track list, WEC, IMSA, Super GT, DTM, BTCC, GTWC, IGTC, GTWCE, GTWCA',
         'operatingSystem': 'All',
         'browserRequirements': 'Requires JavaScript. Requires HTML5.',
-        'softwareVersion': '0.2.1',
+        'softwareVersion': '0.2.2',
         'inLanguage': 'en',
+        'about': [
+          {
+            '@type': 'VideoGame',
+            'name': 'Gran Turismo 7',
+            'sameAs': 'https://www.wikidata.org/wiki/Q18345763',
+          },
+        ],
+
         'isAccessibleForFree': true,
         'description': 'Gran Turismo 7 companion app: setup database, track data, car specs, game event news.',
         'offers': {
@@ -100,17 +125,31 @@ export default function Home() {
         'itemListElement': [
           {
             '@type': 'SiteNavigationElement',
+            '@id': 'https://nopeus-gt.app/#nav-cars',
             'position': 1,
             'name': 'Cars & Specs',
             'url': 'https://nopeus-gt.app/car',
           },
           {
             '@type': 'SiteNavigationElement',
+            '@id': 'https://nopeus-gt.app/#nav-tracks',
             'position': 2,
             'name': 'Tracks & Specs',
             'url': 'https://nopeus-gt.app/track',
           },
         ],
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        '@id': 'https://nopeus-gt.app/#nav-cars',
+        'name': 'Cars & Specs',
+        'url': 'https://nopeus-gt.app/car',
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        '@id': 'https://nopeus-gt.app/#nav-tracks',
+        'name': 'Tracks & Specs',
+        'url': 'https://nopeus-gt.app/track',
       },
     ],
   };
