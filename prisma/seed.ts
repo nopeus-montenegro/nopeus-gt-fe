@@ -31,7 +31,7 @@ async function main() {
     create: {
       id: authorId,
       username: 'Nopeus GT',
-      email: 'nopeus-gt@nopeus.gt',
+      email: 'nopeus@nopeus-gt.app',
     },
   });
   console.log(`System user ready: ${systemUser.username}`);
