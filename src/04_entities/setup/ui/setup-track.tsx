@@ -57,9 +57,10 @@ export function SetupTrack({ lapTime, car }: Props) {
             {'PP • '}
             {lapTime.setup.power}
             &nbsp;
+            {'BHP • '}
             {getSetupAspiration({ ...lapTime.setup, car })}
             &nbsp;
-            {'BHP • '}
+            {' • '}
             {lapTime.setup.torque}
             &nbsp;
             {'kgfm • '}

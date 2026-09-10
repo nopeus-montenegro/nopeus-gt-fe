@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { SetupCarousel } from '@/02_widgets/setup-carousel';
 import { SetupInclude } from '@/04_entities/setup';
 import { getSetup } from '@/04_entities/setup/index.server';
+import { getSetupAspiration } from '@/04_entities/setup/lib/utils/get-setup-aspiration';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
@@ -66,7 +67,7 @@ export async function SetupPage({ setupId }: Props) {
           }
 
           <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-            {setup.car.aspiration.replace('_', ' + ')}
+            {getSetupAspiration(setup)}
           </Badge>
 
           <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
