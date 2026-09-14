@@ -40,7 +40,7 @@ export function TrackFilters() {
         onClick={toggleDrawer}
         type="button"
         className={cn(
-          'group fixed bottom-20 right-6 z-40',
+          'group fixed bottom-20 right-6 z-20',
           'm-0 px-3 py-3',
           'flex items-center gap-2',
           'rounded-full border border-secondary/5 bg-secondary/10',

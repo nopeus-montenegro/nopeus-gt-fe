@@ -64,7 +64,7 @@ export function CarStickyHeader({ car }: Props) {
   };
 
   return (
-    <header className="fixed top-0 md:top-8 left-0 right-0 z-20 flex justify-center w-full px-0 md:px-8 transition-colors duration-300 touch-none pointer-events-none">
+    <header className="fixed top-0 md:top-8 left-0 right-0 z-30 flex justify-center w-full px-0 md:px-8 transition-colors duration-300 touch-none pointer-events-none">
       <div
         className={cn(
           'w-full max-w-5xl pointer-events-auto',
