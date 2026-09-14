@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export function MainNav() {
   return (
-    <header className="fixed top-0 md:top-8 left-0 right-0 z-50 flex justify-center px-0 md:px-8 pointer-events-none">
+    <header className="fixed top-0 md:top-8 left-0 right-0 z-30 flex justify-center px-0 md:px-8 pointer-events-none">
       <nav
         className={cn(
           'w-full max-w-5xl pointer-events-auto',

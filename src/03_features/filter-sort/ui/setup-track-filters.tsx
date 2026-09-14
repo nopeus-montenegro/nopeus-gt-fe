@@ -4,6 +4,7 @@ import { BopTrackClass, TrackClass, TrackRegion, TrackSurface } from '@prisma/cl
 import { ArrowBigRightDash, ArrowDownAZ, ArrowDownZA, SlidersHorizontal, StickyNoteX } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
+import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE, TRACK_FILTER, TRACK_SORT } from '@/05_shared/lib/const';
 import { BOP_CLASS_LABEL, REGION_LABEL, SETUP_TRACK_SORT_LABELS, SURFACE_LABEL, TRACK_CLASS_LABEL } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
@@ -23,6 +24,7 @@ interface Props {
 
 export function SetupTrackFilters({ isLoading }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  useBodyScroll(isOpen);
   const openDrawer = () => {
     setCurrentFilters(getFiltersFromUrl());
     setIsOpen(true);
@@ -78,7 +80,7 @@ export function SetupTrackFilters({ isLoading }: Props) {
         onClick={openDrawer}
         type="button"
         className={cn(
-          'group fixed bottom-20 right-6 z-20',
+          'group fixed bottom-34 right-6 z-20',
           'm-0 px-3 py-3',
           'flex items-center gap-2',
           'rounded-full border border-secondary/5 bg-secondary/10',

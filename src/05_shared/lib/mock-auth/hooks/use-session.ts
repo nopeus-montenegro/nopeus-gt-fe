@@ -6,7 +6,7 @@ import { Session } from '../lib/types';
 type SessionStatus = 'authenticated' | 'unauthenticated' | 'loading';
 
 export function useSession() {
-  const isAuthenticated = true; // Сопряжено с IS_DEV_AUTH
+  const isAuthenticated = false;
 
   const session: Session | null = isAuthenticated
     ? {

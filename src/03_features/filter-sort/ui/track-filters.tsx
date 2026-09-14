@@ -1,5 +1,6 @@
 'use client';
 
+import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { SORT_DIRECTION, SORT_TYPE, TRACK_FILTER, TRACK_SORT } from '@/05_shared/lib/const';
 import { BOP_CLASS_LABEL, REGION_LABEL, SURFACE_LABEL, TRACK_CLASS_LABEL, TRACK_SORT_LABELS } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
@@ -14,6 +15,7 @@ import { useUrlFilters } from '../hooks/use-url-filters';
 
 export function TrackFilters() {
   const [isOpen, setIsOpen] = useState(false);
+  useBodyScroll(isOpen);
 
   const { searchParams, setFilter, clearFilters } = useUrlFilters();
 
@@ -40,7 +42,7 @@ export function TrackFilters() {
         onClick={toggleDrawer}
         type="button"
         className={cn(
-          'group fixed bottom-20 right-6 z-20',
+          'group fixed bottom-34 right-6 z-20',
           'm-0 px-3 py-3',
           'flex items-center gap-2',
           'rounded-full border border-secondary/5 bg-secondary/10',

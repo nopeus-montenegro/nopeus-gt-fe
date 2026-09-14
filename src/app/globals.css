@@ -132,6 +132,7 @@
   }
   html {
     @apply font-sans;
+    scrollbar-gutter: stable;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {

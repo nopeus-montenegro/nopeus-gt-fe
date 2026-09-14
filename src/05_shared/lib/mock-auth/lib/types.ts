@@ -4,10 +4,13 @@ export interface Session {
     name?: string | null;
     email?: string | null;
     image?: string | null;
+
     username?: string | null;
+
     psnId?: string | null;
     psnName?: string | null;
-    gtProfileId?: string | null;
+    psnUrl?: string | null;
+
     isPsnPublic: boolean;
   };
   expires: string;

@@ -4,6 +4,7 @@ import { AspirationType, CarClass, Drivetrain, EngineLayout, OvertakeType } from
 import { ArrowBigRightDash, ArrowDownAZ, ArrowDownZA, SlidersHorizontal, StickyNoteX } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
+import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { CAR_FILTER, CAR_SORT, SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { ASPIRATION, CAR_CLASS, DRIVETRAIN, ENGINE_LAYOUT, OVERTAKE, SETUP_CAR_SORT_LABELS } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
@@ -25,6 +26,7 @@ interface Props {
 
 export function SetupCarFilters({ filterList, isLoading }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  useBodyScroll(isOpen);
   const openDrawer = () => {
     setCurrentFilters(getFiltersFromUrl());
     setIsOpen(true);
@@ -85,7 +87,7 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
         onClick={openDrawer}
         type="button"
         className={cn(
-          'group fixed bottom-20 right-6 z-20',
+          'group fixed bottom-34 right-6 z-20',
           'm-0 px-3 py-3',
           'flex items-center gap-2',
           'rounded-full border border-secondary/5 bg-secondary/10',

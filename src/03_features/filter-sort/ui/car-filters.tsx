@@ -4,6 +4,7 @@ import { ArrowBigRightDash, ArrowDownAZ, ArrowDownZA, SlidersHorizontal, StickyN
 import { useState } from 'react';
 
 import { CarInclude } from '@/04_entities/car';
+import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { CAR_FILTER, CAR_SORT, SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { ASPIRATION, CAR_CLASS, CAR_SORT_LABELS, DRIVETRAIN, ENGINE_LAYOUT, OVERTAKE } from '@/05_shared/lib/dictionaries';
 import { cn } from '@/05_shared/lib/shadcn/utils';
@@ -26,6 +27,7 @@ export function CarFilters({ cars }: Props) {
   const manufacturers = cars.reduce<string[]>((acc, car) => acc.includes(car.manufacturer) ? acc : [...acc, car.manufacturer], []);
 
   const [isOpen, setIsOpen] = useState(false);
+  useBodyScroll(isOpen);
 
   const { searchParams, setFilter, clearFilters } = useUrlFilters();
 
@@ -83,7 +85,7 @@ export function CarFilters({ cars }: Props) {
         onClick={toggleDrawer}
         type="button"
         className={cn(
-          'group fixed bottom-20 right-6 z-20',
+          'group fixed bottom-34 right-6 z-20',
           'm-0 px-3 py-3',
           'flex items-center gap-2',
           'rounded-full border border-secondary/5 bg-secondary/10',

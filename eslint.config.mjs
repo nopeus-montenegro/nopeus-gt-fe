@@ -13,6 +13,11 @@ const eslintConfig = defineConfig([
     jsx: true,
     braceStyle: '1tbs',
   }),
+  {
+    rules: {
+      '@stylistic/linebreak-style': ['error', 'unix'],
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
