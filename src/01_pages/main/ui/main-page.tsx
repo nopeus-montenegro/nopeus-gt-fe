@@ -1,4 +1,4 @@
-import { MainNav } from '@/02_widgets/main-nav';
+import { MainNav } from '@/02_widgets/nav';
 import { NewsList } from '@/02_widgets/news-list';
 import { getNewsFeed } from '@/app/actions/news-feed';
 
