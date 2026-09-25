@@ -40,7 +40,7 @@ export function SetupCar({ lapTime }: Props) {
         <p className="flex flex-col gap-6 text-xs text-slate-400">
           <span>
             {'Author: '}
-            {lapTime.setup.author.username}
+            {lapTime.setup.author.name}
           </span>
 
           <span className="flex items-center text-sm">
@@ -107,7 +107,7 @@ export function SetupCar({ lapTime }: Props) {
         </p>
 
         <p className="text-xs text-slate-500">
-          {lapTime.author.username}
+          {lapTime.author.name}
           {' • '}
           {dayjs(lapTime.createdAt).fromNow()}
         </p>
