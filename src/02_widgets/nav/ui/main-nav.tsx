@@ -10,26 +10,26 @@ export function MainNav() {
     <header className="fixed top-0 md:top-8 left-0 right-0 z-30 flex justify-center px-0 md:px-8 pointer-events-none">
       <nav
         className={cn(
-          'w-full max-w-5xl pointer-events-auto',
-          'flex items-center justify-start lg:justify-between gap-4',
+          'w-full max-w-7xl pointer-events-auto',
+          'flex items-center justify-start xl:justify-between gap-4',
           'px-6 py-6 shadow-xl shadow-black/40',
           'rounded-b-2xl md:rounded-2xl',
           'border border-secondary/5 bg-secondary/30 backdrop-blur-sm',
         )}
       >
-        <h1 className="text-2xl text-center font-black tracking-tighter uppercase italic">
+        <h1 className="text-4xl text-center font-black tracking-tighter uppercase italic">
           <Link href="/">
             Nopeus&nbsp;
             <span className="text-blue-500 not-italic">GT</span>
           </Link>
         </h1>
 
-        <div className="flex gap-2 ml-auto lg:ml-0">
-          <Button asChild variant="outline">
-            <Link href="/car" className="px-4 sm:px-8 lg:px-3">CARS</Link>
+        <div className="flex gap-3 ml-auto xl:ml-0">
+          <Button asChild variant="outline" size="lg">
+            <Link href="/car" className="px-4">CARS</Link>
           </Button>
 
-          <ButtonGroup className="hidden lg:flex">
+          <ButtonGroup className="hidden xl:flex">
             {[
               { label: 'Gr.1', value: CarClass.GR_1 },
               { label: 'Gr.2', value: CarClass.GR_2 },
@@ -37,10 +37,10 @@ export function MainNav() {
               { label: 'Gr.4', value: CarClass.GR_4 },
               { label: 'Gr.B', value: CarClass.GR_B },
             ].map(item => (
-              <Button key={item.label} asChild variant="outline">
+              <Button key={item.label} asChild variant="outline" size="lg">
                 <Link
                   href={`/car?${CAR_FILTER.CAR_CLASS}=${item.value}`}
-                  className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold border border-slate-400/80 text-slate-400 hover:text-white hover:bg-indigo-950/30 transition-all duration-200 shadow-sm"
+                  className="flex items-center gap-2 px-4 font-semibold border border-slate-400/80 text-slate-400 hover:text-white hover:bg-indigo-950/30 transition-all duration-200 shadow-sm"
                 >
                   {item.label}
                 </Link>
@@ -50,12 +50,12 @@ export function MainNav() {
           </ButtonGroup>
         </div>
 
-        <div className="flex gap-2">
-          <Button asChild variant="outline">
-            <Link href="/track" className="px-4 sm:px-8 lg:px-3">TRACKS</Link>
+        <div className="flex gap-3">
+          <Button asChild variant="outline" size="lg">
+            <Link href="/track" className="px-4">TRACKS</Link>
           </Button>
 
-          <ButtonGroup className="hidden lg:flex">
+          <ButtonGroup className="hidden xl:flex">
             {[
               { label: 'BoP: High-Speed', value: BopTrackClass.HIGH_SPEED },
               { label: 'BoP: Mid-Speed', value: BopTrackClass.MID_SPEED },
@@ -68,7 +68,7 @@ export function MainNav() {
               >
                 <Link
                   href={`/track?${TRACK_FILTER.BOP}=${item.value}`}
-                  className="flex items-center px-3 py-1.5 text-xs font-semibold text-nowrap"
+                  className="flex items-center px-4 font-semibold text-nowrap"
                 >
                   {item.label}
                 </Link>

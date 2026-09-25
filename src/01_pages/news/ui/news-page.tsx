@@ -17,7 +17,7 @@ export async function NewsPage({ newsSlug }: Props) {
   }
 
   return (
-    <article className="container max-w-3xl mx-auto px-4 py-12">
+    <article className="container max-w-5xl mx-auto px-4 py-12">
       <header className="mb-4 space-y-4">
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white text-balance">
           {news.title}

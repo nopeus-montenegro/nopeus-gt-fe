@@ -1,8 +1,10 @@
 import { UserNav } from '@/02_widgets/nav';
+import { UserPageList } from '@/02_widgets/user-page-list';
 import { Authorization } from '@/03_features/authorization';
-import { SetupCarUser } from '@/04_entities/setup';
+import { UserDashboardSettings } from '@/03_features/user-dashboard';
 import { UserInclude } from '@/04_entities/user';
 import { getUser } from '@/04_entities/user/model/get-user';
+import { Suspense } from 'react';
 
 export async function UserPage() {
   const userData = await getUser() as UserInclude;
@@ -12,17 +14,14 @@ export async function UserPage() {
   }
 
   return (
-    <div className="relative flex flex-col max-w-5xl mx-auto px-4 antialiased">
+    <div className="relative flex flex-col max-w-7xl mx-auto px-4 pt-40 space-y-8 antialiased">
       <UserNav />
 
-      <div className="pt-32 md:pt-48 lg:pt-36 mb-8 space-y-4">
-        {userData?.setups.map(setup => (
-          <SetupCarUser
-            key={setup.id}
-            setup={setup}
-          />
-        ))}
-      </div>
+      <UserPageList userData={userData} />
+
+      <Suspense>
+        <UserDashboardSettings />
+      </Suspense>
     </div>
   );
 };
