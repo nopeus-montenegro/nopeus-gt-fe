@@ -5,7 +5,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 
 import { cn } from '@/05_shared/lib/shadcn/utils';
 
-import { Authorization } from '@/03_features/authorization';
+import { AuthorizationModal } from '@/03_features/authorization';
 import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/05_shared/ui/shadcn/popover';
 import { Copyright, Info } from 'lucide-react';
 import './globals.css';
@@ -77,7 +77,7 @@ export default function RootLayout({
           <main className="relative z-10 container mx-auto px-6 lg:px-12 min-h-dvh w-full">
             {children}
 
-            <Authorization />
+            <AuthorizationModal />
 
             <Popover>
               <PopoverTrigger className="fixed z-20 bottom-6 right-6" aria-label="App Info">

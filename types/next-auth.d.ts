@@ -4,7 +4,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
-      username?: string | null;
+      name?: string | null;
       psnId?: string | null;
       psnName?: string | null;
       gtProfileId?: string | null;

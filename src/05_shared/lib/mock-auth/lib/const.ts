@@ -1,10 +1,7 @@
 export const MOCK_USER = {
   id: 'nopeus-gt',
-  name: 'nopeus gt',
+  name: 'Nopeus GT',
   email: 'nopeus@nopeus-gt.app',
-  image: 'https://placehold.net/avatar.png',
-
-  username: 'Nopeus GT',
 
   psnId: 'KAHUKYJlbl_MNE',
   psnName: 'Nopeus_MNE',

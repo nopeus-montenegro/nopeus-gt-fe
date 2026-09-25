@@ -1,7 +1,7 @@
 import { AspirationType } from '@prisma/client';
-import { SetupInclude } from '../types';
+import { SetupUserInclude } from '../types';
 
-export function getSetupAspiration(setup: SetupInclude): AspirationType {
+export function getSetupAspiration(setup: SetupUserInclude): AspirationType {
   const hasTurbocharger = setup.turboType !== 'NONE';
   const hasSupercharger = setup.superchargerType !== 'NONE';
   const isEV = setup.car.aspiration === 'EV';

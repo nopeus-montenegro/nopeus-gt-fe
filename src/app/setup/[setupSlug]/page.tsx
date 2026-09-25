@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Params) {
 
   const carFullName = `${setup.car.manufacturer} ${setup.car.name} ${setup.car.year}`;
   const ppPart = setup.pp ? `${Math.ceil(setup.pp)}PP` : '';
-  const authorPart = setup.author?.username ? `by ${setup.author.username}` : '';
+  const authorPart = setup.author?.name ? `by ${setup.author.name}` : '';
   const shortCode = setupId.slice(-5).toUpperCase();
 
   const imageUrl = `${process.env.NEXT_PUBLIC_BLOB_URL}/car/${slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString()])}.webp`;

@@ -31,6 +31,7 @@ model Car {
   setups    Setup[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  favBy     User[]
 
   @@unique([name, manufacturer, year])
   @@index([class])
@@ -41,14 +42,15 @@ model Car {
 
 model Setup {
   id     String  @id @default(cuid())
-  title  String // ex. "Settings Sheet 1"
+  title  String
   isBase Boolean @default(false)
 
   carId    String
   car      Car       @relation(fields: [carId], references: [id], onDelete: Cascade)
   authorId String
-  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author   User      @relation("UserCreatedSetups", fields: [authorId], references: [id], onDelete: Cascade)
   lapTimes LapTime[]
+  favBy    User[]    @relation("UserFavoriteSetups")
 
   // ==========================================
   // BASE PERFORMANCE / RESULTS
@@ -233,6 +235,7 @@ model Track {
   lapTimes  LapTime[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  favBy     User[]
 
   @@unique([name, configName])
   @@index([region])
@@ -267,14 +270,65 @@ model LapTime {
 }
 
 model User {
-  id       String @id @default(cuid())
-  username String @unique
-  email    String @unique
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
 
-  setups   Setup[]
+  setups   Setup[]   @relation("UserCreatedSetups")
   lapTimes LapTime[]
 
+  favSetups Setup[] @relation("UserFavoriteSetups")
+  favCars   Car[]
+  favTracks Track[]
+
+  psnId       String?
+  psnName     String?
+  psnUrl      String?
+  isPsnPublic Boolean @default(true)
+
+  accounts Account[]
+  sessions Session[]
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Account {
+  id                String @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+
+  refresh_token String? @db.Text
+  access_token  String? @db.Text
+  expires_at    Int?
+  token_type    String?
+  scope         String?
+  id_token      String? @db.Text
+  session_state String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 enum VerificationStatus {

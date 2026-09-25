@@ -26,15 +26,15 @@ async function main() {
 
   // --- STAGE 0: System User ---
   const systemUser = await prisma.user.upsert({
-    where: { username: 'Nopeus GT' },
+    where: { id: 'nopeus-gt' },
     update: {},
     create: {
       id: authorId,
-      username: 'Nopeus GT',
+      name: 'Nopeus GT',
       email: 'nopeus@nopeus-gt.app',
     },
   });
-  console.log(`System user ready: ${systemUser.username}`);
+  console.log(`System user ready: ${systemUser.name}`);
 
   // --- STAGE 1: Core Data (Cars & Tracks) ---
   console.log('Reading cars data...');

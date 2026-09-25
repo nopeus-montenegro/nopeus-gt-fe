@@ -5,8 +5,6 @@ export interface Session {
     email?: string | null;
     image?: string | null;
 
-    username?: string | null;
-
     psnId?: string | null;
     psnName?: string | null;
     psnUrl?: string | null;
