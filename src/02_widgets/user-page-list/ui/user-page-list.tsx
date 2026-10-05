@@ -5,6 +5,7 @@ import { TrackList } from '@/02_widgets/track-list';
 import { DASHBOARD_TABS, useUserDashboardStore } from '@/03_features/user-dashboard';
 import { SetupCarUser } from '@/04_entities/setup';
 import { UserInclude } from '@/04_entities/user';
+import { InfiniteScroll } from '@/05_shared/ui/infinite-scroll';
 import { Route } from 'next';
 import { redirect } from 'next/navigation';
 
@@ -26,25 +27,17 @@ export function UserPageList({ userData }: Props) {
       return <TrackList tracks={userData.favTracks} />;
     case DASHBOARD_TABS.SETUP:
       return (
-        <div className="mb-8 space-y-4">
-          {userData?.favSetups.map(setup => (
-            <SetupCarUser
-              key={setup.id}
-              setup={setup}
-            />
-          ))}
-        </div>
+        <InfiniteScroll items={userData.favSetups} keyExtractor={setup => setup.id}>
+          {setup => <SetupCarUser setup={setup} />}
+        </InfiniteScroll>
       );
     case DASHBOARD_TABS.MY_SETUP:
       return (
-        <div className="mb-8 space-y-4">
-          {userData?.setups.map(setup => (
-            <SetupCarUser
-              key={setup.id}
-              setup={setup}
-            />
-          ))}
-        </div>
+        <InfiniteScroll items={userData.setups} keyExtractor={setup => setup.id}>
+          {setup => <SetupCarUser setup={setup} />}
+        </InfiniteScroll>
       );
+    default:
+      return null;
   }
 }
