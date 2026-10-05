@@ -11,6 +11,11 @@ export function UserNav() {
   const activeTab = useUserDashboardStore(s => s.activeTab);
   const setActiveTab = useUserDashboardStore(s => s.setActiveTab);
 
+  const handleTabClick = (tab: DASHBOARD_TABS) => {
+    setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
   return (
     <header className="fixed top-0 md:top-8 left-0 right-0 z-30 flex justify-center px-0 md:px-8 pointer-events-none">
       <nav
@@ -40,7 +45,7 @@ export function UserNav() {
                   activeTab === item && 'bg-secondary/30 hover:bg-secondary/30',
                   'px-4',
                 )}
-                onClick={() => setActiveTab(item)}
+                onClick={() => handleTabClick(item)}
               >
                 {item}
               </Button>

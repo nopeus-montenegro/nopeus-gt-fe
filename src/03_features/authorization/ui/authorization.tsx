@@ -7,11 +7,6 @@ import { FcGoogle } from 'react-icons/fc';
 export function Authorization() {
   return (
     <div className="h-full flex flex-col items-center justify-center gap-4">
-      {/* <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>Name</FieldLabel>
-            <Input {...field} id={field.name} aria-invalid={fieldState.invalid} />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field> */}
       <Field>
         <FieldLabel htmlFor="email">Email</FieldLabel>
         <Input id="email" className="py-5" />
@@ -42,7 +37,7 @@ export function Authorization() {
 
       <Field>
         <FieldLabel htmlFor="password">Don&#39;t have an account yet?</FieldLabel>
-        <Button variant="default" className="w-full py-5">
+        <Button variant="outline" className="w-full py-5">
           Sign Up
         </Button>
       </Field>

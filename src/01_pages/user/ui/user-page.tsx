@@ -10,7 +10,11 @@ export async function UserPage() {
   const userData = await getUser() as UserInclude;
 
   if (!userData) {
-    return <Authorization />;
+    return (
+      <div className="h-dvh max-w-xs mx-auto">
+        <Authorization />
+      </div>
+    );
   }
 
   return (
