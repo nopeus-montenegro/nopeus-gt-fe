@@ -18,6 +18,7 @@ function getLegacyRedirects() {
 const nextConfig: NextConfig = {
   reactCompiler: true,
   typedRoutes: true,
+  allowedDevOrigins: ['192.168.8.113'],
   async redirects() {
     return [
       {

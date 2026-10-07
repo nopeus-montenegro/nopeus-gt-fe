@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { CarInclude } from '@/04_entities/car';
 import { CAR_FILTER, CAR_SORT, SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { ASPIRATION, CAR_CLASS, CAR_SORT_LABELS, DRIVETRAIN, ENGINE_LAYOUT, OVERTAKE } from '@/05_shared/lib/dictionaries';
+import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { ModalDrawer } from '@/05_shared/ui/modal-drawer';
 import { Checkbox } from '@/05_shared/ui/shadcn/checkbox';
 import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxItem, ComboboxList, ComboboxValue, useComboboxAnchor } from '@/05_shared/ui/shadcn/combobox';
@@ -74,506 +75,508 @@ export function CarFilters({ cars }: Props) {
   };
 
   return (
-    <ModalDrawer
-      buttonAria="Car Filters"
-      buttonIcon={<SlidersHorizontal className="w-7 h-7 text-white/90" />}
-      buttonText="Filters"
-    >
-      {({ toggleDrawer }) => (
-        <>
-          <div className="flex items-center justify-between border-b border-zinc-900 pb-4">
-            <h2 className="text-lg font-semibold tracking-wide text-slate-100">Sort and Filters</h2>
+    <MenuPortal priority={MENU_PRIORITY.FILTERS}>
+      <ModalDrawer
+        buttonAria="Car Filters"
+        buttonIcon={<SlidersHorizontal className="w-7 h-7 text-white/90" />}
+        buttonText="Filters"
+      >
+        {({ toggleDrawer }) => (
+          <>
+            <div className="flex items-center justify-between border-b border-zinc-900 pb-4">
+              <h2 className="text-lg font-semibold tracking-wide text-slate-100">Sort and Filters</h2>
 
-            <div>
-              <button
-                type="button"
-                onClick={onFiltersClear}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
-              >
-                <StickyNoteX className="w-6 h-6" />
-              </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={onFiltersClear}
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                >
+                  <StickyNoteX className="w-6 h-6" />
+                </button>
 
+                <button
+                  type="button"
+                  onClick={toggleDrawer}
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                >
+                  <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-6">
+              <div className="mb-2 flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Sort:</h3>
+
+                <button
+                  type="button"
+                  onClick={currentSortDir === SORT_DIRECTION.ASCENDING
+                    ? () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING }])
+                    : () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING }])}
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                >
+                  {
+                    currentSortDir === SORT_DIRECTION.ASCENDING
+                      ? <ArrowDownAZ className="w-6 h-6 cursor-pointer" />
+                      : <ArrowDownZA className="w-6 h-6 cursor-pointer" />
+                  }
+                </button>
+              </div>
+
+              <div className="space-y-2">
+                <Select
+                  value={currentSortBy}
+                  onValueChange={key => setFilter([{ key: SORT_TYPE.DATA, value: key as CAR_SORT | SETUP_SORT }])}
+                >
+                  <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
+                    <SelectValue placeholder="Choose Sort" />
+                  </SelectTrigger>
+
+                  <SelectContent
+                    className="p-1 bg-zinc-900 border-zinc-800 text-slate-200"
+                    position="popper"
+                  >
+                    {(Object.entries(CAR_SORT_LABELS) as [CAR_SORT | SETUP_SORT, string][]).map(([key, value]) => (
+                      <SelectItem key={key} value={key}>
+                        {value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={countries}
+                  value={currentCountry}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.COUNTRY, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={countryRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {value}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentCountry.length === 0
+                            && <ComboboxChipsInput placeholder="Country" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={countryRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {item}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={manufacturers}
+                  value={currentManufacturer}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.MANUFACTURER, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={manufacturerRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {value}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentManufacturer.length === 0
+                            && <ComboboxChipsInput placeholder="Manufacturer" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={manufacturerRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {item}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(ASPIRATION) as AspirationType[]}
+                  value={currentAspiration}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.ASPIRATION, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={aspirationRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {ASPIRATION[value as AspirationType]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentAspiration.length === 0
+                            && <ComboboxChipsInput placeholder="Aspiration" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={aspirationRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {ASPIRATION[item as AspirationType]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(CAR_CLASS) as CarClass[]}
+                  value={currentCarClass}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.CAR_CLASS, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={classRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {CAR_CLASS[value as CarClass]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentCarClass.length === 0
+                            && <ComboboxChipsInput placeholder="Car Class" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={classRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {CAR_CLASS[item as CarClass]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(DRIVETRAIN) as Drivetrain[]}
+                  value={currentDrivetrain}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.DRIVETRAIN, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={drivetrainRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {DRIVETRAIN[value as Drivetrain]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentDrivetrain.length === 0
+                            && <ComboboxChipsInput placeholder="Drivetrain" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={drivetrainRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {DRIVETRAIN[item as Drivetrain]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(ENGINE_LAYOUT) as EngineLayout[]}
+                  value={currentEngineLayout}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.ENGINE_LAYOUT, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={layoutRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {ENGINE_LAYOUT[value as EngineLayout]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentEngineLayout.length === 0
+                            && <ComboboxChipsInput placeholder="Engine Layout" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={layoutRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {ENGINE_LAYOUT[item as EngineLayout]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(OVERTAKE) as OvertakeType[]}
+                  value={currentOvertake}
+                  onValueChange={key => setFilter([{ key: CAR_FILTER.OVERTAKE, value: key.join(',') }])}
+                >
+                  <ComboboxChips ref={overtakeRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {OVERTAKE[value as OvertakeType]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            currentOvertake.length === 0
+                            && <ComboboxChipsInput placeholder="Overtake" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={overtakeRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {OVERTAKE[item as OvertakeType]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <FieldLabel>
+                  <Field orientation="horizontal" className="gap-3">
+                    <Checkbox id={CAR_FILTER.HYBRID} name={CAR_FILTER.HYBRID} checked={isHybrid} onCheckedChange={checked => setFilter([{ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' }])} />
+                    <FieldContent>
+                      <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
+                    </FieldContent>
+                  </Field>
+                </FieldLabel>
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {ppSlider[0]}
+                    {' - '}
+                    {ppSlider[1]}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-pp"
+                  value={ppSlider}
+                  onValueChange={value => setPpSlider(value)}
+                  onValueCommit={(value) => {
+                    setFilter([
+                      { key: SETUP_FILTER.PP_LIM_MIN, value: value[0].toString() },
+                      { key: SETUP_FILTER.PP_LIM_MAX, value: value[1].toString() },
+                    ]);
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.PP}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-power" className="text-muted-foreground">Power</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {powerSlider[0]}
+                    {' - '}
+                    {powerSlider[1]}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-power"
+                  value={powerSlider}
+                  onValueChange={value => setPowerSlider(value)}
+                  onValueCommit={(value) => {
+                    setFilter([
+                      { key: SETUP_FILTER.POWER_LIM_MIN, value: value[0].toString() },
+                      { key: SETUP_FILTER.POWER_LIM_MAX, value: value[1].toString() },
+                    ]);
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.POWER}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-torque" className="text-muted-foreground">Torque</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {torqueSlider[0]}
+                    {' - '}
+                    {torqueSlider[1]}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-torque"
+                  value={torqueSlider}
+                  onValueChange={value => setTorqueSlider(value)}
+                  onValueCommit={(value) => {
+                    setFilter([
+                      { key: SETUP_FILTER.TORQUE_LIM_MIN, value: value[0].toString() },
+                      { key: SETUP_FILTER.TORQUE_LIM_MAX, value: value[1].toString() },
+                    ]);
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.TORQUE}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-weight" className="text-muted-foreground">Weight</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {weightSlider[0]}
+                    {' - '}
+                    {weightSlider[1]}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-weight"
+                  value={weightSlider}
+                  onValueChange={value => setWeightSlider(value)}
+                  onValueCommit={(value) => {
+                    setFilter([
+                      { key: SETUP_FILTER.WEIGHT_LIM_MIN, value: value[0].toString() },
+                      { key: SETUP_FILTER.WEIGHT_LIM_MAX, value: value[1].toString() },
+                    ]);
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.WEIGHT}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-wpr" className="text-muted-foreground">WPR</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {wprSlider[0]}
+                    {' - '}
+                    {wprSlider[1]}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-wpr"
+                  value={wprSlider}
+                  onValueChange={value => setWprSlider(value)}
+                  onValueCommit={(value) => {
+                    setFilter([
+                      { key: SETUP_FILTER.WPR_LIM_MIN, value: value[0].toString() },
+                      { key: SETUP_FILTER.WPR_LIM_MAX, value: value[1].toString() },
+                    ]);
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.WPR}
+                  step={0.01}
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-zinc-900 pt-4 md:hidden">
               <button
                 type="button"
                 onClick={toggleDrawer}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
               >
-                <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
+                Show results
               </button>
             </div>
-          </div>
-
-          <div className="mt-6 space-y-6">
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Sort:</h3>
-
-              <button
-                type="button"
-                onClick={currentSortDir === SORT_DIRECTION.ASCENDING
-                  ? () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING }])
-                  : () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING }])}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
-              >
-                {
-                  currentSortDir === SORT_DIRECTION.ASCENDING
-                    ? <ArrowDownAZ className="w-6 h-6 cursor-pointer" />
-                    : <ArrowDownZA className="w-6 h-6 cursor-pointer" />
-                }
-              </button>
-            </div>
-
-            <div className="space-y-2">
-              <Select
-                value={currentSortBy}
-                onValueChange={key => setFilter([{ key: SORT_TYPE.DATA, value: key as CAR_SORT | SETUP_SORT }])}
-              >
-                <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground">
-                  <SelectValue placeholder="Choose Sort" />
-                </SelectTrigger>
-
-                <SelectContent
-                  className="p-1 bg-zinc-900 border-zinc-800 text-slate-200"
-                  position="popper"
-                >
-                  {(Object.entries(CAR_SORT_LABELS) as [CAR_SORT | SETUP_SORT, string][]).map(([key, value]) => (
-                    <SelectItem key={key} value={key}>
-                      {value}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="mt-6 space-y-4">
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={countries}
-                value={currentCountry}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.COUNTRY, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={countryRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {value}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentCountry.length === 0
-                          && <ComboboxChipsInput placeholder="Country" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={countryRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {item}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={manufacturers}
-                value={currentManufacturer}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.MANUFACTURER, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={manufacturerRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {value}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentManufacturer.length === 0
-                          && <ComboboxChipsInput placeholder="Manufacturer" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={manufacturerRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {item}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(ASPIRATION) as AspirationType[]}
-                value={currentAspiration}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.ASPIRATION, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={aspirationRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {ASPIRATION[value as AspirationType]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentAspiration.length === 0
-                          && <ComboboxChipsInput placeholder="Aspiration" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={aspirationRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {ASPIRATION[item as AspirationType]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(CAR_CLASS) as CarClass[]}
-                value={currentCarClass}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.CAR_CLASS, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={classRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {CAR_CLASS[value as CarClass]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentCarClass.length === 0
-                          && <ComboboxChipsInput placeholder="Car Class" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={classRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {CAR_CLASS[item as CarClass]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(DRIVETRAIN) as Drivetrain[]}
-                value={currentDrivetrain}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.DRIVETRAIN, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={drivetrainRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {DRIVETRAIN[value as Drivetrain]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentDrivetrain.length === 0
-                          && <ComboboxChipsInput placeholder="Drivetrain" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={drivetrainRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {DRIVETRAIN[item as Drivetrain]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(ENGINE_LAYOUT) as EngineLayout[]}
-                value={currentEngineLayout}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.ENGINE_LAYOUT, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={layoutRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {ENGINE_LAYOUT[value as EngineLayout]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentEngineLayout.length === 0
-                          && <ComboboxChipsInput placeholder="Engine Layout" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={layoutRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {ENGINE_LAYOUT[item as EngineLayout]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(OVERTAKE) as OvertakeType[]}
-                value={currentOvertake}
-                onValueChange={key => setFilter([{ key: CAR_FILTER.OVERTAKE, value: key.join(',') }])}
-              >
-                <ComboboxChips ref={overtakeRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {OVERTAKE[value as OvertakeType]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          currentOvertake.length === 0
-                          && <ComboboxChipsInput placeholder="Overtake" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={overtakeRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {OVERTAKE[item as OvertakeType]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <FieldLabel>
-                <Field orientation="horizontal" className="gap-3">
-                  <Checkbox id={CAR_FILTER.HYBRID} name={CAR_FILTER.HYBRID} checked={isHybrid} onCheckedChange={checked => setFilter([{ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' }])} />
-                  <FieldContent>
-                    <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
-                  </FieldContent>
-                </Field>
-              </FieldLabel>
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
-                <span className="text-sm text-muted-foreground">
-                  {ppSlider[0]}
-                  {' - '}
-                  {ppSlider[1]}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-pp"
-                value={ppSlider}
-                onValueChange={value => setPpSlider(value)}
-                onValueCommit={(value) => {
-                  setFilter([
-                    { key: SETUP_FILTER.PP_LIM_MIN, value: value[0].toString() },
-                    { key: SETUP_FILTER.PP_LIM_MAX, value: value[1].toString() },
-                  ]);
-                }}
-                min={0}
-                max={MAX_LIMITS.PP}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-power" className="text-muted-foreground">Power</Label>
-                <span className="text-sm text-muted-foreground">
-                  {powerSlider[0]}
-                  {' - '}
-                  {powerSlider[1]}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-power"
-                value={powerSlider}
-                onValueChange={value => setPowerSlider(value)}
-                onValueCommit={(value) => {
-                  setFilter([
-                    { key: SETUP_FILTER.POWER_LIM_MIN, value: value[0].toString() },
-                    { key: SETUP_FILTER.POWER_LIM_MAX, value: value[1].toString() },
-                  ]);
-                }}
-                min={0}
-                max={MAX_LIMITS.POWER}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-torque" className="text-muted-foreground">Torque</Label>
-                <span className="text-sm text-muted-foreground">
-                  {torqueSlider[0]}
-                  {' - '}
-                  {torqueSlider[1]}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-torque"
-                value={torqueSlider}
-                onValueChange={value => setTorqueSlider(value)}
-                onValueCommit={(value) => {
-                  setFilter([
-                    { key: SETUP_FILTER.TORQUE_LIM_MIN, value: value[0].toString() },
-                    { key: SETUP_FILTER.TORQUE_LIM_MAX, value: value[1].toString() },
-                  ]);
-                }}
-                min={0}
-                max={MAX_LIMITS.TORQUE}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-weight" className="text-muted-foreground">Weight</Label>
-                <span className="text-sm text-muted-foreground">
-                  {weightSlider[0]}
-                  {' - '}
-                  {weightSlider[1]}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-weight"
-                value={weightSlider}
-                onValueChange={value => setWeightSlider(value)}
-                onValueCommit={(value) => {
-                  setFilter([
-                    { key: SETUP_FILTER.WEIGHT_LIM_MIN, value: value[0].toString() },
-                    { key: SETUP_FILTER.WEIGHT_LIM_MAX, value: value[1].toString() },
-                  ]);
-                }}
-                min={0}
-                max={MAX_LIMITS.WEIGHT}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-wpr" className="text-muted-foreground">WPR</Label>
-                <span className="text-sm text-muted-foreground">
-                  {wprSlider[0]}
-                  {' - '}
-                  {wprSlider[1]}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-wpr"
-                value={wprSlider}
-                onValueChange={value => setWprSlider(value)}
-                onValueCommit={(value) => {
-                  setFilter([
-                    { key: SETUP_FILTER.WPR_LIM_MIN, value: value[0].toString() },
-                    { key: SETUP_FILTER.WPR_LIM_MAX, value: value[1].toString() },
-                  ]);
-                }}
-                min={0}
-                max={MAX_LIMITS.WPR}
-                step={0.01}
-              />
-            </div>
-          </div>
-
-          <div className="mt-8 border-t border-zinc-900 pt-4 md:hidden">
-            <button
-              type="button"
-              onClick={toggleDrawer}
-              className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
-            >
-              Show results
-            </button>
-          </div>
-        </>
-      )}
-    </ModalDrawer>
+          </>
+        )}
+      </ModalDrawer>
+    </MenuPortal>
   );
 }

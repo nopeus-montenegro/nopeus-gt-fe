@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 
 import { AuthorizationModal } from '@/03_features/authorization';
+import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/05_shared/ui/shadcn/popover';
 import { Copyright, Info } from 'lucide-react';
 import './globals.css';
@@ -79,47 +80,53 @@ export default function RootLayout({
 
             <AuthorizationModal />
 
-            <Popover>
-              <PopoverTrigger className="fixed z-20 bottom-6 right-6" aria-label="App Info">
-                <div
-                  className={cn(
-                    'group',
-                    'm-0 px-2 py-2',
-                    'flex items-center gap-2',
-                    'rounded-full border border-secondary/5 bg-secondary/10',
-                    'text-sm font-medium text-slate-200/90',
-                    'shadow-xl backdrop-blur-md transition-transform',
-                    'hover:scale-105 active:scale-95',
-                  )}
-                >
-                  <Info className="w-7 h-7 text-white/90" />
-                  <span className="hidden md:group-hover:block mr-1">Info</span>
-                </div>
-              </PopoverTrigger>
+            <div
+              id="menu-dock"
+              className="fixed bottom-6 right-6 z-20 flex flex-col-reverse items-end gap-3 pointer-events-none"
+            />
 
-              <PopoverContent align="end" className="border border-secondary/5 bg-primary/20 backdrop-blur-lg">
-                <PopoverHeader className="flex flex-col gap-4">
-                  <PopoverTitle className="flex gap-1 text-white/80">
-                    <span>Copyright</span>
-                    <Copyright className="w-5 h-5" />
-                    <span>2026 Nopeus DOO</span>
-                  </PopoverTitle>
-                  <PopoverDescription className="flex flex-col gap-4 text-white/40">
-                    <span>
-                      Nopeus&nbsp;GT is an independent project developed by Nopeus&nbsp;DOO and
-                      is not affiliated with, authorized, maintained, sponsored or endorsed by
-                      Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc, Polyphony&nbsp;Digital&nbsp;Inc or Gran&nbsp;Turismo.
-                    </span>
+            <MenuPortal priority={MENU_PRIORITY.INFO}>
+              <Popover>
+                <PopoverTrigger aria-label="App Info">
+                  <div
+                    className={cn(
+                      'group flex items-center gap-2',
+                      'm-0 px-2 py-2',
+                      'rounded-full border border-secondary/5 bg-secondary/10',
+                      'text-sm font-medium text-slate-200/90',
+                      'shadow-xl backdrop-blur-md transition-transform',
+                      'hover:scale-105 active:scale-95',
+                    )}
+                  >
+                    <Info className="w-7 h-7 text-white/90" />
+                    <span className="hidden md:group-hover:block mr-1">Info</span>
+                  </div>
+                </PopoverTrigger>
 
-                    <span>
-                      All game content, images, car names, track names, logos and
-                      trademarks belong to their respective owners - Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc,
-                      Polyphony&nbsp;Digital&nbsp;Inc and respective automotive manufacturers.
-                    </span>
-                  </PopoverDescription>
-                </PopoverHeader>
-              </PopoverContent>
-            </Popover>
+                <PopoverContent align="end" className="border border-secondary/5 bg-primary/20 backdrop-blur-lg">
+                  <PopoverHeader className="flex flex-col gap-4">
+                    <PopoverTitle className="flex gap-1 text-white/80">
+                      <span>Copyright</span>
+                      <Copyright className="w-5 h-5" />
+                      <span>2026 Nopeus DOO</span>
+                    </PopoverTitle>
+                    <PopoverDescription className="flex flex-col gap-4 text-white/40">
+                      <span>
+                        Nopeus&nbsp;GT is an independent project developed by Nopeus&nbsp;DOO and
+                        is not affiliated with, authorized, maintained, sponsored or endorsed by
+                        Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc, Polyphony&nbsp;Digital&nbsp;Inc or Gran&nbsp;Turismo.
+                      </span>
+
+                      <span>
+                        All game content, images, car names, track names, logos and
+                        trademarks belong to their respective owners - Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc,
+                        Polyphony&nbsp;Digital&nbsp;Inc and respective automotive manufacturers.
+                      </span>
+                    </PopoverDescription>
+                  </PopoverHeader>
+                </PopoverContent>
+              </Popover>
+            </MenuPortal>
           </main>
         </div>
 

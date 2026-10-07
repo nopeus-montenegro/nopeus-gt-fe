@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/05_shared/ui/shadcn/slider';
 import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
 
+import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { ModalDrawer } from '@/05_shared/ui/modal-drawer';
 import { useUrlFilters } from '../hooks/use-url-filters';
 import { FilterList } from '../lib/types';
@@ -74,525 +75,527 @@ export function SetupCarFilters({ filterList, isLoading }: Props) {
   const overtakeRef = useComboboxAnchor();
 
   return (
-    <ModalDrawer
-      buttonAria="Setup Filters"
-      buttonIcon={<SlidersHorizontal className="w-7 h-7 text-white/90" />}
-      buttonText="Filters"
-    >
-      {({ toggleDrawer }) => (
-        <>
-          <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
-            <h2 className="text-lg font-semibold tracking-wide text-slate-100">Sort and Filters</h2>
+    <MenuPortal priority={MENU_PRIORITY.FILTERS}>
+      <ModalDrawer
+        buttonAria="Setup Filters"
+        buttonIcon={<SlidersHorizontal className="w-7 h-7 text-white/90" />}
+        buttonText="Filters"
+      >
+        {({ toggleDrawer }) => (
+          <>
+            <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
+              <h2 className="text-lg font-semibold tracking-wide text-slate-100">Sort and Filters</h2>
 
-            <div>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    clearFilters();
+                    toggleDrawer();
+                  }}
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                  aria-label="Clear filters"
+                  disabled={isLoading}
+                >
+                  <StickyNoteX className="w-6 h-6" aria-hidden="true" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={toggleDrawer}
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                  aria-label="Close filters tab"
+                >
+                  <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-3 space-y-4">
+              <div className="mb-2 flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Sort:</h3>
+
+                <button
+                  onClick={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
+                    ? () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING })
+                    : () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING })}
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                  type="button"
+                  aria-label={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
+                  title={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
+                >
+                  {
+                    currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
+                      ? <ArrowDownAZ className="w-6 h-6 cursor-pointer" aria-hidden="true" />
+                      : <ArrowDownZA className="w-6 h-6 cursor-pointer" aria-hidden="true" />
+                  }
+                </button>
+              </div>
+
+              <div className="space-y-2">
+                <Select
+                  value={currentFilters[SORT_TYPE.DATA]!}
+                  onValueChange={key => onFiltersChange({ key: SORT_TYPE.DATA, value: key as CAR_SORT & SETUP_SORT })}
+                >
+                  <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground" aria-label="Choose sort type">
+                    <SelectValue placeholder="Choose Sort" />
+                  </SelectTrigger>
+
+                  <SelectContent
+                    className="p-1 bg-zinc-900 border-zinc-800 text-slate-200"
+                    position="popper"
+                  >
+                    {(Object.entries(SETUP_CAR_SORT_LABELS) as [CAR_SORT & SETUP_SORT, string][]).map(([key, value]) => (
+                      <SelectItem key={key} value={key}>
+                        {value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-4">
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={filterList.countries}
+                  value={currentFilters[CAR_FILTER.COUNTRY] ? currentFilters[CAR_FILTER.COUNTRY]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.COUNTRY, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={countryRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {value}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.COUNTRY]
+                            && <ComboboxChipsInput placeholder="Country" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={countryRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {item}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={filterList.manufacturers}
+                  value={currentFilters[CAR_FILTER.MANUFACTURER] ? currentFilters[CAR_FILTER.MANUFACTURER]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.MANUFACTURER, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={manufacturerRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {value}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.MANUFACTURER]
+                            && <ComboboxChipsInput placeholder="Manufacturer" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={manufacturerRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {item}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(ASPIRATION) as AspirationType[]}
+                  value={currentFilters[CAR_FILTER.ASPIRATION] ? currentFilters[CAR_FILTER.ASPIRATION]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.ASPIRATION, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={aspirationRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {ASPIRATION[value as AspirationType]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.ASPIRATION]
+                            && <ComboboxChipsInput placeholder="Aspiration" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={aspirationRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {ASPIRATION[item as AspirationType]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(CAR_CLASS) as CarClass[]}
+                  value={currentFilters[CAR_FILTER.CAR_CLASS] ? currentFilters[CAR_FILTER.CAR_CLASS]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.CAR_CLASS, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={classRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {CAR_CLASS[value as CarClass]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.CAR_CLASS]
+                            && <ComboboxChipsInput placeholder="Car Class" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={classRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {CAR_CLASS[item as CarClass]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(DRIVETRAIN) as Drivetrain[]}
+                  value={currentFilters[CAR_FILTER.DRIVETRAIN] ? currentFilters[CAR_FILTER.DRIVETRAIN]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.DRIVETRAIN, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={drivetrainRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {DRIVETRAIN[value as Drivetrain]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.DRIVETRAIN]
+                            && <ComboboxChipsInput placeholder="Drivetrain" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={drivetrainRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {DRIVETRAIN[item as Drivetrain]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(ENGINE_LAYOUT) as EngineLayout[]}
+                  value={currentFilters[CAR_FILTER.ENGINE_LAYOUT] ? currentFilters[CAR_FILTER.ENGINE_LAYOUT]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.ENGINE_LAYOUT, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={layoutRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {ENGINE_LAYOUT[value as EngineLayout]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.ENGINE_LAYOUT]
+                            && <ComboboxChipsInput placeholder="Engine Layout" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={layoutRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {ENGINE_LAYOUT[item as EngineLayout]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <Combobox
+                  multiple
+                  autoHighlight
+                  items={Object.keys(OVERTAKE) as OvertakeType[]}
+                  value={currentFilters[CAR_FILTER.OVERTAKE] ? currentFilters[CAR_FILTER.OVERTAKE]?.split(',') : []}
+                  onValueChange={key => onFiltersChange({ key: CAR_FILTER.OVERTAKE, value: key.join(',') })}
+                >
+                  <ComboboxChips ref={overtakeRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
+                    <ComboboxValue>
+                      {values => (
+                        <>
+                          {values.map((value: string) => (
+                            <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
+                              {OVERTAKE[value as OvertakeType]}
+                            </ComboboxChip>
+                          ))}
+
+                          {
+                            !currentFilters[CAR_FILTER.OVERTAKE]
+                            && <ComboboxChipsInput placeholder="Overtake" />
+                          }
+                        </>
+                      )}
+                    </ComboboxValue>
+                  </ComboboxChips>
+
+                  <ComboboxContent anchor={overtakeRef}>
+                    <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
+                      {item => (
+                        <ComboboxItem key={item} value={item}>
+                          {OVERTAKE[item as OvertakeType]}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <FieldLabel>
+                  <Field orientation="horizontal" className="gap-3">
+                    <Checkbox
+                      id={CAR_FILTER.HYBRID}
+                      name={CAR_FILTER.HYBRID}
+                      checked={!!currentFilters[CAR_FILTER.HYBRID]}
+                      onCheckedChange={checked => onFiltersChange({ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' })}
+                      aria-label="Filter by Hybrid"
+                      aria-checked={!!currentFilters[CAR_FILTER.HYBRID]}
+                    />
+                    <FieldContent>
+                      <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
+                    </FieldContent>
+                  </Field>
+                </FieldLabel>
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0}
+                    {' - '}
+                    {currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-pp"
+                  value={[
+                    currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0,
+                    currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP,
+                  ]}
+                  onValueChange={(value) => {
+                    onFiltersChange({ key: SETUP_FILTER.PP_LIM_MIN, value: value[0].toString() });
+                    onFiltersChange({ key: SETUP_FILTER.PP_LIM_MAX, value: value[1].toString() });
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.PP}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-power" className="text-muted-foreground">Power</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {currentFilters[SETUP_FILTER.POWER_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MIN]!, 10) : 0}
+                    {' - '}
+                    {currentFilters[SETUP_FILTER.POWER_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MAX]!, 10) : MAX_LIMITS.POWER}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-power"
+                  value={[
+                    currentFilters[SETUP_FILTER.POWER_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MIN]!, 10) : 0,
+                    currentFilters[SETUP_FILTER.POWER_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MAX]!, 10) : MAX_LIMITS.POWER,
+                  ]}
+                  onValueChange={(value) => {
+                    onFiltersChange({ key: SETUP_FILTER.POWER_LIM_MIN, value: value[0].toString() });
+                    onFiltersChange({ key: SETUP_FILTER.POWER_LIM_MAX, value: value[1].toString() });
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.POWER}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-torque" className="text-muted-foreground">Torque</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {currentFilters[SETUP_FILTER.TORQUE_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MIN]!, 10) : 0}
+                    {' - '}
+                    {currentFilters[SETUP_FILTER.TORQUE_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MAX]!, 10) : MAX_LIMITS.TORQUE}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-torque"
+                  value={[
+                    currentFilters[SETUP_FILTER.TORQUE_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MIN]!, 10) : 0,
+                    currentFilters[SETUP_FILTER.TORQUE_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MAX]!, 10) : MAX_LIMITS.TORQUE,
+                  ]}
+                  onValueChange={(value) => {
+                    onFiltersChange({ key: SETUP_FILTER.TORQUE_LIM_MIN, value: value[0].toString() });
+                    onFiltersChange({ key: SETUP_FILTER.TORQUE_LIM_MAX, value: value[1].toString() });
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.TORQUE}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-weight" className="text-muted-foreground">Weight</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN]!, 10) : 0}
+                    {' - '}
+                    {currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX]!, 10) : MAX_LIMITS.WEIGHT}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-weight"
+                  value={[
+                    currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN]!, 10) : 0,
+                    currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX]!, 10) : MAX_LIMITS.WEIGHT,
+                  ]}
+                  onValueChange={(value) => {
+                    onFiltersChange({ key: SETUP_FILTER.WEIGHT_LIM_MIN, value: value[0].toString() });
+                    onFiltersChange({ key: SETUP_FILTER.WEIGHT_LIM_MAX, value: value[1].toString() });
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.WEIGHT}
+                  step={1}
+                />
+              </div>
+
+              <div className="mx-auto grid w-full gap-3 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="slider-wpr" className="text-muted-foreground">WPR</Label>
+                  <span className="text-sm text-muted-foreground">
+                    {currentFilters[SETUP_FILTER.WPR_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MIN]!, 10) : 0}
+                    {' - '}
+                    {currentFilters[SETUP_FILTER.WPR_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MAX]!, 10) : MAX_LIMITS.WPR}
+                  </span>
+                </div>
+
+                <Slider
+                  id="slider-wpr"
+                  value={[
+                    currentFilters[SETUP_FILTER.WPR_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MIN]!, 10) : 0,
+                    currentFilters[SETUP_FILTER.WPR_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MAX]!, 10) : MAX_LIMITS.WPR,
+                  ]}
+                  onValueChange={(value) => {
+                    onFiltersChange({ key: SETUP_FILTER.WPR_LIM_MIN, value: value[0].toString() });
+                    onFiltersChange({ key: SETUP_FILTER.WPR_LIM_MAX, value: value[1].toString() });
+                  }}
+                  min={0}
+                  max={MAX_LIMITS.WPR}
+                  step={0.01}
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-zinc-900 pt-4">
               <button
                 type="button"
                 onClick={() => {
-                  clearFilters();
+                  onFiltersApply();
                   toggleDrawer();
                 }}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
-                aria-label="Clear filters"
                 disabled={isLoading}
+                className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
               >
-                <StickyNoteX className="w-6 h-6" aria-hidden="true" />
-              </button>
-
-              <button
-                type="button"
-                onClick={toggleDrawer}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
-                aria-label="Close filters tab"
-              >
-                <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" aria-hidden="true" />
+                Apply Filters
               </button>
             </div>
-          </div>
-
-          <div className="mt-3 space-y-4">
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Sort:</h3>
-
-              <button
-                onClick={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
-                  ? () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING })
-                  : () => onFiltersChange({ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING })}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
-                type="button"
-                aria-label={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
-                title={currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
-              >
-                {
-                  currentFilters[SORT_TYPE.DIRECTION] === SORT_DIRECTION.ASCENDING
-                    ? <ArrowDownAZ className="w-6 h-6 cursor-pointer" aria-hidden="true" />
-                    : <ArrowDownZA className="w-6 h-6 cursor-pointer" aria-hidden="true" />
-                }
-              </button>
-            </div>
-
-            <div className="space-y-2">
-              <Select
-                value={currentFilters[SORT_TYPE.DATA]!}
-                onValueChange={key => onFiltersChange({ key: SORT_TYPE.DATA, value: key as CAR_SORT & SETUP_SORT })}
-              >
-                <SelectTrigger className="w-full bg-zinc-900 border-zinc-800 text-muted-foreground" aria-label="Choose sort type">
-                  <SelectValue placeholder="Choose Sort" />
-                </SelectTrigger>
-
-                <SelectContent
-                  className="p-1 bg-zinc-900 border-zinc-800 text-slate-200"
-                  position="popper"
-                >
-                  {(Object.entries(SETUP_CAR_SORT_LABELS) as [CAR_SORT & SETUP_SORT, string][]).map(([key, value]) => (
-                    <SelectItem key={key} value={key}>
-                      {value}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="mt-4 space-y-4">
-            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">Filters:</h3>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={filterList.countries}
-                value={currentFilters[CAR_FILTER.COUNTRY] ? currentFilters[CAR_FILTER.COUNTRY]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.COUNTRY, value: key.join(',') })}
-              >
-                <ComboboxChips ref={countryRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {value}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.COUNTRY]
-                          && <ComboboxChipsInput placeholder="Country" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={countryRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {item}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={filterList.manufacturers}
-                value={currentFilters[CAR_FILTER.MANUFACTURER] ? currentFilters[CAR_FILTER.MANUFACTURER]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.MANUFACTURER, value: key.join(',') })}
-              >
-                <ComboboxChips ref={manufacturerRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {value}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.MANUFACTURER]
-                          && <ComboboxChipsInput placeholder="Manufacturer" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={manufacturerRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {item}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(ASPIRATION) as AspirationType[]}
-                value={currentFilters[CAR_FILTER.ASPIRATION] ? currentFilters[CAR_FILTER.ASPIRATION]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.ASPIRATION, value: key.join(',') })}
-              >
-                <ComboboxChips ref={aspirationRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {ASPIRATION[value as AspirationType]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.ASPIRATION]
-                          && <ComboboxChipsInput placeholder="Aspiration" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={aspirationRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {ASPIRATION[item as AspirationType]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(CAR_CLASS) as CarClass[]}
-                value={currentFilters[CAR_FILTER.CAR_CLASS] ? currentFilters[CAR_FILTER.CAR_CLASS]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.CAR_CLASS, value: key.join(',') })}
-              >
-                <ComboboxChips ref={classRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {CAR_CLASS[value as CarClass]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.CAR_CLASS]
-                          && <ComboboxChipsInput placeholder="Car Class" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={classRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {CAR_CLASS[item as CarClass]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(DRIVETRAIN) as Drivetrain[]}
-                value={currentFilters[CAR_FILTER.DRIVETRAIN] ? currentFilters[CAR_FILTER.DRIVETRAIN]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.DRIVETRAIN, value: key.join(',') })}
-              >
-                <ComboboxChips ref={drivetrainRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {DRIVETRAIN[value as Drivetrain]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.DRIVETRAIN]
-                          && <ComboboxChipsInput placeholder="Drivetrain" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={drivetrainRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {DRIVETRAIN[item as Drivetrain]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(ENGINE_LAYOUT) as EngineLayout[]}
-                value={currentFilters[CAR_FILTER.ENGINE_LAYOUT] ? currentFilters[CAR_FILTER.ENGINE_LAYOUT]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.ENGINE_LAYOUT, value: key.join(',') })}
-              >
-                <ComboboxChips ref={layoutRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {ENGINE_LAYOUT[value as EngineLayout]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.ENGINE_LAYOUT]
-                          && <ComboboxChipsInput placeholder="Engine Layout" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={layoutRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {ENGINE_LAYOUT[item as EngineLayout]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <Combobox
-                multiple
-                autoHighlight
-                items={Object.keys(OVERTAKE) as OvertakeType[]}
-                value={currentFilters[CAR_FILTER.OVERTAKE] ? currentFilters[CAR_FILTER.OVERTAKE]?.split(',') : []}
-                onValueChange={key => onFiltersChange({ key: CAR_FILTER.OVERTAKE, value: key.join(',') })}
-              >
-                <ComboboxChips ref={overtakeRef} className="w-full bg-zinc-900 border-zinc-800 text-slate-200">
-                  <ComboboxValue>
-                    {values => (
-                      <>
-                        {values.map((value: string) => (
-                          <ComboboxChip key={value} className="bg-zinc-800 text-slate-200">
-                            {OVERTAKE[value as OvertakeType]}
-                          </ComboboxChip>
-                        ))}
-
-                        {
-                          !currentFilters[CAR_FILTER.OVERTAKE]
-                          && <ComboboxChipsInput placeholder="Overtake" />
-                        }
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <ComboboxContent anchor={overtakeRef}>
-                  <ComboboxList className="bg-zinc-900 border-zinc-800 text-slate-200">
-                    {item => (
-                      <ComboboxItem key={item} value={item}>
-                        {OVERTAKE[item as OvertakeType]}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
-
-            <div className="space-y-2">
-              <FieldLabel>
-                <Field orientation="horizontal" className="gap-3">
-                  <Checkbox
-                    id={CAR_FILTER.HYBRID}
-                    name={CAR_FILTER.HYBRID}
-                    checked={!!currentFilters[CAR_FILTER.HYBRID]}
-                    onCheckedChange={checked => onFiltersChange({ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' })}
-                    aria-label="Filter by Hybrid"
-                    aria-checked={!!currentFilters[CAR_FILTER.HYBRID]}
-                  />
-                  <FieldContent>
-                    <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
-                  </FieldContent>
-                </Field>
-              </FieldLabel>
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-pp" className="text-muted-foreground">PP</Label>
-                <span className="text-sm text-muted-foreground">
-                  {currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0}
-                  {' - '}
-                  {currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-pp"
-                value={[
-                  currentFilters[SETUP_FILTER.PP_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MIN]!, 10) : 0,
-                  currentFilters[SETUP_FILTER.PP_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.PP_LIM_MAX]!, 10) : MAX_LIMITS.PP,
-                ]}
-                onValueChange={(value) => {
-                  onFiltersChange({ key: SETUP_FILTER.PP_LIM_MIN, value: value[0].toString() });
-                  onFiltersChange({ key: SETUP_FILTER.PP_LIM_MAX, value: value[1].toString() });
-                }}
-                min={0}
-                max={MAX_LIMITS.PP}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-power" className="text-muted-foreground">Power</Label>
-                <span className="text-sm text-muted-foreground">
-                  {currentFilters[SETUP_FILTER.POWER_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MIN]!, 10) : 0}
-                  {' - '}
-                  {currentFilters[SETUP_FILTER.POWER_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MAX]!, 10) : MAX_LIMITS.POWER}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-power"
-                value={[
-                  currentFilters[SETUP_FILTER.POWER_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MIN]!, 10) : 0,
-                  currentFilters[SETUP_FILTER.POWER_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.POWER_LIM_MAX]!, 10) : MAX_LIMITS.POWER,
-                ]}
-                onValueChange={(value) => {
-                  onFiltersChange({ key: SETUP_FILTER.POWER_LIM_MIN, value: value[0].toString() });
-                  onFiltersChange({ key: SETUP_FILTER.POWER_LIM_MAX, value: value[1].toString() });
-                }}
-                min={0}
-                max={MAX_LIMITS.POWER}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-torque" className="text-muted-foreground">Torque</Label>
-                <span className="text-sm text-muted-foreground">
-                  {currentFilters[SETUP_FILTER.TORQUE_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MIN]!, 10) : 0}
-                  {' - '}
-                  {currentFilters[SETUP_FILTER.TORQUE_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MAX]!, 10) : MAX_LIMITS.TORQUE}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-torque"
-                value={[
-                  currentFilters[SETUP_FILTER.TORQUE_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MIN]!, 10) : 0,
-                  currentFilters[SETUP_FILTER.TORQUE_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.TORQUE_LIM_MAX]!, 10) : MAX_LIMITS.TORQUE,
-                ]}
-                onValueChange={(value) => {
-                  onFiltersChange({ key: SETUP_FILTER.TORQUE_LIM_MIN, value: value[0].toString() });
-                  onFiltersChange({ key: SETUP_FILTER.TORQUE_LIM_MAX, value: value[1].toString() });
-                }}
-                min={0}
-                max={MAX_LIMITS.TORQUE}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-weight" className="text-muted-foreground">Weight</Label>
-                <span className="text-sm text-muted-foreground">
-                  {currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN]!, 10) : 0}
-                  {' - '}
-                  {currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX]!, 10) : MAX_LIMITS.WEIGHT}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-weight"
-                value={[
-                  currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MIN]!, 10) : 0,
-                  currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WEIGHT_LIM_MAX]!, 10) : MAX_LIMITS.WEIGHT,
-                ]}
-                onValueChange={(value) => {
-                  onFiltersChange({ key: SETUP_FILTER.WEIGHT_LIM_MIN, value: value[0].toString() });
-                  onFiltersChange({ key: SETUP_FILTER.WEIGHT_LIM_MAX, value: value[1].toString() });
-                }}
-                min={0}
-                max={MAX_LIMITS.WEIGHT}
-                step={1}
-              />
-            </div>
-
-            <div className="mx-auto grid w-full gap-3 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="slider-wpr" className="text-muted-foreground">WPR</Label>
-                <span className="text-sm text-muted-foreground">
-                  {currentFilters[SETUP_FILTER.WPR_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MIN]!, 10) : 0}
-                  {' - '}
-                  {currentFilters[SETUP_FILTER.WPR_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MAX]!, 10) : MAX_LIMITS.WPR}
-                </span>
-              </div>
-
-              <Slider
-                id="slider-wpr"
-                value={[
-                  currentFilters[SETUP_FILTER.WPR_LIM_MIN] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MIN]!, 10) : 0,
-                  currentFilters[SETUP_FILTER.WPR_LIM_MAX] ? parseInt(currentFilters[SETUP_FILTER.WPR_LIM_MAX]!, 10) : MAX_LIMITS.WPR,
-                ]}
-                onValueChange={(value) => {
-                  onFiltersChange({ key: SETUP_FILTER.WPR_LIM_MIN, value: value[0].toString() });
-                  onFiltersChange({ key: SETUP_FILTER.WPR_LIM_MAX, value: value[1].toString() });
-                }}
-                min={0}
-                max={MAX_LIMITS.WPR}
-                step={0.01}
-              />
-            </div>
-          </div>
-
-          <div className="mt-8 border-t border-zinc-900 pt-4">
-            <button
-              type="button"
-              onClick={() => {
-                onFiltersApply();
-                toggleDrawer();
-              }}
-              disabled={isLoading}
-              className="w-full rounded-xl bg-slate-200 py-3 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-slate-100 active:scale-[0.99]"
-            >
-              Apply Filters
-            </button>
-          </div>
-        </>
-      )}
-    </ModalDrawer>
+          </>
+        )}
+      </ModalDrawer>
+    </MenuPortal>
   );
 }

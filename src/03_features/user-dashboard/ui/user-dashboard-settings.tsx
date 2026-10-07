@@ -3,7 +3,8 @@
 import { UserRoundCog } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
-import { BUTTON_POSITION, ModalDrawer } from '@/05_shared/ui/modal-drawer';
+import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
+import { ModalDrawer } from '@/05_shared/ui/modal-drawer';
 
 export function UserDashboardSettings() {
   const pathname = usePathname();
@@ -13,18 +14,19 @@ export function UserDashboardSettings() {
   }
 
   return (
-    <ModalDrawer
-      buttonAria="User Settings"
-      buttonIcon={<UserRoundCog className="w-7 h-7 ml-0.5 mr-[-0.5] text-white/90" />}
-      buttonText="Settings"
-      buttonPosition={BUTTON_POSITION.SECOND}
-    >
-      {() => (
-        <div>
-          User Settings
-        </div>
-      )}
-    </ModalDrawer>
+    <MenuPortal priority={MENU_PRIORITY.AUTH}>
+      <ModalDrawer
+        buttonAria="User Settings"
+        buttonIcon={<UserRoundCog className="w-7 h-7 ml-0.5 mr-[-0.5] text-white/90" />}
+        buttonText="Settings"
+      >
+        {() => (
+          <div>
+            User Settings
+          </div>
+        )}
+      </ModalDrawer>
+    </MenuPortal>
 
   );
 }

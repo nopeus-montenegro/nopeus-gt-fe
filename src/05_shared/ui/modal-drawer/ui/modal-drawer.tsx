@@ -1,17 +1,15 @@
 import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { useState } from 'react';
-import { BUTTON_POSITION } from '../lib/const';
 
 interface Props {
   buttonAria: string;
   buttonIcon: React.ReactNode;
   buttonText: string;
-  buttonPosition?: BUTTON_POSITION;
   children: (props: { toggleDrawer: () => void }) => React.ReactNode;
 }
 
-export function ModalDrawer({ children, buttonAria, buttonIcon, buttonText, buttonPosition = BUTTON_POSITION.THIRD }: Props) {
+export function ModalDrawer({ children, buttonAria, buttonIcon, buttonText }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   useBodyScroll(isOpen);
   const toggleDrawer = () => setIsOpen(current => !current);
@@ -22,9 +20,8 @@ export function ModalDrawer({ children, buttonAria, buttonIcon, buttonText, butt
         onClick={toggleDrawer}
         type="button"
         className={cn(
-          `group fixed bottom-${buttonPosition} right-6 z-20`,
+          'group flex items-center gap-2',
           'm-0 py-2 px-2',
-          'flex items-center gap-2',
           'rounded-full border border-secondary/5 bg-secondary/10',
           'text-sm font-medium text-slate-200/90',
           'shadow-xl backdrop-blur-md transition-transform',
