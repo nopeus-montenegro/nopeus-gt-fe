@@ -5,14 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/
 import { slugify } from '@/05_shared/utils/slugify';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import { CarInclude } from '../lib/types';
 
 interface Props {
   car: CarInclude;
   preload?: boolean;
+  action?: ReactNode;
 }
 
-export function CarCard({ car, preload }: Props) {
+export function CarCard({ car, preload, action }: Props) {
   return (
     <Card className="relative grid grid-rows-subgrid row-span-3 overflow-hidden min-h-52 h-full bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-900/20">
       <div className="absolute -inset-0.5 bg-linear-to-br from-white/20 to-transparent opacity-0 transition-opacity hover:opacity-100 pointer-events-none rounded-xl" />
@@ -57,42 +59,46 @@ export function CarCard({ car, preload }: Props) {
             {car.setups[0].weightBalanceRear}
           </p>
 
-          <div className="flex flex-wrap gap-2 items-stretch">
-            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-              {car.class !== 'ROAD' && `${CAR_CLASS[car.class]} / `}
-              {'PP '}
-              {car.setups[0].pp.toFixed(2)}
-            </Badge>
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-wrap gap-2 items-stretch">
+              <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                {car.class !== 'ROAD' && `${CAR_CLASS[car.class]} / `}
+                {'PP '}
+                {car.setups[0].pp.toFixed(2)}
+              </Badge>
 
-            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-              {car.aspiration.replace('_', ' + ')}
-            </Badge>
+              <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                {car.aspiration.replace('_', ' + ')}
+              </Badge>
 
-            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-              {car.engineLayout}
-              -ENGINE
-            </Badge>
+              <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                {car.engineLayout}
+                -ENGINE
+              </Badge>
 
-            <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-              {car.drivetrain}
-            </Badge>
+              <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                {car.drivetrain}
+              </Badge>
 
-            {
-              car.isHybrid
-              && (
-                <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-                  HYBRID
-                </Badge>
-              )
-            }
+              {
+                car.isHybrid
+                && (
+                  <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                    HYBRID
+                  </Badge>
+                )
+              }
 
-            {
-              car.overtake !== 'NONE' && (
-                <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
-                  {car.overtake.replace('_', ' ')}
-                </Badge>
-              )
-            }
+              {
+                car.overtake !== 'NONE' && (
+                  <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">
+                    {car.overtake.replace('_', ' ')}
+                  </Badge>
+                )
+              }
+            </div>
+
+            {action && <div className="z-20 flex flex-col-reverse">{action}</div>}
           </div>
         </CardContent>
       </div>

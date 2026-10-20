@@ -11,6 +11,7 @@ import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitl
 import { Copyright, Info } from 'lucide-react';
 import './globals.css';
 import styles from './layout.module.css';
+import { QueryProvider } from './providers/query-provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -76,7 +77,9 @@ export default function RootLayout({
           <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-noise" />
 
           <main className="relative z-10 container mx-auto px-6 lg:px-12 min-h-dvh w-full">
-            {children}
+            <QueryProvider>
+              {children}
+            </QueryProvider>
 
             <AuthorizationModal />
 

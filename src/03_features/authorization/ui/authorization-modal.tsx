@@ -1,18 +1,18 @@
 'use client';
 
 import { UserRound, UserRoundCheck } from 'lucide-react';
-import { Route } from 'next';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { useSession } from '@/05_shared/lib/mock-auth/hooks/use-session';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { ModalDrawer } from '@/05_shared/ui/modal-drawer';
+
+import Link from 'next/link';
 import { Authorization } from './authorization';
 
 export function AuthorizationModal() {
   const pathname = usePathname();
-  const router = useRouter();
   const session = useSession();
 
   if (pathname === '/user') {
@@ -22,15 +22,14 @@ export function AuthorizationModal() {
   if (session.status === 'authenticated') {
     return (
       <MenuPortal priority={MENU_PRIORITY.AUTH}>
-        <button
-          onClick={() => router.push('/user' as Route)}
-          type="button"
+        <Link
+          href="/user"
           className={cn(
             'group flex items-center gap-2',
             'm-0 py-2 px-2',
             'rounded-full border border-secondary/5 bg-secondary/10',
             'text-sm font-medium text-slate-200/90',
-            'shadow-xl backdrop-blur-md transition-transform',
+            'shadow-xl backdrop-blur-md trabnsition-transform',
             'hover:scale-105 active:scale-95',
           )}
           aria-label="User Dashboard"
@@ -40,7 +39,7 @@ export function AuthorizationModal() {
           <span className="hidden md:group-hover:block mr-2">
             {session.data?.user.name}
           </span>
-        </button>
+        </Link>
       </MenuPortal>
     );
   }
