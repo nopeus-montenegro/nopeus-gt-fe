@@ -8,6 +8,7 @@ import { cn } from '@/05_shared/lib/shadcn/utils';
 import { AuthorizationModal } from '@/03_features/authorization';
 import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/05_shared/ui/shadcn/popover';
+import { Toaster } from '@/05_shared/ui/shadcn/sonner';
 import { Copyright, Info } from 'lucide-react';
 import './globals.css';
 import styles from './layout.module.css';
@@ -80,6 +81,8 @@ export default function RootLayout({
             <QueryProvider>
               {children}
             </QueryProvider>
+
+            <Toaster position="bottom-left" />
 
             <AuthorizationModal />
 

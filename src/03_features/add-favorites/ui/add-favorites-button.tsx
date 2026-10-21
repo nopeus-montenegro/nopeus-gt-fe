@@ -1,16 +1,17 @@
 import { Button } from '@/05_shared/ui/shadcn/button';
-import { ComponentProps, ReactNode } from 'react';
-import { useFavoriteCarToggle } from '../model/use-favorite-car';
+import { Bookmark } from 'lucide-react';
+import { ComponentProps } from 'react';
+import { useFavoriteCarList, useFavoriteCarToggle } from '../model/use-favorite-car';
 
 interface Props {
   size?: ComponentProps<typeof Button>['size'];
-  buttonIcon: ReactNode;
   id: string;
-  isFavorite: boolean;
 };
 
-export function AddFavoritesButton({ size = 'xs', buttonIcon, id, isFavorite }: Props) {
+export function AddFavoritesButton({ size = 'xs', id }: Props) {
   const { mutate, isPending } = useFavoriteCarToggle();
+  const { data = [] } = useFavoriteCarList();
+  const isFavorite = data.includes(id);
 
   return (
     <Button
@@ -21,7 +22,12 @@ export function AddFavoritesButton({ size = 'xs', buttonIcon, id, isFavorite }: 
       className="hover:bg-transparent"
       aria-label={isFavorite ? 'Remove favorite' : 'Add favorite'}
     >
-      {buttonIcon}
+      <Bookmark
+        fill={isFavorite
+          ? 'white'
+          : 'transparent'}
+        className="w-5 h-5 text-white/90"
+      />
     </Button>
   );
 }
