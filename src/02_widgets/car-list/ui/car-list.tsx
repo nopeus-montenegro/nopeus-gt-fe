@@ -4,7 +4,8 @@ import { Authorization } from '@/03_features/authorization';
 import { CarCard, type CarInclude } from '@/04_entities/car';
 import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { MANUFACTURERS_PRELOAD } from '@/05_shared/lib/const';
-import { ModalDrawerControlled } from '@/05_shared/ui/modal-drawer/ui/modal-drawer-controlled';
+import { ModalDrawerControlled } from '@/05_shared/ui/modal-drawer';
+import { Portal } from '@/05_shared/ui/portal';
 import { useState } from 'react';
 import { useFilter } from '../hooks/use-filter';
 import { useSort } from '../hooks/use-sort';
@@ -31,12 +32,14 @@ export function CarList({ cars }: Props) {
 
   return (
     <>
-      <ModalDrawerControlled
-        isOpen={isOpen}
-        toggleDrawer={toggleDrawer}
-      >
-        {() => <Authorization />}
-      </ModalDrawerControlled>
+      <Portal>
+        <ModalDrawerControlled
+          isOpen={isOpen}
+          toggleDrawer={toggleDrawer}
+        >
+          {() => <Authorization />}
+        </ModalDrawerControlled>
+      </Portal>
 
       {
         Object.entries(groupedCars).toSorted(([a], [b]) => a.localeCompare(b)).map(([manufacturer, carList], index) => (

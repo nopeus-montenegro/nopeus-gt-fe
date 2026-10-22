@@ -6,14 +6,15 @@ import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { slugify } from '@/05_shared/utils/slugify';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { CarInclude } from '../lib/types';
 
 interface Props {
   car: CarInclude;
+  action?: ReactNode;
 }
 
-export function CarStickyHeader({ car }: Props) {
+export function CarStickyHeader({ car, action }: Props) {
   const isScrolled = useStickyHeader(320);
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
 
@@ -85,33 +86,37 @@ export function CarStickyHeader({ car }: Props) {
         )}
         >
           <div className="flex flex-wrap items-center justify-start md:justify-between gap-4">
-            <div>
-              <h1 className={cn(
-                'font-bold tracking-tight bg-linear-to-br from-white to-white/40 bg-clip-text text-transparent transition-all duration-300',
-                isMobileExpanded ? 'text-2xl' : 'text-xl',
-                !isScrolled
-                  ? 'md:text-2xl lg:text-3xl'
-                  : 'md:text-xl lg:text-xl',
-              )}
-              >
-                {car.manufacturer}
-                {' '}
-                {car.name}
-                {' • '}
-                {car.year}
-              </h1>
+            <div className="flex gap-4">
+              <div>
+                <h1 className={cn(
+                  'font-bold tracking-tight bg-linear-to-br from-white to-white/40 bg-clip-text text-transparent transition-all duration-300',
+                  isMobileExpanded ? 'text-2xl' : 'text-xl',
+                  !isScrolled
+                    ? 'md:text-2xl lg:text-3xl'
+                    : 'md:text-xl lg:text-xl',
+                )}
+                >
+                  {car.manufacturer}
+                  {' '}
+                  {car.name}
+                  {' • '}
+                  {car.year}
+                </h1>
 
-              <p className="text-xs text-slate-400 font-medium tracking-wide uppercase">
-                {car.setups[0].power}
+                <p className="text-xs text-slate-400 font-medium tracking-wide uppercase">
+                  {car.setups[0].power}
                   &nbsp;
-                {'BHP • '}
-                {car.setups[0].weight}
+                  {'BHP • '}
+                  {car.setups[0].weight}
                   &nbsp;
-                {'kg • '}
-                {car.setups[0].weightBalanceFront}
-                :
-                {car.setups[0].weightBalanceRear}
-              </p>
+                  {'kg • '}
+                  {car.setups[0].weightBalanceFront}
+                  :
+                  {car.setups[0].weightBalanceRear}
+                </p>
+              </div>
+
+              {action && <div className="z-20 pt-1.5">{action}</div>}
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap items-center gap-2">

@@ -1,13 +1,15 @@
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
-import { CarInclude, CarStickyHeader } from '@/04_entities/car';
+import { CarInclude } from '@/04_entities/car';
 import { getCar } from '@/04_entities/car/index.server';
 import { LapTimeTrackInclude } from '@/04_entities/lap-time';
 import { getLapTimeTrackCached } from '@/04_entities/lap-time/model/get-lap-time';
 import { AsyncPageSearchParams } from '@/05_shared/lib/types';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs/ui/breadcrumbs';
 import { slugify } from '@/05_shared/utils/slugify';
-import { Suspense } from 'react';
+
+import { CarHeader } from '@/02_widgets/sticky-header';
 import { SetupTrackList } from './setup-track-list';
 
 interface Props {
@@ -28,7 +30,7 @@ export async function CarPage({ carId, searchParams }: Props) {
   return (
     <div className="relative min-h-dvh pt-64 sm:pt-48 md:pt-148">
       <div className="container mx-auto px-4 max-w-5xl">
-        <CarStickyHeader car={car} />
+        <CarHeader car={car} />
       </div>
 
       <div className="container mx-auto px-4 max-w-5xl">

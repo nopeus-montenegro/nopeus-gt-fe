@@ -11,14 +11,16 @@ import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/05_shared/ui/shadcn/card';
 import { slugify } from '@/05_shared/utils/slugify';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
   track: Track;
   preload?: boolean;
+  action?: ReactNode;
 }
 
-export function TrackCard({ track, preload = false }: Props) {
+export function TrackCard({ track, preload = false, action }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[track.surface];
 
@@ -73,15 +75,13 @@ export function TrackCard({ track, preload = false }: Props) {
       />
 
       <CardContent className="flex gap-2 items-center justify-between mt-auto">
-        <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
           <Badge variant="outline" className="h-7 sm:h-10 border border-accent/30 bg-accent/10 text-accent">
             BoP:
             {' '}
             {BOP_CLASS_LABEL[track.bopClass]}
           </Badge>
-        </div>
 
-        <div className="flex items-center gap-2">
           <div className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Track class: ${TRACK_CLASS_LABEL[track.trackClass]}`}>
             <ClassIcon className="w-6 h-6" />
           </div>
@@ -101,6 +101,10 @@ export function TrackCard({ track, preload = false }: Props) {
           <div className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full tracking-tight bg-slate-800/50 border border-white/5" title={`Surface: ${SURFACE_LABEL[track.surface]}`}>
             <SurfaceIcon className="w-5 h-5 text-white/60" />
           </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          {action && <div className="z-20 flex flex-col-reverse">{action}</div>}
         </div>
       </CardContent>
     </Card>

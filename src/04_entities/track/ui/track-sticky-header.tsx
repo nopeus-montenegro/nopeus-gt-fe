@@ -11,14 +11,15 @@ import { Track } from '@prisma/client';
 import * as countryCodes from 'country-codes-list';
 import { CloudHail, HeartCrack, TrafficCone } from 'lucide-react';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { ReactCountryFlag } from 'react-country-flag';
 
 interface Props {
   track: Track;
+  action?: ReactNode;
 }
 
-export function TrackStickyHeader({ track }: Props) {
+export function TrackStickyHeader({ track, action }: Props) {
   const isScrolled = useStickyHeader(240);
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
 
@@ -125,6 +126,8 @@ export function TrackStickyHeader({ track }: Props) {
                     </p>
                   )}
               </div>
+
+              {action && <div className="z-20 pt-3">{action}</div>}
             </div>
 
             <div className="flex items-center gap-2">

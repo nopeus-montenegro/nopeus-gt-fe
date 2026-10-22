@@ -1,23 +1,23 @@
 import { Button } from '@/05_shared/ui/shadcn/button';
 import { Bookmark } from 'lucide-react';
 import { ComponentProps } from 'react';
-import { useFavoriteCarList, useFavoriteCarToggle } from '../model/use-favorite-car';
+import { FAVORITE_TYPE } from '../lib/const';
+import { useFavorite } from '../model/use-favorite';
 
 interface Props {
   size?: ComponentProps<typeof Button>['size'];
   id: string;
+  favoriteType: FAVORITE_TYPE;
 };
 
-export function AddFavoritesButton({ size = 'xs', id }: Props) {
-  const { mutate, isPending } = useFavoriteCarToggle();
-  const { data = [] } = useFavoriteCarList();
-  const isFavorite = data.includes(id);
+export function AddFavoritesButton({ size = 'xs', id, favoriteType }: Props) {
+  const { isFavorite, mutate, isPending } = useFavorite(favoriteType, id);
 
   return (
     <Button
       disabled={isPending}
       size={size}
-      onClick={() => mutate({ carId: id, isFavorite })}
+      onClick={() => mutate()}
       variant="ghost"
       className="hover:bg-transparent"
       aria-label={isFavorite ? 'Remove favorite' : 'Add favorite'}
@@ -26,7 +26,7 @@ export function AddFavoritesButton({ size = 'xs', id }: Props) {
         fill={isFavorite
           ? 'white'
           : 'transparent'}
-        className="w-5 h-5 text-white/90"
+        className="w-7 h-7 text-white/90"
       />
     </Button>
   );

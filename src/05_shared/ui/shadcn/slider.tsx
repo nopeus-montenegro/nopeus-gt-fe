@@ -1,9 +1,8 @@
 'use client';
 
+import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Slider as SliderPrimitive } from 'radix-ui';
 import * as React from 'react';
-
-import { cn } from '@/05_shared/lib/shadcn/utils';
 
 function Slider({
   className,

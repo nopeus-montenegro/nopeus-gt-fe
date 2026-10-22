@@ -1,6 +1,7 @@
 import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ModalDrawerControlled } from './modal-drawer-controlled';
 
 interface Props {
@@ -37,14 +38,17 @@ export function ModalDrawer({ children, buttonAria, buttonIcon, buttonText }: Pr
         </span>
       </button>
 
-      <ModalDrawerControlled
-        isOpen={isOpen}
-        toggleDrawer={toggleDrawer}
-      >
-        {({ toggleDrawer }) => (
-          children({ toggleDrawer })
-        )}
-      </ModalDrawerControlled>
+      {createPortal(
+        <ModalDrawerControlled
+          isOpen={isOpen}
+          toggleDrawer={toggleDrawer}
+        >
+          {({ toggleDrawer }) => (
+            children({ toggleDrawer })
+          )}
+        </ModalDrawerControlled>,
+        document.body,
+      )}
     </>
   );
 }

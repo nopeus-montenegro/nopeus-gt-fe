@@ -1,13 +1,14 @@
-import { getFavoriteCars } from '@/03_features/add-favorites/model/get-favorite-cars';
-import { toggleFavoriteCar } from '@/03_features/add-favorites/model/toggle-favorite-car';
+import { toggleFavorite } from '@/03_features/add-favorites/model/toggle-favorite';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { FAVORITE_TYPE } from '../lib/const';
+import { getFavorite } from './get-favorite';
 
 export function useFavoriteCarToggle() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ carId, isFavorite }: { carId: string; isFavorite: boolean }) =>
-      toggleFavoriteCar(carId, isFavorite),
+      toggleFavorite(carId, isFavorite, FAVORITE_TYPE.CAR),
 
     onMutate: async ({ carId, isFavorite }) => {
       await queryClient.cancelQueries({ queryKey: ['cars', 'user-favorite'] });
@@ -40,7 +41,7 @@ export function useFavoriteCarToggle() {
 export function useFavoriteCarList() {
   return useQuery({
     queryKey: ['cars', 'user-favorite'],
-    queryFn: () => getFavoriteCars(),
+    queryFn: () => getFavorite(),
     staleTime: 5 * 60 * 1000,
   });
 }
@@ -48,8 +49,8 @@ export function useFavoriteCarList() {
 export function useIsCarFavorite(carId: string) {
   const { data: isFavorited = false, isLoading } = useQuery({
     queryKey: ['cars', 'user-favorite'],
-    queryFn: () => getFavoriteCars(),
-    select: favIds => favIds.includes(carId),
+    queryFn: () => getFavorite(),
+    select: fav => fav.favCars.includes(carId),
   });
 
   return { isFavorited, isLoading };

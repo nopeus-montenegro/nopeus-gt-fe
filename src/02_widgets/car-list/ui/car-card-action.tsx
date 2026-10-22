@@ -1,4 +1,5 @@
 import { AddFavoritesButton } from '@/03_features/add-favorites';
+import { FAVORITE_TYPE } from '@/03_features/add-favorites/lib/const';
 import { useSession } from '@/05_shared/lib/mock-auth/hooks/use-session';
 import { Button } from '@/05_shared/ui/shadcn/button';
 import { Bookmark } from 'lucide-react';
@@ -22,7 +23,7 @@ export function CarCardAction({ id, onUnauthenticated }: Props) {
     });
   };
 
-  if (session.status === 'authenticated') return <AddFavoritesButton id={id} />;
+  if (session.status === 'authenticated') return <AddFavoritesButton id={id} favoriteType={FAVORITE_TYPE.CAR} />;
 
   return (
     <Button

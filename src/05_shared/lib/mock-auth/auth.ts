@@ -2,7 +2,7 @@ import { MOCK_USER } from './lib/const';
 import { Session } from './lib/types';
 
 export async function auth(): Promise<Session | null> {
-  const IS_DEV_AUTH = false;
+  const IS_DEV_AUTH = true;
 
   if (!IS_DEV_AUTH) return null;
   return {
