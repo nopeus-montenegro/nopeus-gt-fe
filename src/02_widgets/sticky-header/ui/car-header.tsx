@@ -1,6 +1,6 @@
 'use client';
 
-import { FAVORITE_TYPE } from '@/03_features/add-favorites/lib/const';
+import { FAVORITE_TYPE } from '@/03_features/add-favorites';
 import { Authorization } from '@/03_features/authorization';
 import { CarInclude, CarStickyHeader } from '@/04_entities/car';
 import { useBodyScroll } from '@/05_shared/hooks/use-body-scroll';

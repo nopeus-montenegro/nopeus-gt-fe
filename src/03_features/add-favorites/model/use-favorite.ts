@@ -1,3 +1,4 @@
+import { useSession } from '@/05_shared/lib/mock-auth/hooks/use-session';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FAVORITE_TYPE } from '../lib/const';
 import { Favorites } from '../lib/types';
@@ -6,13 +7,15 @@ import { toggleFavorite } from './toggle-favorite';
 
 export function useFavorite(favoriteType: FAVORITE_TYPE, id: string) {
   const queryClient = useQueryClient();
+  const session = useSession();
+  const queryKey = ['user-favorites', session.data?.user.id];
 
   const { data: favorites = {
     favCars: [],
     favTracks: [],
     favSetups: [],
   } } = useQuery<Favorites>({
-    queryKey: ['user-favorites'],
+    queryKey: queryKey,
     queryFn: () => getFavorite(),
     staleTime: 5 * 60 * 1000,
   });
@@ -24,11 +27,11 @@ export function useFavorite(favoriteType: FAVORITE_TYPE, id: string) {
     mutationFn: () => toggleFavorite(id, isFavorite, favoriteType),
 
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['user-favorites'] });
+      await queryClient.cancelQueries({ queryKey: queryKey });
 
-      const previousFavorites = queryClient.getQueryData<Favorites>(['user-favorites']);
+      const previousFavorites = queryClient.getQueryData<Favorites>(queryKey);
 
-      queryClient.setQueryData<Favorites>(['user-favorites'], (old) => {
+      queryClient.setQueryData<Favorites>(queryKey, (old) => {
         if (!old) return old;
 
         const oldList = old[favoriteType] || [];
@@ -47,12 +50,12 @@ export function useFavorite(favoriteType: FAVORITE_TYPE, id: string) {
 
     onError: (_err, _vars, context) => {
       if (context?.previousFavorites) {
-        queryClient.setQueryData(['user-favorites'], context.previousFavorites);
+        queryClient.setQueryData(queryKey, context.previousFavorites);
       }
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['user-favorites'] });
+      queryClient.invalidateQueries({ queryKey: queryKey });
     },
   });
 
