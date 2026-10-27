@@ -80,7 +80,7 @@ export function SetupCarList({ trackId, initialLapTimes, filterList }: Props) {
                   searchParams={currentParams}
                   fetch={fetchLapTimesCar}
                 >
-                  {item => <SetupCar lapTime={item} />}
+                  {(item, action) => <SetupCar lapTime={item} action={action} />}
                 </SetupList>
               </div>
             )

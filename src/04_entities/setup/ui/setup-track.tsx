@@ -11,14 +11,16 @@ import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { slugify } from '@/05_shared/utils/slugify';
 import { Car } from '@prisma/client';
+import { ReactNode } from 'react';
 import { getSetupAspiration } from '../lib/utils/get-setup-aspiration';
 
 interface Props {
   lapTime: LapTimeTrackInclude;
   car: Car;
+  action?: ReactNode;
 };
 
-export function SetupTrack({ lapTime, car }: Props) {
+export function SetupTrack({ lapTime, car, action }: Props) {
   const ClassIcon = TRACK_CLASS_ICONS[lapTime.track.trackClass];
   const SurfaceIcon = TRACK_SURFACE_ICONS[lapTime.track.surface];
 
@@ -45,33 +47,39 @@ export function SetupTrack({ lapTime, car }: Props) {
           </Link>
         </h3>
 
-        <p className="flex flex-col gap-4 text-xs text-slate-400">
+        <div className="flex flex-col gap-4 text-xs text-slate-400">
           <span>
             {'Author: '}
             {lapTime.setup.author.name}
           </span>
 
-          <span className="flex items-center text-xs">
-            {lapTime.setup.pp}
+          <div className="relative flex">
+            <div className="z-20 flex items-center pr-4 mt-0">
+              {action}
+            </div>
+
+            <span className="flex items-center text-xs">
+              {lapTime.setup.pp}
             &nbsp;
-            {'PP • '}
-            {lapTime.setup.power}
+              {'PP • '}
+              {lapTime.setup.power}
             &nbsp;
-            {'BHP • '}
-            {getSetupAspiration({ ...lapTime.setup, car })}
+              {'BHP • '}
+              {getSetupAspiration({ ...lapTime.setup, car })}
             &nbsp;
-            {' • '}
-            {lapTime.setup.torque}
+              {' • '}
+              {lapTime.setup.torque}
             &nbsp;
-            {'kgfm • '}
-            {lapTime.setup.weight}
+              {'kgfm • '}
+              {lapTime.setup.weight}
             &nbsp;
-            {'kg • '}
-            {lapTime.setup.weightBalanceFront}
-            :
-            {lapTime.setup.weightBalanceRear}
-          </span>
-        </p>
+              {'kg • '}
+              {lapTime.setup.weightBalanceFront}
+              :
+              {lapTime.setup.weightBalanceRear}
+            </span>
+          </div>
+        </div>
 
       </div>
 

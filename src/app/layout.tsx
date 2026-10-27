@@ -10,6 +10,7 @@ import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/05_shared/ui/shadcn/popover';
 import { Toaster } from '@/05_shared/ui/shadcn/sonner';
 import { Copyright, Info } from 'lucide-react';
+import Link from 'next/link';
 import './globals.css';
 import styles from './layout.module.css';
 import { QueryProvider } from './providers/query-provider';
@@ -127,6 +128,17 @@ export default function RootLayout({
                         All game content, images, car names, track names, logos and
                         trademarks belong to their respective owners - Sony&nbsp;Interactive&nbsp;Entertainment&nbsp;Inc,
                         Polyphony&nbsp;Digital&nbsp;Inc and respective automotive manufacturers.
+                      </span>
+
+                      <span>
+                        Spotted a bug or have feedback? We’d love to hear from you -
+                        {' '}
+                        <Link
+                          href="mailto:support@nopeus-gt.app?subject=Nopeus%20GT%20-%20Support%20/%20Bug%20Report"
+                          className="text-white/80 underline"
+                        >
+                          Get In Touch
+                        </Link>
                       </span>
                     </PopoverDescription>
                   </PopoverHeader>

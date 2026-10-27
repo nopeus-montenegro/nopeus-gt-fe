@@ -5,14 +5,16 @@ import { setupDetailRoute } from '@/05_shared/lib/next/routes';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Badge } from '@/05_shared/ui/shadcn/badge';
 import { slugify } from '@/05_shared/utils/slugify';
+import { ReactNode } from 'react';
 import { SetupUserInclude } from '../lib/types';
 import { getSetupAspiration } from '../lib/utils/get-setup-aspiration';
 
 interface Props {
   setup: SetupUserInclude;
+  action?: ReactNode;
 };
 
-export function SetupCarUser({ setup }: Props) {
+export function SetupCarUser({ setup, action }: Props) {
   return (
     <div
       key={setup.id}
@@ -24,7 +26,7 @@ export function SetupCarUser({ setup }: Props) {
         'hover:bg-slate-900/40 hover:-translate-y-0.5 hover:shadow-lg transition-all',
       )}
     >
-      <div className="w-full col-span-3 flex flex-col items-start gap-1">
+      <div className="w-full h-full col-span-3 flex flex-col justify-between items-start gap-1">
         <h3 className="flex items-center font-bold text-secondary text-lg">
           <Link
             href={setupDetailRoute(slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString(), 'setup', setup.id]))}
@@ -36,23 +38,31 @@ export function SetupCarUser({ setup }: Props) {
           </Link>
         </h3>
 
-        <p className="flex items-center text-sm text-slate-400">
-          {setup.car.manufacturer}
-          {' '}
-          {setup.car.name}
-          {` • `}
-          {setup.car.year}
-          {` • `}
-          {setup.power}
+        <div className="relative flex">
+          {action && (
+            <div className="z-20 flex items-center pr-4 mt-0">
+              {action}
+            </div>
+          )}
+
+          <p className="flex items-center text-sm text-slate-400">
+            {setup.car.manufacturer}
+            {' '}
+            {setup.car.name}
+            {` • `}
+            {setup.car.year}
+            {` • `}
+            {setup.power}
             &nbsp;
-          {'BHP • '}
-          {setup.weight}
+            {'BHP • '}
+            {setup.weight}
             &nbsp;
-          {'kg • '}
-          {setup.weightBalanceFront}
-          :
-          {setup.weightBalanceRear}
-        </p>
+            {'kg • '}
+            {setup.weightBalanceFront}
+            :
+            {setup.weightBalanceRear}
+          </p>
+        </div>
       </div>
 
       <div className="w-full col-span-2 items-start md:items-stretch flex md:flex-row-reverse flex-wrap gap-3">

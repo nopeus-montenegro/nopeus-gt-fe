@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 import { LapTimeCarInclude } from '@/04_entities/lap-time';
 import { CAR_CLASS } from '@/05_shared/lib/dictionaries';
@@ -11,9 +12,10 @@ import { getSetupAspiration } from '../lib/utils/get-setup-aspiration';
 
 interface Props {
   lapTime: LapTimeCarInclude;
+  action?: ReactNode;
 };
 
-export function SetupCar({ lapTime }: Props) {
+export function SetupCar({ lapTime, action }: Props) {
   return (
     <div
       key={lapTime.id}
@@ -37,30 +39,36 @@ export function SetupCar({ lapTime }: Props) {
           </Link>
         </h3>
 
-        <p className="flex flex-col gap-6 text-xs text-slate-400">
+        <div className="flex flex-col gap-6 text-xs text-slate-400">
           <span>
             {'Author: '}
             {lapTime.setup.author.name}
           </span>
 
-          <span className="flex items-center text-sm">
-            {lapTime.setup.car.manufacturer}
-            {' '}
-            {lapTime.setup.car.name}
-            {` • `}
-            {lapTime.setup.car.year}
-            {` • `}
-            {lapTime.setup.power}
+          <div className="relative flex">
+            <div className="z-20 flex items-center pr-4 mt-0">
+              {action}
+            </div>
+
+            <span className="flex items-center text-sm">
+              {lapTime.setup.car.manufacturer}
+              {' '}
+              {lapTime.setup.car.name}
+              {` • `}
+              {lapTime.setup.car.year}
+              {` • `}
+              {lapTime.setup.power}
             &nbsp;
-            {'BHP • '}
-            {lapTime.setup.weight}
+              {'BHP • '}
+              {lapTime.setup.weight}
             &nbsp;
-            {'kg • '}
-            {lapTime.setup.weightBalanceFront}
-            :
-            {lapTime.setup.weightBalanceRear}
-          </span>
-        </p>
+              {'kg • '}
+              {lapTime.setup.weightBalanceFront}
+              :
+              {lapTime.setup.weightBalanceRear}
+            </span>
+          </div>
+        </div>
       </div>
 
       <div className="w-full col-span-2 items-start md:items-stretch flex md:flex-row-reverse flex-wrap gap-3">
@@ -101,7 +109,7 @@ export function SetupCar({ lapTime }: Props) {
         }
       </div>
 
-      <div className="col-span-1 flex flex-col justify-center h-full  w-full md:text-right">
+      <div className="col-span-1 flex flex-col justify-center h-full w-full md:text-right">
         <p className="right-0 text-xl font-mono text-emerald-400 font-semibold">
           {dayjs().startOf('day').millisecond(lapTime.lapTime).format(`m'ss.SSS`)}
         </p>

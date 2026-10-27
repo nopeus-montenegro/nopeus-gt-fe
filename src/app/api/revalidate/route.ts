@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
   const tag = searchParams.get('tag');
   const path = searchParams.get('path');
+  const secret = request.headers.get('x-revalidate-secret');
   const expectedSecret = process.env.REVALIDATE_SECRET;
 
   if (!expectedSecret || !secret || secret !== expectedSecret) {
