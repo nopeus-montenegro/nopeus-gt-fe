@@ -2,7 +2,7 @@ import { SetupUserInclude } from '@/04_entities/setup/lib/types';
 import { CAR_SORT, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { useSearchParams } from 'next/navigation';
 
-export function useSort(cars: SetupUserInclude[]) {
+export function useSort(setups: SetupUserInclude[]) {
   const searchParams = useSearchParams();
 
   const sortDirection = searchParams.get(SORT_TYPE.DIRECTION) || SORT_DIRECTION.ASCENDING;
@@ -10,7 +10,7 @@ export function useSort(cars: SetupUserInclude[]) {
 
   const modifier = sortDirection === SORT_DIRECTION.ASCENDING ? 1 : -1;
 
-  return cars.toSorted((a, b) => {
+  return setups.toSorted((a, b) => {
     switch (sortBy) {
       case SETUP_SORT.PP:
         return ((a.pp || 0) - (b.pp || 0)) * modifier;

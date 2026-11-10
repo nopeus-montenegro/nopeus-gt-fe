@@ -3,9 +3,9 @@ import { CAR_FILTER, SETUP_FILTER } from '@/05_shared/lib/const';
 import { MAX_LIMITS, parseLimits } from '@/05_shared/utils/parse-limits';
 import { useSearchParams } from 'next/navigation';
 
-export function useFilter(cars: SetupUserInclude[]) {
+export function useFilter(setups: SetupUserInclude[]) {
   const searchParams = useSearchParams();
-  let filtered = [...cars];
+  let filtered = [...setups];
 
   const manufacturer = searchParams.get(CAR_FILTER.MANUFACTURER)?.split(',') || [];
   const country = searchParams.get(CAR_FILTER.COUNTRY)?.split(',') || [];
