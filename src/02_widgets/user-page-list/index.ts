@@ -1,1 +1,1 @@
-export { UserPageList } from './ui/user-page-list';
+export { SetupUserList } from './ui/setup-user-list';

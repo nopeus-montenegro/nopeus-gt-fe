@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { CarList } from '@/02_widgets/car-list';
-import { CarFilters } from '@/03_features/filter-sort';
+import { CarFilters, getFilterList } from '@/03_features/filter-sort';
 import { getCarList } from '@/04_entities/car/index.server';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 
@@ -24,7 +24,7 @@ export async function CarListPage() {
       </div>
 
       <Suspense>
-        <CarFilters cars={cars} />
+        <CarFilters filterList={getFilterList(cars)} />
       </Suspense>
     </div>
   );

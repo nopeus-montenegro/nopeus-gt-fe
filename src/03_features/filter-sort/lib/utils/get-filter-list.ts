@@ -1,7 +1,8 @@
 import { CarInclude } from '@/04_entities/car';
+import { Car } from '@prisma/client';
 import { FilterList } from '../types';
 
-export function getFilterList(cars: CarInclude[]): FilterList {
+export function getFilterList(cars: CarInclude[] | Car[]): FilterList {
   const mSet = new Set<string>();
   const cSet = new Set<string>();
 

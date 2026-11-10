@@ -1,6 +1,6 @@
 'use client';
 
-import { DASHBOARD_TABS, useUserDashboardStore } from '@/03_features/user-dashboard';
+import { DASHBOARD_TABS, useUrlTabs } from '@/03_features/user-dashboard';
 import { cn } from '@/05_shared/lib/shadcn/utils';
 import { Button } from '@/05_shared/ui/shadcn/button';
 import { ButtonGroup } from '@/05_shared/ui/shadcn/button-group';
@@ -8,11 +8,10 @@ import { CirclePlus } from 'lucide-react';
 import Link from 'next/link';
 
 export function UserNav() {
-  const activeTab = useUserDashboardStore(s => s.activeTab);
-  const setActiveTab = useUserDashboardStore(s => s.setActiveTab);
+  const { currentTab, setCurrentTab } = useUrlTabs();
 
   const handleTabClick = (tab: DASHBOARD_TABS) => {
-    setActiveTab(tab);
+    setCurrentTab(tab);
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
@@ -42,12 +41,12 @@ export function UserNav() {
                 variant="outline"
                 size="lg"
                 className={cn(
-                  activeTab === item && 'bg-secondary/30 hover:bg-secondary/30',
+                  currentTab === item && 'bg-secondary/30 hover:bg-secondary/30',
                   'px-4',
                 )}
                 onClick={() => handleTabClick(item)}
               >
-                {item}
+                {item.replace('_', ' ')}
               </Button>
             ))}
           </ButtonGroup>

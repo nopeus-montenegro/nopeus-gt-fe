@@ -1,10 +1,10 @@
 import { UserNav } from '@/02_widgets/nav';
-import { UserPageList } from '@/02_widgets/user-page-list';
 import { Authorization } from '@/03_features/authorization';
 import { UserDashboardSettings } from '@/03_features/user-dashboard';
 import { UserInclude } from '@/04_entities/user';
 import { getUser } from '@/04_entities/user/model/get-user';
 import { Suspense } from 'react';
+import { UserPageList } from './user-page-list';
 
 export async function UserPage() {
   const userData = await getUser() as UserInclude;

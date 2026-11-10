@@ -3,7 +3,6 @@
 import { ArrowBigRightDash, ArrowDownAZ, ArrowDownZA, SlidersHorizontal, StickyNoteX } from 'lucide-react';
 import { useState } from 'react';
 
-import { CarInclude } from '@/04_entities/car';
 import { CAR_FILTER, CAR_SORT, SETUP_FILTER, SETUP_SORT, SORT_DIRECTION, SORT_TYPE } from '@/05_shared/lib/const';
 import { ASPIRATION, CAR_CLASS, CAR_SORT_LABELS, DRIVETRAIN, ENGINE_LAYOUT, OVERTAKE } from '@/05_shared/lib/dictionaries';
 import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
@@ -17,15 +16,13 @@ import { Slider } from '@/05_shared/ui/shadcn/slider';
 import { MAX_LIMITS } from '@/05_shared/utils/parse-limits';
 import { AspirationType, CarClass, Drivetrain, EngineLayout, OvertakeType } from '@prisma/client';
 import { useUrlFilters } from '../hooks/use-url-filters';
+import { FilterList } from '../lib/types';
 
 interface Props {
-  cars: CarInclude[];
+  filterList: FilterList;
 }
 
-export function CarFilters({ cars }: Props) {
-  const countries = cars.reduce<string[]>((acc, car) => acc.includes(car.country) ? acc : [...acc, car.country], []);
-  const manufacturers = cars.reduce<string[]>((acc, car) => acc.includes(car.manufacturer) ? acc : [...acc, car.manufacturer], []);
-
+export function CarFilters({ filterList }: Props) {
   const { searchParams, setFilter, clearFilters } = useUrlFilters();
 
   const countryRef = useComboboxAnchor();
@@ -91,6 +88,8 @@ export function CarFilters({ cars }: Props) {
                   type="button"
                   onClick={onFiltersClear}
                   className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                  aria-label="Clear filters"
+                  title="Clear filters"
                 >
                   <StickyNoteX className="w-6 h-6" />
                 </button>
@@ -99,6 +98,8 @@ export function CarFilters({ cars }: Props) {
                   type="button"
                   onClick={toggleDrawer}
                   className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                  aria-label="Close filters tab"
+                  title="Close filters tab"
                 >
                   <ArrowBigRightDash className="rotate-90 md:rotate-0 w-6 h-6" />
                 </button>
@@ -111,10 +112,13 @@ export function CarFilters({ cars }: Props) {
 
                 <button
                   type="button"
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
                   onClick={currentSortDir === SORT_DIRECTION.ASCENDING
                     ? () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.DESCENDING }])
                     : () => setFilter([{ key: SORT_TYPE.DIRECTION, value: SORT_DIRECTION.ASCENDING }])}
-                  className="rounded-lg p-1.5 text-slate-400 hover:bg-zinc-900 hover:text-slate-200"
+                  aria-label={currentSortDir === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
+                  title={currentSortDir === SORT_DIRECTION.ASCENDING ? 'Sort descending' : 'Sort ascending'}
+
                 >
                   {
                     currentSortDir === SORT_DIRECTION.ASCENDING
@@ -154,7 +158,7 @@ export function CarFilters({ cars }: Props) {
                 <Combobox
                   multiple
                   autoHighlight
-                  items={countries}
+                  items={filterList.countries}
                   value={currentCountry}
                   onValueChange={key => setFilter([{ key: CAR_FILTER.COUNTRY, value: key.join(',') }])}
                 >
@@ -193,7 +197,7 @@ export function CarFilters({ cars }: Props) {
                 <Combobox
                   multiple
                   autoHighlight
-                  items={manufacturers}
+                  items={filterList.manufacturers}
                   value={currentManufacturer}
                   onValueChange={key => setFilter([{ key: CAR_FILTER.MANUFACTURER, value: key.join(',') }])}
                 >
@@ -426,7 +430,14 @@ export function CarFilters({ cars }: Props) {
               <div className="space-y-2">
                 <FieldLabel>
                   <Field orientation="horizontal" className="gap-3">
-                    <Checkbox id={CAR_FILTER.HYBRID} name={CAR_FILTER.HYBRID} checked={isHybrid} onCheckedChange={checked => setFilter([{ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' }])} />
+                    <Checkbox
+                      id={CAR_FILTER.HYBRID}
+                      name={CAR_FILTER.HYBRID}
+                      checked={isHybrid}
+                      onCheckedChange={checked => setFilter([{ key: CAR_FILTER.HYBRID, value: checked ? 'true' : '' }])}
+                      aria-label="Filter by Hybrid"
+                      aria-checked={isHybrid}
+                    />
                     <FieldContent>
                       <FieldTitle className="text-muted-foreground">Hybrid</FieldTitle>
                     </FieldContent>
@@ -565,7 +576,7 @@ export function CarFilters({ cars }: Props) {
               </div>
             </div>
 
-            <div className="mt-8 border-t border-zinc-900 pt-4 md:hidden">
+            <div className="mt-8 border-t border-zinc-900 pt-4">
               <button
                 type="button"
                 onClick={toggleDrawer}

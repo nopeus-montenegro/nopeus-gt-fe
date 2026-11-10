@@ -8,6 +8,7 @@ import { cn } from '@/05_shared/lib/shadcn/utils';
 import { MENU_PRIORITY, MenuPortal } from '@/05_shared/ui/menu-portal';
 import { ModalDrawer } from '@/05_shared/ui/modal-drawer';
 
+import { DASHBOARD_TABS } from '@/03_features/user-dashboard';
 import Link from 'next/link';
 import { Authorization } from './authorization';
 
@@ -23,7 +24,7 @@ export function AuthorizationModal() {
     return (
       <MenuPortal priority={MENU_PRIORITY.AUTH}>
         <Link
-          href="/user"
+          href={`/user?tab=${DASHBOARD_TABS.MY_SETUP}`}
           className={cn(
             'group flex items-center gap-2',
             'm-0 py-2 px-2',
