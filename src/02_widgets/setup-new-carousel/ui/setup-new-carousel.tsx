@@ -1,5 +1,7 @@
 'use client';
 
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { SetupInclude } from '@/04_entities/setup';
 import {
   Carousel, CarouselContent,
@@ -29,80 +31,93 @@ interface Props {
 }
 
 export function SetupNewCarousel({ setup }: Props) {
+  const methods = useForm({
+    defaultValues: {
+      suspensionType: 'FULLY_CUSTOMIZED',
+      susBodyHeightFront: 100,
+      susBodyHeightRear: 105,
+      // ...
+    },
+  });
+
   return (
-    <Carousel
-      opts={{ align: 'start' }}
-      className="flex-1 min-h-0 w-full"
-      aria-label="Setup details carousel"
-    >
-      <CarouselContent
-        className="h-full"
-        aria-live="polite"
-      >
-        <CarouselItem className="flex h-full pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 h-full w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
-            <EngineCard setup={setup} />
+    <FormProvider {...methods}>
+      <form className="relative flex-1 min-h-0 w-full">
+        <Carousel
+          opts={{ align: 'start' }}
+          className="h-full"
+          aria-label="Setup details carousel"
+        >
+          <CarouselContent
+            className="h-full"
+            aria-live="polite"
+          >
+            <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+              <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+                <EngineCard setup={setup} />
 
-            <GtAutoCard setup={setup} />
-          </div>
-        </CarouselItem>
+                <GtAutoCard setup={setup} />
+              </div>
+            </CarouselItem>
 
-        <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
-            <TyresCard setup={setup} />
+            <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+              <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+                <TyresCard setup={setup} />
 
-            <SuspensionCard setup={setup} />
+                <SuspensionCard setup={setup} />
 
-            <DifferentialCard setup={setup} />
-          </div>
-        </CarouselItem>
+                <DifferentialCard setup={setup} />
+              </div>
+            </CarouselItem>
 
-        <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
-            <AerodynamicsCard setup={setup} />
+            <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+              <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+                <AerodynamicsCard setup={setup} />
 
-            <EcuCard setup={setup} />
+                <EcuCard setup={setup} />
 
-            <PerformanceCard setup={setup} />
+                <PerformanceCard setup={setup} />
 
-            <TransmissionCard setup={setup} />
+                <TransmissionCard setup={setup} />
 
-            <NitrousCard setup={setup} />
-          </div>
-        </CarouselItem>
+                <NitrousCard setup={setup} />
+              </div>
+            </CarouselItem>
 
-        <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
-            <SuperchargerCard setup={setup} />
+            <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+              <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+                <SuperchargerCard setup={setup} />
 
-            <IntakeExhaustCard setup={setup} />
+                <IntakeExhaustCard setup={setup} />
 
-            <BrakesCard setup={setup} />
-          </div>
-        </CarouselItem>
+                <BrakesCard setup={setup} />
+              </div>
+            </CarouselItem>
 
-        <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
-            <SteeringCard setup={setup} />
+            <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+              <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+                <SteeringCard setup={setup} />
 
-            <DrivetrainCard setup={setup} />
+                <DrivetrainCard setup={setup} />
 
-            <EngineTuningCard setup={setup} />
+                <EngineTuningCard setup={setup} />
 
-            <BodyworkCard setup={setup} />
-          </div>
-        </CarouselItem>
-      </CarouselContent>
+                <BodyworkCard setup={setup} />
+              </div>
+            </CarouselItem>
+          </CarouselContent>
 
-      <CarouselPrevious
-        className="absolute hidden md:flex -top-27 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white"
-        aria-label="Previous setup section"
-      />
+          <CarouselPrevious
+            className="absolute hidden md:flex -top-27 left-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white"
+            aria-label="Previous setup section"
+          />
 
-      <CarouselNext
-        className="absolute hidden md:flex -top-27 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white"
-        aria-label="Next setup section"
-      />
-    </Carousel>
+          <CarouselNext
+            className="absolute hidden md:flex -top-27 right-4 m-0 border-white/20 bg-black/50 hover:bg-white/10 text-white"
+            aria-label="Next setup section"
+          />
+        </Carousel>
+      </form>
+    </FormProvider>
   );
 }

@@ -39,8 +39,8 @@ export function SetupCarousel({ setup }: Props) {
         className="h-full"
         aria-live="polite"
       >
-        <CarouselItem className="flex h-full pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 h-full w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+        <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <EngineCard setup={setup} />
 
             <GtAutoCard setup={setup} />
@@ -58,7 +58,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <AerodynamicsCard setup={setup} />
 
             <EcuCard setup={setup} />
@@ -72,7 +72,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <SuperchargerCard setup={setup} />
 
             <IntakeExhaustCard setup={setup} />
@@ -82,7 +82,7 @@ export function SetupCarousel({ setup }: Props) {
         </CarouselItem>
 
         <CarouselItem className="flex pl-4 basis-full md:basis-1/2 xl:basis-1/3">
-          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar max-h-[calc(100dvh-150px)] p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
+          <div className="relative flex-1 w-full overflow-y-auto custom-scrollbar p-4 rounded-xl bg-slate-900/20 backdrop-blur-xl border border-white/5 shadow-lg transition-all hover:bg-slate-900/60 dark:bg-slate-900/20">
             <SteeringCard setup={setup} />
 
             <DrivetrainCard setup={setup} />

@@ -6,11 +6,6 @@ import { getSetup } from '@/04_entities/setup/index.server';
 import { Breadcrumbs } from '@/05_shared/ui/breadcrumbs';
 import { slugify } from '@/05_shared/utils/slugify';
 
-// interface Props {
-//   setupId: string;
-// };
-
-// export async function SetupNewPage({ setupId }: Props) {
 export async function SetupNewPage() {
   const setupId = 'cmr1zfims02qbd2bynwcsvrov';
   const setup = await getSetup(setupId) as SetupInclude;
