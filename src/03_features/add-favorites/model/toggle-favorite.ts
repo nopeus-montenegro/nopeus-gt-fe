@@ -1,6 +1,6 @@
 'use server';
 
-import { getUser, UserInclude } from '@/04_entities/user';
+import { auth } from '@/05_shared/lib/mock-auth/auth';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { FAVORITE_TYPE } from '../lib/const';
 
@@ -11,8 +11,8 @@ const ALLOWED_FAVORITES = {
 } as const;
 
 export async function toggleFavorite(id: string, isFavorite: boolean, favoriteType: FAVORITE_TYPE) {
-  const userData = await getUser() as UserInclude;
-  if (!userData) throw new Error('Unauthorized');
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
 
   const dbFavField = ALLOWED_FAVORITES[favoriteType];
 
@@ -21,7 +21,7 @@ export async function toggleFavorite(id: string, isFavorite: boolean, favoriteTy
   }
 
   await prisma.user.update({
-    where: { id: userData.id },
+    where: { id: session.user.id },
     data: {
       [dbFavField]: isFavorite
         ? { disconnect: { id } }

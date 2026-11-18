@@ -1,19 +1,19 @@
 'use server';
 
-import { getUser, UserInclude } from '@/04_entities/user';
+import { auth } from '@/05_shared/lib/mock-auth/auth';
 import { prisma } from '@/05_shared/lib/prisma/db';
 import { Favorites } from '../lib/types';
 
 export async function getFavorite(): Promise<Favorites> {
-  const userData = await getUser() as UserInclude;
-  if (!userData) return {
+  const session = await auth();
+  if (!session) return {
     favCars: [],
     favTracks: [],
     favSetups: [],
   };
 
   const user = await prisma.user.findUnique({
-    where: { id: userData.id },
+    where: { id: session.user.id },
     select: {
       favCars: {
         select: { id: true },

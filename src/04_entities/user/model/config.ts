@@ -10,7 +10,6 @@ export const userInclude = {
       author: true,
     },
   },
-  lapTimes: true,
   favSetups: {
     include: {
       car: true,
