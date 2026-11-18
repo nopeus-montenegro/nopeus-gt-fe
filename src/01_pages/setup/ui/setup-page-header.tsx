@@ -32,9 +32,11 @@ export function SetupPageHeader({ setup }: Props) {
       </Portal>
 
       <div className="flex items-center justify-between py-4 md:py-8 px-0.5 md:px-20">
-        <h1 className="text-xl md:text-2xl font-bold text-white">
+        <div className="text-xl md:text-2xl font-bold text-white">
           <div className="flex gap-2">
-            {setup.title}
+            <h1>
+              {setup.title}
+            </h1>
 
             <div className="z-20 flex items-center pr-4 mt-0">
               <SetupAction
@@ -51,7 +53,7 @@ export function SetupPageHeader({ setup }: Props) {
             {' '}
             {setup.car.year}
           </p>
-        </h1>
+        </div>
 
         <div className="flex flex-row-reverse flex-wrap gap-2 items-stretch">
           <Badge variant="outline" className="h-6 p-2 border border-secondary/30 bg-secondary/10 text-secondary">

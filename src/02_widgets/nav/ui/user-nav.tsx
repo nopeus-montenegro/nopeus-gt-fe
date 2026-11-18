@@ -55,9 +55,12 @@ export function UserNav() {
             variant="secondary"
             size="lg"
             className="px-4 text-blue-700 font-black"
+            asChild
           >
-            <CirclePlus className="w-5 h-5" />
-            ADD SETUP
+            <Link href="/setup/new" className="px-4">
+              <CirclePlus className="w-5 h-5" />
+              ADD SETUP
+            </Link>
           </Button>
         </div>
       </nav>

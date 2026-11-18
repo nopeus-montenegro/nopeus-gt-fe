@@ -3,4 +3,5 @@ export const routeDictionary: Record<string, string> = {
   track: 'Track',
   setup: 'Setup',
   news: 'News',
+  new: 'New',
 };

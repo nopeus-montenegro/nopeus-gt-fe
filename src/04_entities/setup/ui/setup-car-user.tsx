@@ -19,14 +19,14 @@ export function SetupCarUser({ setup, action }: Props) {
     <div
       key={setup.id}
       className={cn(
-        'relative flex flex-col md:grid md:grid-cols-5 items-center gap-8',
+        'relative flex flex-col md:grid md:grid-cols-5 items-center gap-4',
         'py-6 px-6 md:px-8',
         'rounded-xl border border-white/5',
         'bg-slate-900/20 backdrop-blur-sm',
         'hover:bg-slate-900/40 hover:-translate-y-0.5 hover:shadow-lg transition-all',
       )}
     >
-      <div className="w-full h-full col-span-3 flex flex-col justify-between items-start gap-1">
+      <div className="w-full h-full col-span-3 flex flex-col justify-between items-start gap-2">
         <h3 className="flex items-center font-bold text-secondary text-lg">
           <Link
             href={setupDetailRoute(slugify([setup.car.manufacturer, setup.car.name, setup.car.year.toString(), 'setup', setup.id]))}
